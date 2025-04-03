@@ -3,6 +3,12 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
       "@/*": [
         "./*"
       ]
