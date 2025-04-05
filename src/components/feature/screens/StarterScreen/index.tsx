@@ -1,8 +1,11 @@
 import PositionBottom from "@components/common/shared/layout/PositionBottom";
 import Button from "@components/common/shared/ui/Button";
 import styled from "@emotion/native";
+import { useSharedValue } from "react-native-reanimated";
 
 const StarterScreen = () => {
+  const width = useSharedValue(0);
+
   return (
     <Container>
       <StyledText>Hello, this is the starter screen!</StyledText>
