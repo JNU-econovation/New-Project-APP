@@ -1,15 +1,30 @@
+import CarouselView from "@components/common/entities/CarouselView";
 import PositionBottom from "@components/common/shared/layout/PositionBottom";
 import Button from "@components/common/shared/ui/Button";
 import styled from "@emotion/native";
-import { useSharedValue } from "react-native-reanimated";
+import { View } from "react-native";
 
 const StarterScreen = () => {
-  const width = useSharedValue(0);
-
   return (
     <Container>
-      <StyledText>Hello, this is the starter screen!</StyledText>
-      <StyledImage source={require("@/assets/images/react-logo.png")} />
+      <CarouselView
+        loop
+        width={300}
+        height={200}
+        data={[1, 2, 3]}
+        renderItem={(item) => (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              borderWidth: 1,
+            }}
+          >
+            <StyledText>{item}</StyledText>
+          </View>
+        )}
+      />
       <PositionBottom>
         <Button title="로그인 하러 가기" fullWidth />
       </PositionBottom>
