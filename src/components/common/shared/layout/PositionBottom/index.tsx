@@ -1,18 +1,35 @@
 import styled from "@emotion/native";
 import { PropsWithChildren } from "react";
 
-interface PositionBottomProps extends PropsWithChildren {}
+const BOTTOM_SPACE = 50; // 하단 여백
 
-const PositionBottom = ({ children }: PositionBottomProps) => {
-  return <Container>{children}</Container>;
+interface PositionBottomStyleProps {
+  bottom?: number;
+  paddingInline?: number;
+}
+
+interface PositionBottomProps
+  extends PositionBottomStyleProps,
+    PropsWithChildren {}
+
+const PositionBottom = ({
+  children,
+  bottom,
+  paddingInline,
+}: PositionBottomProps) => {
+  return (
+    <Container bottom={bottom} paddingInline={paddingInline}>
+      {children}
+    </Container>
+  );
 };
 
-const Container = styled.View`
+const Container = styled.View<PositionBottomStyleProps>`
   position: absolute;
-  bottom: 50;
+  padding-inline: ${({ paddingInline }) => paddingInline || 0}px;
+  bottom: ${({ bottom }) => bottom || BOTTOM_SPACE}px;
   left: 0;
   right: 0;
-  padding: 10px;
   align-items: center;
 `;
 
