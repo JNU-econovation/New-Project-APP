@@ -1,7 +1,9 @@
 import { View } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
+import type { ICarouselInstance } from "react-native-reanimated-carousel";
 
 interface CarouselViewProps<T> {
+  // ref?: React.RefObject<ICarouselInstance>;
   loop?: boolean;
   width: number;
   height?: number;
@@ -9,12 +11,12 @@ interface CarouselViewProps<T> {
   pagingEnabled?: boolean;
   autoPlayInterval?: number;
   data: T[];
-  style?: object;
   onSnapToItem?: (index: number) => void;
   renderItem: (item: T, index: number) => JSX.Element;
 }
 
 function CarouselView<T>({
+  // ref,
   data,
   renderItem,
   autoPlayInterval,
@@ -23,12 +25,12 @@ function CarouselView<T>({
   onSnapToItem,
   pagingEnabled,
   snapEnabled,
-  style,
   width,
 }: CarouselViewProps<T>) {
   return (
     <View>
       <Carousel
+        // ref={ref}
         loop={loop}
         width={width}
         height={height}
@@ -36,8 +38,6 @@ function CarouselView<T>({
         pagingEnabled={pagingEnabled}
         autoPlayInterval={autoPlayInterval}
         data={data}
-        style={style}
-        onSnapToItem={onSnapToItem}
         renderItem={({ item, index }) => renderItem(item, index) as JSX.Element}
       />
     </View>
