@@ -16,9 +16,4 @@ const Container = styled.SafeAreaView`
   align-items: center;
 `;
 
-const StyledText = styled.Text`
-  font-size: 20px;
-  color: #333;
-`;
-
 export default StarterScreen;
