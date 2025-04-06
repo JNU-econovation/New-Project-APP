@@ -12,6 +12,9 @@
       "@assets/*": [
         "./assets/*"
       ],
+      "@constants/*": [
+        "./src/constants/*"
+      ],
       "@/*": [
         "./*"
       ]
