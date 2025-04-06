@@ -1,4 +1,4 @@
-import StarterScreen from "@components/feature/screens/StarterScreen";
+import StarterScreen from "@components/feature/screens/Starter/StarterScreen";
 import { Stack } from "expo-router";
 
 export default function RootLayout() {
