@@ -1,4 +1,5 @@
-import styled, { css } from "@emotion/native";
+import { COLORS } from "@/src/styles/colorPalette";
+import styled from "@emotion/native";
 
 interface ButtonStyledProps {
   fullWidth?: boolean;
@@ -24,7 +25,7 @@ const Button = ({ title, fullWidth, disabled, onPress }: ButtonProps) => {
 
 const StyledTouchableOpacity = styled.TouchableOpacity<ButtonStyledProps>(
   ({ fullWidth, disabled }) => ({
-    backgroundColor: "#007bff",
+    backgroundColor: COLORS.mainGreen,
     paddingVertical: 16,
     paddingHorizontal: 20,
     borderRadius: 8,
