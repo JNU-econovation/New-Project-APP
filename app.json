@@ -10,13 +10,17 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.geongyu09.new-project"
+      "bundleIdentifier": "com.geongyu09.new-project",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/splash-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.geongyu09.newproject"
     },
     "web": {
       "bundler": "metro",
@@ -24,19 +28,26 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#232323",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200
         }
-      ]
+      ],
+      "expo-router"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "980c25a2-cc92-431c-9a41-8c1a84bfc6b8"
+      }
     }
   }
 }
