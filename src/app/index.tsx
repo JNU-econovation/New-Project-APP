@@ -1,42 +1,36 @@
 import LoginButton from "@components/feature/screens/Starter/LoginButton";
 import StarterScreen from "@components/feature/screens/Starter/StarterScreen";
+import { useFonts } from "expo-font";
 import { SplashScreen } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Text, View } from "react-native";
 
-// Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
-// SplashScreen.setOptions({
-//   duration: 1000,
-//   fade: true,
-// });
+const isAuthenticated = false;
 
 export default function Index() {
-  const isAuthenticated = false;
-
-  const [appIsReady, setAppIsReady] = useState(false);
-  console.log("appIsReady", appIsReady);
-
-  useEffect(() => {
-    async function prepare() {
-      try {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        setAppIsReady(true);
-      }
-    }
-
-    prepare();
-  }, []);
+  // const [appIsReady, setAppIsReady] = useState(false);
+  const [loaded, error] = useFonts({
+    "pretendard-black": require("@/assets/fonts/Pretendard-Black.otf"),
+    "pretendard-bold": require("@/assets/fonts/Pretendard-Bold.otf"),
+    "pretendard-extrabold": require("@/assets/fonts/Pretendard-ExtraBold.otf"),
+    "pretendard-extralight": require("@/assets/fonts/Pretendard-ExtraLight.otf"),
+    "pretendard-light": require("@/assets/fonts/Pretendard-Light.otf"),
+    "pretendard-medium": require("@/assets/fonts/Pretendard-Medium.otf"),
+    "pretendard-semibold": require("@/assets/fonts/Pretendard-SemiBold.otf"),
+    "pretendard-thin": require("@/assets/fonts/Pretendard-Thin.otf"),
+  });
 
   useEffect(() => {
-    if (appIsReady) {
+    if (loaded || error) {
       SplashScreen.hideAsync();
     }
-  }, [appIsReady]);
+  }, [loaded, error]);
+
+  if (!loaded && !error) {
+    return null;
+  }
 
   if (!isAuthenticated) {
     return <StarterScreen />;

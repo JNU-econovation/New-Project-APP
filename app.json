@@ -4,7 +4,11 @@
     "slug": "new-project",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/splash-icon.png",
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "cover"
+    },
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -28,15 +32,23 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      "expo-splash-screen",
+      "expo-router",
       [
-        "expo-splash-screen",
+        "expo-font",
         {
-          "backgroundColor": "#232323",
-          "image": "./assets/splash-icon.png",
-          "imageWidth": 200
+          "fonts": [
+            "./assets/fonts/Pretendard-Black.otf",
+            "./assets/fonts/Pretendard-Bold.otf",
+            "./assets/fonts/Pretendard-ExtraBold.otf",
+            "./assets/fonts/Pretendard-ExtraLight.otf",
+            "./assets/fonts/Pretendard-Light.otf",
+            "./assets/fonts/Pretendard-Medium.otf",
+            "./assets/fonts/Pretendard-SemiBold.otf",
+            "./assets/fonts/Pretendard-Thin.otf"
+          ]
         }
-      ],
-      "expo-router"
+      ]
     ],
     "experiments": {
       "typedRoutes": true
