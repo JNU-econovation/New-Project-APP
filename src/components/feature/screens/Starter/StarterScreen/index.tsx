@@ -1,6 +1,7 @@
 import styled from "@emotion/native";
 import LoginButton from "../LoginButton";
 import ExplainCarousel from "../ExplainCarousel";
+import { COLORS } from "@/src/styles/colorPalette";
 
 const StarterScreen = () => {
   return (
@@ -14,6 +15,7 @@ const StarterScreen = () => {
 const Container = styled.SafeAreaView`
   flex: 1;
   align-items: center;
+  background-color: ${COLORS.mainWhite};
 `;
 
 export default StarterScreen;
