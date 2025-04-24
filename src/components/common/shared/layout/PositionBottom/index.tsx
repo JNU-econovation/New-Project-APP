@@ -33,4 +33,6 @@ const Container = styled.View<PositionBottomStyleProps>`
   align-items: center;
 `;
 
+PositionBottom.BOTTOM_SPACE = BOTTOM_SPACE;
+
 export default PositionBottom;

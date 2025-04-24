@@ -26,4 +26,6 @@ const LoginButton = () => {
   );
 };
 
+LoginButton.OCCUPY_SPACE = PositionBottom.BOTTOM_SPACE + 100;
+
 export default LoginButton;
