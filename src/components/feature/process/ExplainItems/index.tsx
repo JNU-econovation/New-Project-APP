@@ -1,38 +1,26 @@
+import {
+  Guide1SVG,
+  Guide2SVG,
+  Guide3SVG,
+} from "@components/common/shared/ui/Icons";
 import Text from "@components/common/shared/ui/Text";
-import { Dimensions, Image, View } from "react-native";
+import styled from "@emotion/native";
+import { View } from "react-native";
 
-const { width, height } = Dimensions.get("window");
-const usableHeight = height - 130;
+const SCREEN_HEIGHT = 430;
 
 const ExplainItem1 = () => {
   return (
-    <View
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: usableHeight,
-      }}
-    >
-      <View
-        style={{
-          display: "flex",
-          gap: 40,
-          alignItems: "center",
-          marginBottom: 20,
-        }}
-      >
+    <ScreenView>
+      <Container>
         <Text fontSize={30} fontWeight="bold" color="mainGreen">
           안전한 모험의 시작
         </Text>
-        <Image
-          source={require("@assets/images/guide1.png")}
-          style={{ width: width * 0.6, height: width * 0.6 }}
-        />
+        <Guide1SVG width={300} height={300} />
         <View>
           <Text
             fontSize={20}
-            fontWeight="semibold"
+            fontWeight="bold"
             opacity={0.6}
             textAlign="center"
           >
@@ -40,43 +28,26 @@ const ExplainItem1 = () => {
           </Text>
           <Text
             fontSize={20}
-            fontWeight="semibold"
+            fontWeight="bold"
             opacity={0.6}
             textAlign="center"
           >
             완벽한 산행 준비
           </Text>
         </View>
-      </View>
-    </View>
+      </Container>
+    </ScreenView>
   );
 };
+
 const ExplainItem2 = () => {
-  const { width, height } = Dimensions.get("window");
   return (
-    <View
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: usableHeight,
-      }}
-    >
-      <View
-        style={{
-          display: "flex",
-          gap: 40,
-          alignItems: "center",
-          marginBottom: 20,
-        }}
-      >
+    <ScreenView>
+      <Container>
         <Text fontSize={30} fontWeight="bold" color="mainGreen">
           안전을 위한 스마트 가이드
         </Text>
-        <Image
-          source={require("@assets/images/guide2.png")}
-          style={{ width: width * 0.6, height: width * 0.6 }}
-        />
+        <Guide2SVG />
         <View>
           <Text
             fontSize={20}
@@ -95,35 +66,18 @@ const ExplainItem2 = () => {
             음성 안내 지원
           </Text>
         </View>
-      </View>
-    </View>
+      </Container>
+    </ScreenView>
   );
 };
 const ExplainItem3 = () => {
   return (
-    <View
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: usableHeight,
-      }}
-    >
-      <View
-        style={{
-          display: "flex",
-          gap: 40,
-          alignItems: "center",
-          marginBottom: 20,
-        }}
-      >
+    <ScreenView>
+      <Container>
         <Text fontSize={30} fontWeight="bold" color="mainGreen">
           나만의 멸종위기 동물 키우기
         </Text>
-        <Image
-          source={require("@assets/images/guide3.png")}
-          style={{ width: width * 0.6, minHeight: width * 0.6 + 10 }}
-        />
+        <Guide3SVG />
         <View>
           <Text
             fontSize={20}
@@ -142,9 +96,28 @@ const ExplainItem3 = () => {
             나만의 동물을 키워보세요
           </Text>
         </View>
-      </View>
-    </View>
+      </Container>
+    </ScreenView>
   );
 };
 
-export default [ExplainItem1, ExplainItem2, ExplainItem3];
+const ScreenView = styled.View`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
+const Container = styled.View`
+  display: flex;
+  align-items: center;
+  gap: 48;
+  height: ${SCREEN_HEIGHT};
+`;
+
+const ExplainItems = {
+  Views: [ExplainItem1, ExplainItem2, ExplainItem3],
+  SCREEN_HEIGHT: SCREEN_HEIGHT,
+};
+
+export default ExplainItems;

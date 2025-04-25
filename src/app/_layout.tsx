@@ -1,3 +1,4 @@
+import { LeftArrowBlackSVG } from "@components/common/shared/ui/Icons";
 import { router, Stack } from "expo-router";
 import { Image, TouchableOpacity } from "react-native";
 
@@ -12,11 +13,7 @@ export default function RootLayout() {
         headerShadowVisible: false,
         headerLeft: () => (
           <TouchableOpacity onPress={() => router.back()}>
-            <Image
-              source={require("@assets/images/Left_Arrow_button_black.png")}
-              alt="logo"
-              style={{ width: 41, height: 41 }}
-            />
+            <LeftArrowBlackSVG />
           </TouchableOpacity>
         ),
         headerTitle: () => <></>,
