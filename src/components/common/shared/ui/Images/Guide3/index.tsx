@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { View, Image } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
@@ -86,4 +86,4 @@ const Guide3Image = () => {
   );
 };
 
-export default Guide3Image;
+export default memo(Guide3Image);
