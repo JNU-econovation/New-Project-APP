@@ -26,31 +26,28 @@ const ExplainCarousel = () => {
   const progress = useSharedValue<number>(0);
   const [index, setIndex] = useState(0);
 
-  const onPressPagination = useCallback(() => {
-    return (index: number) => {
+  const onPressPagination = useCallback(
+    () => (index: number) => {
       carouselRef.current?.scrollTo({
         count: index - progress.value,
         animated: true,
       });
-    };
-  }, [carouselRef]);
+    },
+    [carouselRef],
+  );
 
   const goToNext = useCallback(() => {
-    return () => {
-      carouselRef.current?.scrollTo({
-        count: index + 1,
-        animated: true,
-      });
-    };
+    carouselRef.current?.scrollTo({
+      count: index + 1,
+      animated: true,
+    });
   }, [carouselRef]);
 
   const goToPrev = useCallback(() => {
-    return () => {
-      carouselRef.current?.scrollTo({
-        count: index - 1,
-        animated: true,
-      });
-    };
+    carouselRef.current?.scrollTo({
+      count: index - 1,
+      animated: true,
+    });
   }, [carouselRef]);
 
   return (
