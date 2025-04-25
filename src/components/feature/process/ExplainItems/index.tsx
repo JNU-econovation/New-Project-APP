@@ -1,8 +1,6 @@
-import {
-  Guide1SVG,
-  Guide2SVG,
-  Guide3SVG,
-} from "@components/common/shared/ui/Icons";
+import Guide1Image from "@components/common/shared/ui/Images/Guide1";
+import Guide2Image from "@components/common/shared/ui/Images/Guide2";
+import Guide3Image from "@components/common/shared/ui/Images/Guide3";
 import Text from "@components/common/shared/ui/Text";
 import styled from "@emotion/native";
 import { View } from "react-native";
@@ -16,11 +14,11 @@ const ExplainItem1 = () => {
         <Text fontSize={30} fontWeight="bold" color="mainGreen">
           안전한 모험의 시작
         </Text>
-        <Guide1SVG width={300} height={300} />
+        <Guide1Image />
         <View>
           <Text
             fontSize={20}
-            fontWeight="bold"
+            fontWeight="semibold"
             opacity={0.6}
             textAlign="center"
           >
@@ -28,7 +26,7 @@ const ExplainItem1 = () => {
           </Text>
           <Text
             fontSize={20}
-            fontWeight="bold"
+            fontWeight="semibold"
             opacity={0.6}
             textAlign="center"
           >
@@ -47,7 +45,7 @@ const ExplainItem2 = () => {
         <Text fontSize={30} fontWeight="bold" color="mainGreen">
           안전을 위한 스마트 가이드
         </Text>
-        <Guide2SVG />
+        <Guide2Image />
         <View>
           <Text
             fontSize={20}
@@ -77,7 +75,7 @@ const ExplainItem3 = () => {
         <Text fontSize={30} fontWeight="bold" color="mainGreen">
           나만의 멸종위기 동물 키우기
         </Text>
-        <Guide3SVG />
+        <Guide3Image />
         <View>
           <Text
             fontSize={20}
