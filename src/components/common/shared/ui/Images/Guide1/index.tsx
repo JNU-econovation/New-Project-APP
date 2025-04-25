@@ -1,4 +1,4 @@
-import * as React from "react";
+import { memo } from "react";
 import { Image } from "react-native";
 import { View } from "react-native";
 
@@ -30,4 +30,4 @@ const Guide1Image = () => {
   );
 };
 
-export default Guide1Image;
+export default memo(Guide1Image);
