@@ -2,7 +2,7 @@ import { COLORS } from "@/src/styles/colorPalette";
 import ExplainItems from "@components/feature/process/ExplainItems";
 import styled from "@emotion/native";
 
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Dimensions, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import Carousel, {
@@ -26,27 +26,40 @@ const ExplainCarousel = () => {
   const progress = useSharedValue<number>(0);
   const [index, setIndex] = useState(0);
 
-  const onPressPagination = (index: number) => {
-    carouselRef.current?.scrollTo({
-      count: index - progress.value,
-      animated: true,
-    });
-  };
+  const onPressPagination = useCallback(() => {
+    return (index: number) => {
+      carouselRef.current?.scrollTo({
+        count: index - progress.value,
+        animated: true,
+      });
+    };
+  }, [carouselRef]);
+
+  const goToNext = useCallback(() => {
+    return () => {
+      carouselRef.current?.scrollTo({
+        count: index + 1,
+        animated: true,
+      });
+    };
+  }, [carouselRef]);
+
+  const goToPrev = useCallback(() => {
+    return () => {
+      carouselRef.current?.scrollTo({
+        count: index - 1,
+        animated: true,
+      });
+    };
+  }, [carouselRef]);
 
   return (
     <Container>
       <View>
         {index !== 0 && (
-          <View
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: 15,
-              zIndex: 1,
-            }}
-          >
+          <ArrowLeftButton onPress={goToPrev}>
             <LeftArrowSVG />
-          </View>
+          </ArrowLeftButton>
         )}
         <Carousel
           ref={carouselRef}
@@ -73,16 +86,9 @@ const ExplainCarousel = () => {
           renderItem={({ index }) => <>{ExplainItems.Views[index]()}</>}
         />
         {index !== data.length - 1 && (
-          <View
-            style={{
-              position: "absolute",
-              top: "50%",
-              right: 15,
-              zIndex: 1,
-            }}
-          >
+          <ArrowRightButton onPress={goToNext}>
             <RightArrowSVG />
-          </View>
+          </ArrowRightButton>
         )}
       </View>
 
@@ -120,10 +126,19 @@ const Container = styled.View`
   justify-content: center;
   align-items: center;
   width: 100%;
-
-  View {
-    position: relative;
-  }
 `;
 
+const ArrowLeftButton = styled.TouchableOpacity`
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  z-index: 1;
+`;
+
+const ArrowRightButton = styled.TouchableOpacity`
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  z-index: 1;
+`;
 export default ExplainCarousel;
