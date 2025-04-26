@@ -12,7 +12,7 @@ export default function RootLayout() {
         },
         headerShadowVisible: false,
         headerLeft: () => (
-          <TouchableOpacity onPress={() => router.back()}>
+          <TouchableOpacity onPress={() => router.back()} activeOpacity={0.8}>
             <LeftArrowBlackSVG />
           </TouchableOpacity>
         ),

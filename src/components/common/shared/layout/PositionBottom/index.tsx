@@ -1,7 +1,7 @@
 import styled from "@emotion/native";
-import { PropsWithChildren } from "react";
+import { memo, PropsWithChildren } from "react";
 
-const BOTTOM_SPACE = 50; // 하단 여백
+const DEFAULT_BOTTOM_SPACE = 50; // 하단 여백
 
 interface PositionBottomStyleProps {
   bottom?: number;
@@ -14,8 +14,8 @@ interface PositionBottomProps
 
 const PositionBottom = ({
   children,
-  bottom,
-  paddingInline,
+  bottom = DEFAULT_BOTTOM_SPACE,
+  paddingInline = 20,
 }: PositionBottomProps) => {
   return (
     <Container bottom={bottom} paddingInline={paddingInline}>
@@ -27,12 +27,13 @@ const PositionBottom = ({
 const Container = styled.View<PositionBottomStyleProps>`
   position: absolute;
   padding-inline: ${({ paddingInline }) => paddingInline || 0}px;
-  bottom: ${({ bottom }) => bottom || BOTTOM_SPACE}px;
+  bottom: ${({ bottom }) => bottom || DEFAULT_BOTTOM_SPACE}px;
   left: 0;
   right: 0;
   align-items: center;
+  z-index: 110;
 `;
 
-PositionBottom.BOTTOM_SPACE = BOTTOM_SPACE;
+PositionBottom.DEFAULT_BOTTOM_SPACE = DEFAULT_BOTTOM_SPACE;
 
 export default PositionBottom;

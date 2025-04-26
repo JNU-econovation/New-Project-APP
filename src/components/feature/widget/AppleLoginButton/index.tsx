@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "100%",
-    paddingVertical: 42,
+    paddingVertical: 32,
   },
 });
 

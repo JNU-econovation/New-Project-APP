@@ -7,7 +7,7 @@ import { Text, View } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
-const isAuthenticated = true;
+const isAuthenticated = false;
 
 export default function Index() {
   // const [appIsReady, setAppIsReady] = useState(false);

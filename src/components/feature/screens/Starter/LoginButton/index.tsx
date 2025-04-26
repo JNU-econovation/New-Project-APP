@@ -18,6 +18,7 @@ const LoginButton = () => {
       <Button
         title="로그인 하러 가기"
         fullWidth
+        color="mainWhite"
         onPress={() => {
           router.push("/login");
         }}
@@ -26,6 +27,6 @@ const LoginButton = () => {
   );
 };
 
-LoginButton.OCCUPY_SPACE = PositionBottom.BOTTOM_SPACE + 100;
+LoginButton.OCCUPY_SPACE = PositionBottom.DEFAULT_BOTTOM_SPACE + 100;
 
 export default LoginButton;
