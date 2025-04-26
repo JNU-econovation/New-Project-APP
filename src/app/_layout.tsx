@@ -7,20 +7,10 @@ export default function RootLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        headerStyle: {
-          backgroundColor: "white",
-        },
-        headerShadowVisible: false,
-        headerLeft: () => (
-          <TouchableOpacity onPress={() => router.back()} activeOpacity={0.8}>
-            <LeftArrowBlackSVG />
-          </TouchableOpacity>
-        ),
-        headerTitle: () => <></>,
       }}
     >
       <Stack.Screen name="index" />
-      <Stack.Screen name="login" options={{ headerShown: true }} />
+      <Stack.Screen name="login" />
     </Stack>
   );
 }
