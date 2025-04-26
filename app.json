@@ -13,6 +13,7 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
+      "usesAppleSignIn": true,
       "supportsTablet": true,
       "bundleIdentifier": "com.geongyu09.new-project",
       "infoPlist": {
@@ -33,6 +34,7 @@
     },
     "plugins": [
       "expo-splash-screen",
+      "expo-apple-authentication",
       "expo-router",
       [
         "expo-font",
