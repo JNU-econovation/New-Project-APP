@@ -1,20 +1,30 @@
 import PositionBottom from "@components/common/shared/layout/PositionBottom";
 import Spacing from "@components/common/shared/layout/Spacing";
-import Button from "@components/common/shared/ui/Button";
-import { HikingSVG, StarSVG } from "@components/common/shared/ui/Icons";
+import {
+  HikingSVG,
+  LeftArrowBlackSVG,
+  StarSVG,
+} from "@components/common/shared/ui/Icons";
 import Text from "@components/common/shared/ui/Text";
 import AppleLoginButton from "@components/feature/widget/AppleLoginButton";
+import KakaoLoginButton from "@components/feature/widget/KakaoLoginButton";
 import styled from "@emotion/native";
+import { router } from "expo-router";
+import { TouchableOpacity } from "react-native";
 
 const LoginScreen = () => {
   return (
     <Container>
-      <Title>
-        {/* <WebViewWithInjected
-          source={{
-            uri: PATH_ROUTE.WEBVIEW.LOGIN,
-          }}
-        /> */}
+      <Spacing gap={24} />
+      <HeaderContainer>
+        <TouchableOpacity onPress={() => router.back()} activeOpacity={0.8}>
+          <LeftArrowBlackSVG />
+        </TouchableOpacity>
+      </HeaderContainer>
+
+      <Spacing gap={24} />
+
+      <TitleContainer>
         <Text fontSize={30} fontWeight="bold">
           그럼,
         </Text>
@@ -24,21 +34,18 @@ const LoginScreen = () => {
         <TitleStarPositioner>
           <StarSVG />
         </TitleStarPositioner>
-      </Title>
+      </TitleContainer>
 
-      <Spacing gap={60} />
+      <Spacing gap={72} />
       <HikingSVG />
+      <Spacing gap={72} />
 
-      <PositionBottom>
-        <Button
-          title="카카오 로그인"
-          backgroundColor="kakaoYellow"
-          color="black"
-          fullWidth
-        />
-        <Spacing gap={16} />
-        <AppleLoginButton />
-      </PositionBottom>
+      {/* <PositionBottom> */}
+      <KakaoLoginButton />
+
+      <Spacing gap={14} />
+      <AppleLoginButton />
+      {/* </PositionBottom> */}
     </Container>
   );
 };
@@ -46,11 +53,12 @@ const LoginScreen = () => {
 const Container = styled.View`
   flex: 1;
   background-color: white;
-  padding: 25px;
+  padding-inline: 25px;
+  padding-block: 40px;
   align-items: center;
 `;
 
-const Title = styled.View`
+const TitleContainer = styled.View`
   position: relative;
   width: 100%;
 `;
@@ -60,6 +68,10 @@ const TitleStarPositioner = styled.View`
   top: 50%;
   right: 0;
   transform: translate(0px, -12px);
+`;
+
+const HeaderContainer = styled.View`
+  width: 100%;
 `;
 
 export default LoginScreen;
