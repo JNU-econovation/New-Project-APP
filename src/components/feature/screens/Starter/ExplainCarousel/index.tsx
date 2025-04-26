@@ -54,7 +54,7 @@ const ExplainCarousel = () => {
     <Container>
       <View>
         {index !== 0 && (
-          <ArrowLeftButton onPress={goToPrev}>
+          <ArrowLeftButton activeOpacity={0.8} onPress={goToPrev}>
             <LeftArrowSVG />
           </ArrowLeftButton>
         )}
@@ -83,7 +83,7 @@ const ExplainCarousel = () => {
           renderItem={({ index }) => <>{ExplainItems.Views[index]()}</>}
         />
         {index !== data.length - 1 && (
-          <ArrowRightButton onPress={goToNext}>
+          <ArrowRightButton activeOpacity={0.8} onPress={goToNext}>
             <RightArrowSVG />
           </ArrowRightButton>
         )}
