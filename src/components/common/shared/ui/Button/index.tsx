@@ -1,10 +1,14 @@
 import { COLORS } from "@/src/styles/colorPalette";
 import styled from "@emotion/native";
+import { ReactNode } from "react";
 interface ButtonStyledProps {
   fullWidth?: boolean;
   disabled?: boolean;
   backgroundColor?: keyof typeof COLORS;
   color?: keyof typeof COLORS;
+  fontSize?: number;
+  startIcon?: ReactNode;
+  fontWeight?: "bold";
 }
 
 interface ButtonProps extends ButtonStyledProps {
@@ -18,6 +22,8 @@ const Button = ({
   backgroundColor,
   disabled,
   color,
+  fontSize,
+  startIcon,
   onPress,
 }: ButtonProps) => {
   return (
@@ -28,13 +34,16 @@ const Button = ({
       backgroundColor={backgroundColor}
       activeOpacity={0.8}
     >
-      <StyledText color={color}>{title}</StyledText>
+      {startIcon && startIcon}
+      <StyledText color={color} fontSize={fontSize}>
+        {title}
+      </StyledText>
     </StyledTouchableOpacity>
   );
 };
 
 const StyledTouchableOpacity = styled.TouchableOpacity<ButtonStyledProps>(
-  ({ fullWidth, disabled, backgroundColor, color }) => ({
+  ({ fullWidth, disabled, backgroundColor }) => ({
     backgroundColor: backgroundColor
       ? COLORS[backgroundColor]
       : COLORS.mainGreen,
@@ -45,14 +54,15 @@ const StyledTouchableOpacity = styled.TouchableOpacity<ButtonStyledProps>(
     alignItems: "center",
     justifyContent: "center",
     opacity: disabled ? 0.5 : 1,
-    color: color ? COLORS[color] : COLORS.black,
+    flexDirection: "row",
+    gap: 12,
   }),
 );
 
 const StyledText = styled.Text<ButtonStyledProps>`
   color: ${({ color }) => (color ? COLORS[color] : COLORS.black)};
-  font-size: 16px;
-  font-weight: bold;
+  font-size: ${({ fontSize }) => (fontSize ? fontSize + "px" : "16px")};
+  font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : "bold")};
   text-align: center;
 `;
 
