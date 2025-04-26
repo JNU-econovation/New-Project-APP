@@ -1,6 +1,8 @@
+import Button from "@components/common/shared/ui/Button";
+import { AppleSVG } from "@components/common/shared/ui/Icons";
+import styled from "@emotion/native";
 import * as AppleAuthentication from "expo-apple-authentication";
 import { useCallback } from "react";
-import { StyleSheet } from "react-native";
 
 const AppleLoginButton = () => {
   const login = useCallback(async () => {
@@ -24,26 +26,21 @@ const AppleLoginButton = () => {
   }, []);
 
   return (
-    <AppleAuthentication.AppleAuthenticationButton
-      buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
-      buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
-      cornerRadius={5}
-      style={styles.button}
-      onPress={login}
-    />
+    <Container>
+      <Button
+        title="apple로 계속하기"
+        backgroundColor="black"
+        color="mainWhite"
+        startIcon={<AppleSVG />}
+        fullWidth
+        onPress={login}
+      />
+    </Container>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button: {
-    width: "100%",
-    paddingVertical: 32,
-  },
-});
+const Container = styled.View`
+  width: 100%;
+`;
 
 export default AppleLoginButton;
