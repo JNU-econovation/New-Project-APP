@@ -10,10 +10,11 @@ interface LoginRequestBody {
   identityToken: string;
 }
 
-export const LOGIN_API_PATH = "api/v1/oauth/login";
+export const LOGIN_API_PATH = `${process.env.BASE_URL}api/v1/oauth/login`;
 
 /**
  * @method POST
  */
-export const postLogin = (body: LoginRequestBody) =>
-  instance.post(`/${LOGIN_API_PATH}`, body);
+export const postLogin = async (body: LoginRequestBody) => {
+  return await instance.post(`/${LOGIN_API_PATH}`, body);
+};

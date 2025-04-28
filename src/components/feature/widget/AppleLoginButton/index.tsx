@@ -1,10 +1,13 @@
 import Button from "@components/common/shared/ui/Button";
 import { AppleSVG } from "@components/common/shared/ui/Icons";
 import styled from "@emotion/native";
+import useAppleLoginMutate from "@hooks/query/useAppleLoginQuery";
 import * as AppleAuthentication from "expo-apple-authentication";
 import { useCallback } from "react";
 
 const AppleLoginButton = () => {
+  const { mutate } = useAppleLoginMutate();
+
   const login = useCallback(async () => {
     try {
       const credential = await AppleAuthentication.signInAsync({
@@ -14,11 +17,17 @@ const AppleLoginButton = () => {
         ],
       });
 
-      console.log(credential);
-      // signed in
+      if (!credential.identityToken || !credential.authorizationCode) {
+        throw new Error("Invalid credential");
+      }
+
+      mutate({
+        authorizationCode: credential.authorizationCode,
+        identityToken: credential.identityToken,
+      });
     } catch (e) {
       if (e.code === "ERR_REQUEST_CANCELED") {
-        // handle that the user canceled the sign-in flow
+        console.log("User canceled the sign-in flow");
       } else {
         // handle other errors
       }
