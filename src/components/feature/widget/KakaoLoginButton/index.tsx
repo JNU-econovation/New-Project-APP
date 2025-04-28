@@ -1,8 +1,17 @@
 import Button from "@components/common/shared/ui/Button";
 import { KakaoSVG } from "@components/common/shared/ui/Icons";
 import styled from "@emotion/native";
+import { router } from "expo-router";
 
 const KakaoLoginButton = () => {
+  const handleKakaoLogin = () =>
+    router.push({
+      pathname: "/loginModal",
+      params: {
+        type: "kakao",
+      },
+    });
+
   return (
     <Container>
       <Button
@@ -11,6 +20,7 @@ const KakaoLoginButton = () => {
         color="black"
         fullWidth
         startIcon={<KakaoSVG />}
+        onPress={handleKakaoLogin}
       />
     </Container>
   );
