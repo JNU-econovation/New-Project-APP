@@ -15,6 +15,12 @@
       "@constants/*": [
         "./src/constants/*"
       ],
+      "@context/*": [
+        "./src/context/*"
+      ],
+      "@api/*": [
+        "./src/api/*"
+      ],
       "@/*": [
         "./*"
       ]
