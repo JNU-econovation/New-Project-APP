@@ -39,7 +39,6 @@ export default function Index() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>지도 페이지</Text>
-      {/* <LoginButton /> */}
       <AppleLoginButton />
     </View>
   );

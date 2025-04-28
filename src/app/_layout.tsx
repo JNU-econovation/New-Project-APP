@@ -1,24 +1,27 @@
 import { Stack } from "expo-router";
-import ModalProvider from "@/src/context/modal/provider";
+import ModalProvider from "@context/modal/provider";
+import QueryProvider from "@context/query/provider";
 
 export default function RootLayout() {
   return (
-    <ModalProvider>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="index" />
-        <Stack.Screen name="login" />
-        <Stack.Screen
-          name="loginModal"
-          options={{
-            presentation: "modal",
+    <QueryProvider>
+      <ModalProvider>
+        <Stack
+          screenOptions={{
             headerShown: false,
           }}
-        />
-      </Stack>
-    </ModalProvider>
+        >
+          <Stack.Screen name="index" />
+          <Stack.Screen name="login" />
+          <Stack.Screen
+            name="loginModal"
+            options={{
+              presentation: "modal",
+              headerShown: false,
+            }}
+          />
+        </Stack>
+      </ModalProvider>
+    </QueryProvider>
   );
 }

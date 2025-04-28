@@ -1,4 +1,3 @@
-import PositionBottom from "@components/common/shared/layout/PositionBottom";
 import Spacing from "@components/common/shared/layout/Spacing";
 import {
   HikingSVG,
@@ -15,7 +14,7 @@ import { TouchableOpacity } from "react-native";
 const LoginScreen = () => {
   return (
     <Container>
-      <Spacing gap={24} />
+      <Spacing gap={28} />
       <HeaderContainer>
         <TouchableOpacity onPress={() => router.back()} activeOpacity={0.8}>
           <LeftArrowBlackSVG />
@@ -36,16 +35,14 @@ const LoginScreen = () => {
         </TitleStarPositioner>
       </TitleContainer>
 
-      <Spacing gap={72} />
+      <Spacing gap={68} />
       <HikingSVG />
-      <Spacing gap={72} />
+      <Spacing gap={68} />
 
-      {/* <PositionBottom> */}
       <KakaoLoginButton />
 
       <Spacing gap={14} />
       <AppleLoginButton />
-      {/* </PositionBottom> */}
     </Container>
   );
 };
