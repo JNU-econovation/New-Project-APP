@@ -1,21 +1,32 @@
-import Text from "@components/common/shared/ui/Text";
-import { TouchableOpacity, View } from "react-native";
+import WebViewWithInjected from "@components/common/entities/WebViewWithInjected";
+import PATH_ROUTE from "@constants/pathRoute";
+import { useEffect, useRef } from "react";
+import { View } from "react-native";
 
 const LoginModalScreen = () => {
+  const ref = useRef(null);
+
+  const requestKakaoLoginBridge = {
+    method: "POST",
+    name: "request-kakao",
+    body: {},
+  };
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.postMessage(JSON.stringify(requestKakaoLoginBridge));
+    }
+  }, []);
+
   return (
     <View style={{}}>
-      <TouchableOpacity
-        // onPress={closeModal}
-        style={{
-          opacity: 1,
+      <WebViewWithInjected
+        ref={ref}
+        source={{ uri: PATH_ROUTE.WEBVIEW.LOGIN }}
+        onMessage={(event) => {
+          console.log(event.nativeEvent.data);
         }}
-      >
-        <Text>로그인 성공</Text>
-        <Text>로그인 실패</Text>
-        <Text>로그인 취소</Text>
-        <Text>로그인 에러</Text>
-        <Text>로그인 완료</Text>
-      </TouchableOpacity>
+      />
     </View>
   );
 };
