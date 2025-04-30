@@ -42,3 +42,4 @@ app-example
 # build
 ios/
 android/
+credentials.json
