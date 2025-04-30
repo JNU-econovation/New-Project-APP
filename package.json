@@ -29,6 +29,7 @@
     "expo-blur": "~14.0.3",
     "expo-clipboard": "^7.0.1",
     "expo-constants": "~17.0.8",
+    "expo-dev-client": "~5.0.20",
     "expo-font": "^13.0.4",
     "expo-haptics": "~14.0.1",
     "expo-linking": "~7.0.5",
