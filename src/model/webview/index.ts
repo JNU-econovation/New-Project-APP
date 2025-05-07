@@ -1,13 +1,16 @@
 type Flag = 0 | 1;
 
+export type Method = "GET" | "POST" | "PUT" | "DELETE";
+type Status = "success" | "error";
+
 export interface MessageEventResponseData<Data = unknown> {
-  status: "success" | "error";
+  status: Status;
   name: string;
   data?: Data;
 }
 
 export interface MessageEventRequestData<Body = unknown> {
-  method: "GET" | "POST" | "PUT" | "DELETE";
+  method: Method;
   name: string;
   body?: Body;
 }
