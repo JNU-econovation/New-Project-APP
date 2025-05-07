@@ -1,34 +1,43 @@
 import WebViewWithInjected from "@components/common/entities/WebViewWithInjected";
 import PATH_ROUTE from "@constants/pathRoute";
-import { useEffect, useRef } from "react";
-import { View } from "react-native";
+import styled from "@emotion/native";
+import { useCallback, useRef } from "react";
+import { Alert, TouchableWithoutFeedback, View } from "react-native";
+import WebView from "react-native-webview";
 
 const LoginModalScreen = () => {
-  const ref = useRef(null);
+  const ref = useRef<WebView>(null);
 
-  const requestKakaoLoginBridge = {
-    method: "POST",
-    name: "request-kakao",
-    body: {},
-  };
-
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.postMessage(JSON.stringify(requestKakaoLoginBridge));
-    }
+  const requestKakaoLoginBridge = useCallback(() => {
+    console.log("[app] requestKakaoLoginBridge");
+    ref.current?.postMessage(
+      JSON.stringify({
+        name: "request-kakao",
+        method: "POST",
+        body: {},
+      }),
+    );
   }, []);
 
   return (
-    <View style={{}}>
+    <Container>
       <WebViewWithInjected
         ref={ref}
         source={{ uri: PATH_ROUTE.WEBVIEW.LOGIN }}
-        onMessage={(event) => {
-          console.log(event.nativeEvent.data);
+        onReadyToMessage={requestKakaoLoginBridge}
+        onMessage={(reqMessage) => {
+          if (reqMessage.name === "request-kakao") {
+            console.log("request-kakao", reqMessage);
+          }
         }}
       />
-    </View>
+    </Container>
   );
 };
+
+const Container = styled.View`
+  flex: 1;
+  position: relative;
+`;
 
 export default LoginModalScreen;
