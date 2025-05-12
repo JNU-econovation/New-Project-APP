@@ -37,7 +37,7 @@ const ModalProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <ModalContext.Provider value={value}>
-      {children}
+      {children && children}
       <Modal
         animationType="fade"
         transparent={false}
