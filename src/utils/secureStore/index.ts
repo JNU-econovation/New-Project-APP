@@ -5,3 +5,6 @@ export const getValueFromSecureStore = async (key: string) =>
 
 export const setValueToSecureStore = async (key: string, value: string) =>
   await SecureStore.setItemAsync(key, value);
+
+export const removeValueFromSecureStore = async (key: string) =>
+  await SecureStore.deleteItemAsync(key);

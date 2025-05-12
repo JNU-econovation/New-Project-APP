@@ -13,6 +13,7 @@ export default function QueryProvider({ children }: PropsWithChildren) {
       return false;
     }
   };
+
   return (
     <QueryClientProvider client={queryClient}>
       {children}
