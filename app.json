@@ -53,7 +53,8 @@
             "./assets/fonts/Pretendard-Thin.otf"
           ]
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
