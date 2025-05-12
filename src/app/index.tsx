@@ -1,14 +1,17 @@
 import StarterScreen from "@components/feature/screens/Starter/StarterScreen";
+import {
+  getValueFromSecureStore,
+  removeValueFromSecureStore,
+} from "@utils/secureStore";
 import { useFonts } from "expo-font";
 import { Redirect, SplashScreen } from "expo-router";
 import { useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
 
-const isAuthenticated = true;
+let isAuthenticated = false;
 
 export default function Index() {
-  // const [appIsReady, setAppIsReady] = useState(false);
   const [loaded, error] = useFonts({
     "pretendard-black": require("@/assets/fonts/Pretendard-Black.otf"),
     "pretendard-bold": require("@/assets/fonts/Pretendard-Bold.otf"),
@@ -21,10 +24,28 @@ export default function Index() {
   });
 
   useEffect(() => {
+    //TODO: 로그인 플로우를 확인하기 위한 임시 코드
+    {
+      removeValueFromSecureStore("accessToken");
+      removeValueFromSecureStore("refreshToken");
+    }
+
     if (loaded || error) {
       SplashScreen.hideAsync();
     }
   }, [loaded, error]);
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      getValueFromSecureStore("accessToken").then((accessToken) => {
+        if (accessToken) {
+          isAuthenticated = true;
+        }
+      });
+    };
+
+    checkLogin();
+  }, []);
 
   if (!loaded && !error) {
     return null;

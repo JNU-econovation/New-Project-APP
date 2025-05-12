@@ -2,7 +2,9 @@ import Button from "@components/common/shared/ui/Button";
 import { AppleSVG } from "@components/common/shared/ui/Icons";
 import styled from "@emotion/native";
 import useAppleLoginMutate from "@hooks/query/useAppleLoginQuery";
+import { setValueToSecureStore } from "@utils/secureStore";
 import * as AppleAuthentication from "expo-apple-authentication";
+import { router } from "expo-router";
 import { useCallback } from "react";
 
 const AppleLoginButton = () => {
@@ -21,10 +23,28 @@ const AppleLoginButton = () => {
         throw new Error("Invalid credential");
       }
 
-      mutate({
-        authorizationCode: credential.authorizationCode,
-        identityToken: credential.identityToken,
-      });
+      //TODO: 로그인 플로우를 확인하기 위한 임시 코드
+      {
+        await setValueToSecureStore("accessToken", credential.identityToken);
+        await setValueToSecureStore(
+          "refreshToken",
+          credential.authorizationCode,
+        );
+      }
+
+      mutate(
+        {
+          authorizationCode: credential.authorizationCode,
+          identityToken: credential.identityToken,
+        },
+        {
+          //TODO: 로그인 플로우를 확인하기 위한 임시 코드
+          onSettled() {
+            router.back();
+            router.replace("/(tabs)/home");
+          },
+        },
+      );
     } catch (e) {
       if (e.code === "ERR_REQUEST_CANCELED") {
         console.log("User canceled the sign-in flow");
