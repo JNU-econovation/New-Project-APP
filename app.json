@@ -18,6 +18,9 @@
       "bundleIdentifier": "com.geongyu09.new-project",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
+      },
+      "config": {
+        "usesNonExemptEncryption": false
       }
     },
     "android": {
