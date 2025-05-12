@@ -4405,6 +4405,13 @@ expo-linking@~7.0.5:
     expo-constants "~17.0.5"
     invariant "^2.2.4"
 
+expo-local-authentication@^16.0.4:
+  version "16.0.4"
+  resolved "https://registry.yarnpkg.com/expo-local-authentication/-/expo-local-authentication-16.0.4.tgz#23d17203d652944b233a63c368bc6a3a4871d407"
+  integrity sha512-KdrbSrL1yxmL25IsByMLRpss2TCo32YA4kCYI12qz2APIO7NsyYC75+ATGdwtYuZabhMHHaPcQgdb6iLthvVzQ==
+  dependencies:
+    invariant "^2.2.4"
+
 expo-manifests@~0.15.8:
   version "0.15.8"
   resolved "https://registry.yarnpkg.com/expo-manifests/-/expo-manifests-0.15.8.tgz#15e7b7b99d764b40ca3e3f859a126c856e2d6206"
@@ -4452,6 +4459,11 @@ expo-router@~4.0.19:
     schema-utils "^4.0.1"
     semver "~7.6.3"
     server-only "^0.0.1"
+
+expo-secure-store@^14.2.3:
+  version "14.2.3"
+  resolved "https://registry.yarnpkg.com/expo-secure-store/-/expo-secure-store-14.2.3.tgz#8e74da512e671cec5f7b88679def3d54b59cd49d"
+  integrity sha512-hYBbaAD70asKTFd/eZBKVu+9RTo9OSTMMLqXtzDF8ndUGjpc6tmRCoZtrMHlUo7qLtwL5jm+vpYVBWI8hxh/1Q==
 
 expo-splash-screen@^0.29.22:
   version "0.29.22"
