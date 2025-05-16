@@ -2,13 +2,28 @@ import { COLORS } from "@/src/styles/colorPalette";
 import Spacing from "@components/common/shared/layout/Spacing";
 import Text from "@components/common/shared/ui/Text";
 import styled from "@emotion/native";
+import { router } from "expo-router";
+import { useCallback } from "react";
 import { View } from "react-native";
 
 const HomeNavGridSection = () => {
+  const goCourse = useCallback(() => {
+    router.push("/course");
+  }, []);
+  const goTravel = useCallback(() => {
+    router.push("/course");
+  }, []);
+  const goReport = useCallback(() => {
+    router.push("/course");
+  }, []);
+  const goManual = useCallback(() => {
+    router.push("/course");
+  }, []);
+
   return (
     <Container>
       <ButtonContainer>
-        <HomeLinkButton>
+        <HomeLinkButton activeOpacity={0.8} onPress={goCourse}>
           <Text fontSize={20} fontWeight="semibold">
             코스 탐색
           </Text>
@@ -22,7 +37,7 @@ const HomeNavGridSection = () => {
           </View>
         </HomeLinkButton>
 
-        <HomeLinkButton>
+        <HomeLinkButton activeOpacity={0.8} onPress={goTravel}>
           <Text fontSize={20} fontWeight="semibold">
             산행 시작
           </Text>
@@ -35,7 +50,7 @@ const HomeNavGridSection = () => {
       <Spacing gap={10} />
 
       <ButtonContainer>
-        <HomeLinkButton>
+        <HomeLinkButton activeOpacity={0.8} onPress={goReport}>
           <Text fontSize={20} fontWeight="semibold">
             신고하기
           </Text>
@@ -44,7 +59,7 @@ const HomeNavGridSection = () => {
           </Text>
         </HomeLinkButton>
 
-        <HomeLinkButton>
+        <HomeLinkButton activeOpacity={0.8} onPress={goManual}>
           <Text fontSize={20} fontWeight="semibold">
             안전 매뉴얼
           </Text>
@@ -71,7 +86,7 @@ const ButtonContainer = styled.View`
   gap: 10px;
 `;
 
-const HomeLinkButton = styled.View`
+const HomeLinkButton = styled.TouchableOpacity`
   flex: 1;
   height: 100px;
   background-color: ${COLORS.mainWhite};
