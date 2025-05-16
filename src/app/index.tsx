@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
 
-let isAuthenticated = false;
+let isAuthenticated = true;
 
 export default function Index() {
   const [loaded, error] = useFonts({
@@ -19,6 +19,7 @@ export default function Index() {
     "pretendard-extralight": require("@/assets/fonts/Pretendard-ExtraLight.otf"),
     "pretendard-light": require("@/assets/fonts/Pretendard-Light.otf"),
     "pretendard-medium": require("@/assets/fonts/Pretendard-Medium.otf"),
+    "pretendard-regular": require("@/assets/fonts/Pretendard-Regular.otf"),
     "pretendard-semibold": require("@/assets/fonts/Pretendard-SemiBold.otf"),
     "pretendard-thin": require("@/assets/fonts/Pretendard-Thin.otf"),
   });
