@@ -17,3 +17,7 @@ export { default as MountainSVG } from "@assets/images/icons/Mountain.svg";
 export { default as MapSVG } from "@assets/images/icons/Map.svg";
 export { default as StoreSVG } from "@assets/images/icons/Store.svg";
 export { default as HeroSVG } from "@assets/images/icons/Hero.svg";
+
+// Header
+export { default as BellSVG } from "@assets/images/icons/Bell.svg";
+export { default as SettingSVG } from "@assets/images/icons/Setting.svg";
