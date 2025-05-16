@@ -9,16 +9,26 @@ const HomeNavGridSection = () => {
     <Container>
       <ButtonContainer>
         <HomeLinkButton>
-          <Text fontSize={20}>코스 탐색</Text>
+          <Text fontSize={20} fontWeight="semibold">
+            코스 탐색
+          </Text>
           <View>
-            <Text fontSize={12}>내비게이션 및</Text>
-            <Text fontSize={12}>코스 기록</Text>
+            <Text fontSize={12} fontWeight="semibold">
+              내비게이션 및
+            </Text>
+            <Text fontSize={12} fontWeight="semibold">
+              코스 기록
+            </Text>
           </View>
         </HomeLinkButton>
 
         <HomeLinkButton>
-          <Text fontSize={20}>산행 시작</Text>
-          <Text fontSize={12}>운동 기록하기</Text>
+          <Text fontSize={20} fontWeight="semibold">
+            산행 시작
+          </Text>
+          <Text fontSize={12} fontWeight="semibold">
+            운동 기록하기
+          </Text>
         </HomeLinkButton>
       </ButtonContainer>
 
@@ -26,15 +36,25 @@ const HomeNavGridSection = () => {
 
       <ButtonContainer>
         <HomeLinkButton>
-          <Text fontSize={20}>신고하기</Text>
-          <Text fontSize={12}>구조대 신고</Text>
+          <Text fontSize={20} fontWeight="semibold">
+            신고하기
+          </Text>
+          <Text fontSize={12} fontWeight="semibold">
+            구조대 신고
+          </Text>
         </HomeLinkButton>
 
         <HomeLinkButton>
-          <Text fontSize={20}>안전 매뉴얼</Text>
+          <Text fontSize={20} fontWeight="semibold">
+            안전 매뉴얼
+          </Text>
           <View>
-            <Text fontSize={12}>사고발생시</Text>
-            <Text fontSize={12}>대처방법</Text>
+            <Text fontSize={12} fontWeight="semibold">
+              사고발생시
+            </Text>
+            <Text fontSize={12} fontWeight="semibold">
+              대처방법
+            </Text>
           </View>
         </HomeLinkButton>
       </ButtonContainer>
