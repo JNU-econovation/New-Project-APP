@@ -8,7 +8,7 @@ const HomeHeaderSection = () => {
       <Hero />
 
       <IconContainer>
-        <BellSVG />
+        <BellSVG scale={10} />
         <SettingSVG />
       </IconContainer>
     </Container>

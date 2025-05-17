@@ -8,16 +8,16 @@ import { View } from "react-native";
 
 const HomeNavGridSection = () => {
   const goCourse = useCallback(() => {
-    router.push("/course");
+    router.push("/(tabs)/home/course");
   }, []);
   const goTravel = useCallback(() => {
-    router.push("/course");
+    router.push("/(tabs)/home/course");
   }, []);
   const goReport = useCallback(() => {
-    router.push("/course");
+    router.push("/(tabs)/home/course");
   }, []);
   const goManual = useCallback(() => {
-    router.push("/course");
+    router.push("/(tabs)/home/course");
   }, []);
 
   return (
