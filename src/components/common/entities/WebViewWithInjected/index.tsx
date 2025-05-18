@@ -1,6 +1,5 @@
 import { MessageEventRequestData, WebviewHandshake } from "@/src/model/webview";
 import { COLORS } from "@/src/styles/colorPalette";
-import Text from "@components/common/shared/ui/Text";
 import {
   DISABLED_PINCH_GESTURE,
   DISABLED_SCROLL,
