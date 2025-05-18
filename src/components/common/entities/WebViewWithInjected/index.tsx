@@ -1,4 +1,6 @@
 import { MessageEventRequestData, WebviewHandshake } from "@/src/model/webview";
+import { COLORS } from "@/src/styles/colorPalette";
+import Text from "@components/common/shared/ui/Text";
 import {
   DISABLED_PINCH_GESTURE,
   DISABLED_SCROLL,
@@ -13,7 +15,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { NativeSyntheticEvent } from "react-native";
+import { Animated, NativeSyntheticEvent, View } from "react-native";
 import WebView from "react-native-webview";
 import type {
   WebViewMessage,
@@ -34,6 +36,8 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
   ({ source, onMessage, onReadyToMessage }, ref) => {
     const webViewRef = useRef<WebView>(null);
     const [isReady, setIsReady] = useState(false);
+
+    const progressAnim = useRef(new Animated.Value(0)).current;
 
     useImperativeHandle(ref, () => webViewRef.current as WebView);
 
@@ -76,17 +80,46 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
     );
 
     return (
-      <WebView
-        source={source}
-        ref={webViewRef}
-        injectedJavaScript={INJECTED_JAVASCRIPT}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        scalesPageToFit={false}
-        javaScriptEnabled={true}
-        scrollEnabled={false}
-        onMessage={handleMessage}
-      />
+      <View style={{ flex: 1 }}>
+        <Animated.View
+          style={[
+            {
+              position: "absolute",
+              top: 0,
+              left: 0,
+              height: 4,
+              backgroundColor: COLORS.mainGreen,
+              zIndex: 9999,
+              width: "100%",
+              borderBottomRightRadius: 2,
+            },
+            {
+              width: progressAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: ["0%", "100%"],
+              }),
+            },
+          ]}
+        />
+
+        <WebView
+          source={source}
+          ref={webViewRef}
+          injectedJavaScript={INJECTED_JAVASCRIPT}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          scalesPageToFit={false}
+          javaScriptEnabled={true}
+          scrollEnabled={false}
+          onMessage={handleMessage}
+          onLoadProgress={({ nativeEvent }) => {
+            progressAnim.setValue(nativeEvent.progress);
+          }}
+          onLoadEnd={() => {
+            progressAnim.setValue(0);
+          }}
+        />
+      </View>
     );
   },
 );
