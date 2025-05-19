@@ -4,6 +4,7 @@ import PATH_ROUTE from "@constants/pathRoute";
 import { setValueToSecureStore } from "@utils/secureStore";
 import { useCallback, useRef } from "react";
 import WebView from "react-native-webview";
+import { postMessage } from "@utils/bridge";
 
 interface KakaoTokens {
   accessToken: string;
