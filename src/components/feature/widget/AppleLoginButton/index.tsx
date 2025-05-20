@@ -23,6 +23,8 @@ const AppleLoginButton = () => {
         throw new Error("Invalid credential");
       }
 
+      console.log(credential);
+
       //TODO: 로그인 플로우를 확인하기 위한 임시 코드
       {
         await setValueToSecureStore("accessToken", credential.identityToken);
