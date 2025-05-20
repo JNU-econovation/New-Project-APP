@@ -27,12 +27,13 @@ interface WebViewWithInjectedProps {
   source: WebViewSource;
   onMessage?: <Data>(reqMessage: MessageEventRequestData<Data>) => void;
   onReadyToMessage?: () => void;
+  loadingBar?: boolean;
 }
 
 const INJECTED_JAVASCRIPT = `${DISABLED_PINCH_GESTURE}${DISABLED_TEXT_SELECT}${DISABLED_SCROLL}${SET_VIEWPORT_RATE}`;
 
 const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
-  ({ source, onMessage, onReadyToMessage }, ref) => {
+  ({ source, onMessage, onReadyToMessage, loadingBar = false }, ref) => {
     const webViewRef = useRef<WebView>(null);
     const [isReady, setIsReady] = useState(false);
 
@@ -80,26 +81,28 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
 
     return (
       <View style={{ flex: 1 }}>
-        <Animated.View
-          style={[
-            {
-              position: "absolute",
-              top: 0,
-              left: 0,
-              height: 4,
-              backgroundColor: COLORS.mainGreen,
-              zIndex: 9999,
-              width: "100%",
-              borderBottomRightRadius: 2,
-            },
-            {
-              width: progressAnim.interpolate({
-                inputRange: [0, 1],
-                outputRange: ["0%", "100%"],
-              }),
-            },
-          ]}
-        />
+        {loadingBar && (
+          <Animated.View
+            style={[
+              {
+                position: "absolute",
+                top: 0,
+                left: 0,
+                height: 4,
+                backgroundColor: COLORS.mainGreen,
+                zIndex: 9999,
+                width: "100%",
+                borderBottomRightRadius: 2,
+              },
+              {
+                width: progressAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: ["0%", "100%"],
+                }),
+              },
+            ]}
+          />
+        )}
 
         <WebView
           source={source}
@@ -117,6 +120,8 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
           onLoadEnd={() => {
             progressAnim.setValue(0);
           }}
+          cacheEnabled={false}
+          cacheMode="LOAD_NO_CACHE"
         />
       </View>
     );
