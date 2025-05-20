@@ -5,6 +5,13 @@ const WEBVIEW = {
   LOGIN: `${webviewBaseUri}/login`,
   EMAIL_AUTH: `${webviewBaseUri}/email-auth`,
   COURSE: `${webviewBaseUri}/course`,
+  COURSE_SEARCH_RESULT: ({
+    mountainName,
+    sort = "my",
+  }: {
+    mountainName: string;
+    sort?: string;
+  }) => `${webviewBaseUri}/course/${mountainName}?sort=${sort}`,
 } as const;
 
 const PATH_ROUTE = {
