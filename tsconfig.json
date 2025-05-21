@@ -15,6 +15,21 @@
       "@constants/*": [
         "./src/constants/*"
       ],
+      "@entities/*": [
+        "./src/constants/common/entities/*"
+      ],
+      "@shared/*": [
+        "./src/constants/common/shared/*"
+      ],
+      "@process/*": [
+        "./src/constants/feature/process/*"
+      ],
+      "@screens/*": [
+        "./src/constants/feature/screens/*"
+      ],
+      "@widget/*": [
+        "./src/constants/feature/widget/*"
+      ],
       "@context/*": [
         "./src/context/*"
       ],
