@@ -1,4 +1,5 @@
 import StarterScreen from "@components/feature/screens/Starter/StarterScreen";
+import useGetCurrentPosition from "@hooks/feature/useGetCurrentPosition";
 import {
   getValueFromSecureStore,
   removeValueFromSecureStore,
@@ -23,6 +24,8 @@ export default function Index() {
     "pretendard-semibold": require("@/assets/fonts/Pretendard-SemiBold.otf"),
     "pretendard-thin": require("@/assets/fonts/Pretendard-Thin.otf"),
   });
+
+  useGetCurrentPosition();
 
   useEffect(() => {
     //TODO: 로그인 플로우를 확인하기 위한 임시 코드
