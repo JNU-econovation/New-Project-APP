@@ -17,7 +17,7 @@ export default function QueryProvider({ children }: PropsWithChildren) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      <DevToolsBubble onCopy={onCopy} />
+      {/* <DevToolsBubble onCopy={onCopy} /> */}
     </QueryClientProvider>
   );
 }

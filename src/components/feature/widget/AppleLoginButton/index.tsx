@@ -1,7 +1,7 @@
 import Button from "@components/common/shared/ui/Button";
 import { AppleSVG } from "@components/common/shared/ui/Icons";
 import styled from "@emotion/native";
-import useAppleLoginMutate from "@hooks/query/useAppleLoginQuery";
+import useAppleLoginMutate from "@hooks/feature/query/useAppleLoginQuery";
 import { setValueToSecureStore } from "@utils/secureStore";
 import * as AppleAuthentication from "expo-apple-authentication";
 import { router } from "expo-router";
