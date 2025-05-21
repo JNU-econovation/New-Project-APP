@@ -1,12 +1,7 @@
-import Text from "@components/common/shared/ui/Text";
-import { View } from "react-native";
+import CourseDetailWebview from "@components/feature/screens/map/CourseDetailWebview";
 
 const MapScreen = () => {
-  return (
-    <View>
-      <Text>Map</Text>
-    </View>
-  );
+  return <CourseDetailWebview />;
 };
 
 export default MapScreen;
