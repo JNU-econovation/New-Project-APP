@@ -1,4 +1,8 @@
-import { MessageEventRequestData, WebviewHandshake } from "@/src/model/webview";
+import {
+  MessageEventRequestData,
+  MessageEventResponseData,
+  WebviewHandshake,
+} from "@/src/model/webview";
 import { COLORS } from "@/src/styles/colorPalette";
 import {
   DISABLED_PINCH_GESTURE,
@@ -25,7 +29,10 @@ type WebViewMessageEvent = NativeSyntheticEvent<WebViewMessage>;
 
 interface WebViewWithInjectedProps {
   source: WebViewSource;
-  onMessage?: <Data>(reqMessage: MessageEventRequestData<Data>) => void;
+  // onMessage?: <Data>(reqMessage: MessageEventRequestData<Data>) => void;
+  onMessage?: (
+    reqMessage: MessageEventRequestData,
+  ) => MessageEventResponseData | void;
   onReadyToMessage?: () => void;
   loadingBar?: boolean;
 }
@@ -73,8 +80,17 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
           }
         }
 
+        if (reqMessage.name === ("log-message" as string)) {
+          console.log(reqMessage.body);
+          return;
+        }
+
         // normal message
-        if (onMessage) onMessage(reqMessage);
+        if (onMessage) {
+          const responseMessage = onMessage(reqMessage);
+          if (!responseMessage) return;
+          webViewRef.current?.postMessage(JSON.stringify(responseMessage));
+        }
       },
       [onMessage],
     );
