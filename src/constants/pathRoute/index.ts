@@ -12,6 +12,9 @@ const WEBVIEW = {
     mountainName: string;
     sort?: string;
   }) => `${webviewBaseUri}/course/${mountainName}?sort=${sort}`,
+  COURSE_DETAIL: "",
+  MAP_COURSE_SEARCH: `${webviewBaseUri}/map/course-search`,
+  MAP_COURSE_DETAIL: `${webviewBaseUri}/map/course-detail`,
 } as const;
 
 const PATH_ROUTE = {
