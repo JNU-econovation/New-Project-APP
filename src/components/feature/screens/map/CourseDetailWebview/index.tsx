@@ -1,5 +1,5 @@
-import WebViewWithInjected from "@components/common/entities/WebViewWithInjected";
 import PATH_ROUTE from "@constants/pathRoute";
+import WebViewWithInjected from "@entities/WebViewWithInjected";
 import useGetCurrentPosition from "@hooks/feature/useGetCurrentPosition";
 import { router } from "expo-router";
 
@@ -12,15 +12,32 @@ const CourseDetailWebview = () => {
         uri: PATH_ROUTE.WEBVIEW.MAP_COURSE_DETAIL,
       }}
       onMessage={({ method, name, body }) => {
-        if (name === "route-back" && method === "POST") router.back();
+        if (name === "route-back" && method === "POST") {
+          router.back();
+          return {
+            name: "route-back",
+            status: "success",
+          };
+        }
         if (name === "route-course-detail" && method === "POST") {
           router.replace("/(tabs)/map/course");
+          return {
+            name: "route-course-detail",
+            status: "success",
+          };
         }
         if (name === "get-current-position" && method === "GET") {
           return {
             name: "get-current-position",
             status: "success",
             data: location,
+          };
+        }
+        if (name === "start-travel" && method === "POST") {
+          router.push("/(tabs)/map/travel");
+          return {
+            name: "start-travel",
+            status: "success",
           };
         }
       }}
