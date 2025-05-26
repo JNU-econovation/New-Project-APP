@@ -16,19 +16,19 @@
         "./src/constants/*"
       ],
       "@entities/*": [
-        "./src/constants/common/entities/*"
+        "./src/components/common/entities/*"
       ],
       "@shared/*": [
-        "./src/constants/common/shared/*"
+        "./src/components/common/shared/*"
       ],
       "@process/*": [
-        "./src/constants/feature/process/*"
+        "./src/components/feature/process/*"
       ],
       "@screens/*": [
-        "./src/constants/feature/screens/*"
+        "./src/components/feature/screens/*"
       ],
       "@widget/*": [
-        "./src/constants/feature/widget/*"
+        "./src/components/feature/widget/*"
       ],
       "@context/*": [
         "./src/context/*"
