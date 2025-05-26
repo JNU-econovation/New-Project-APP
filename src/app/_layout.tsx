@@ -1,12 +1,13 @@
 import { Stack } from "expo-router";
 import ModalProvider from "@context/modal/provider";
 import QueryProvider from "@context/query/provider";
-import { View } from "react-native";
+import { StatusBar, View } from "react-native";
 
 export default function RootLayout() {
   return (
     <QueryProvider>
       <ModalProvider>
+        <StatusBar barStyle={"dark-content"} />
         <Stack
           screenOptions={{
             headerShown: false,
@@ -29,7 +30,6 @@ export default function RootLayout() {
             }}
           />
         </Stack>
-        <View />
       </ModalProvider>
     </QueryProvider>
   );
