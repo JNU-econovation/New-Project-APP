@@ -10,6 +10,7 @@ import {
   DISABLED_TEXT_SELECT,
   SET_VIEWPORT_RATE,
 } from "@constants/webview";
+import { logMessageWithTime } from "@utils/log";
 import {
   forwardRef,
   useCallback,
@@ -85,11 +86,14 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
           return;
         }
 
+        logMessageWithTime(`WebView received: \n${JSON.stringify(reqMessage)}`);
+
         // normal message
         if (onMessage) {
-          const responseMessage = onMessage(reqMessage);
+          const responseMessage = JSON.stringify(onMessage(reqMessage));
           if (!responseMessage) return;
-          webViewRef.current?.postMessage(JSON.stringify(responseMessage));
+          logMessageWithTime(`WebView response: \n${responseMessage} \n\n`);
+          webViewRef.current?.postMessage(responseMessage);
         }
       },
       [onMessage],
