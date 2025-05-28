@@ -14,7 +14,7 @@ const HomeNavGridSection = () => {
     router.push("/(tabs)/home/course");
   }, []);
   const goReport = useCallback(() => {
-    router.push("/(tabs)/home/course");
+    router.push("/report");
   }, []);
   const goManual = useCallback(() => {
     router.push("/(tabs)/home/course");
@@ -47,7 +47,7 @@ const HomeNavGridSection = () => {
         </HomeLinkButton>
       </ButtonContainer>
 
-      <Spacing gap={10} />
+      <Spacing size={10} />
 
       <ButtonContainer>
         <HomeLinkButton activeOpacity={0.8} onPress={goReport}>

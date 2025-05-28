@@ -1,7 +1,7 @@
 import Spacing from "@components/common/shared/layout/Spacing";
 import {
   HikingSVG,
-  LeftArrowBlackSVG,
+  LeftArrowWithWhiteBgSVG,
   StarSVG,
 } from "@components/common/shared/ui/Icons";
 import Text from "@components/common/shared/ui/Text";
@@ -14,14 +14,14 @@ import { TouchableOpacity } from "react-native";
 const LoginScreen = () => {
   return (
     <Container>
-      <Spacing gap={28} />
+      <Spacing size={28} />
       <HeaderContainer>
         <TouchableOpacity onPress={() => router.back()} activeOpacity={0.8}>
-          <LeftArrowBlackSVG />
+          <LeftArrowWithWhiteBgSVG />
         </TouchableOpacity>
       </HeaderContainer>
 
-      <Spacing gap={24} />
+      <Spacing size={24} />
 
       <TitleContainer>
         <Text fontSize={30} fontWeight="bold">
@@ -35,13 +35,13 @@ const LoginScreen = () => {
         </TitleStarPositioner>
       </TitleContainer>
 
-      <Spacing gap={68} />
+      <Spacing size={68} />
       <HikingSVG />
-      <Spacing gap={68} />
+      <Spacing size={68} />
 
       <KakaoLoginButton />
 
-      <Spacing gap={14} />
+      <Spacing size={14} />
       <AppleLoginButton />
     </Container>
   );
