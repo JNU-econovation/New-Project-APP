@@ -4,4 +4,5 @@ export const COLORS = {
   subGray: "#dadada",
   black: "#000000",
   kakaoYellow: "#FAE64D",
+  mainRed: "#FF5151",
 } as const;
