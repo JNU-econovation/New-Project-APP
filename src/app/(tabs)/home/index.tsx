@@ -1,19 +1,19 @@
-import Spacing from "@components/common/shared/layout/Spacing";
-import HomeCanvas from "@components/feature/screens/Home/HomeCanvas";
-import HomeHeaderSection from "@components/feature/screens/Home/HomeHeaderSection";
-import HomeNavGridSection from "@components/feature/screens/Home/HomeNavGridSection";
+import Spacing from "@shared/layout/Spacing";
+import HomeCanvas from "@screens/Home/HomeCanvas";
+import HomeHeaderSection from "@screens/Home/HomeHeaderSection";
+import HomeNavGridSection from "@screens/Home/HomeNavGridSection";
 import styled from "@emotion/native";
 
 const HomeScreen = () => {
   return (
     <Screen>
       <Container>
-        <Spacing gap={20} />
+        <Spacing size={20} />
         <HomeHeaderSection />
-        <Spacing gap={20} />
+        <Spacing size={20} />
         <HomeCanvas />
         <HomeNavGridSection />
-        <Spacing gap={20} />
+        <Spacing size={20} />
       </Container>
     </Screen>
   );

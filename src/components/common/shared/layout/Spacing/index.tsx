@@ -1,11 +1,11 @@
 import styled from "@emotion/native";
 
 interface SpacingProps {
-  gap?: number;
+  size?: number;
 }
 
 const Spacing = styled.View<SpacingProps>`
-  margin-top: ${({ gap }) => (gap ? `${gap}px` : "0")};
+  margin-top: ${({ size }) => (size ? `${size}px` : "0")};
 `;
 
 export default Spacing;
