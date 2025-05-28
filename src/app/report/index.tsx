@@ -1,0 +1,93 @@
+import BackButton from "@components/common/entities/BackButton";
+import styled from "@emotion/native";
+import Spacing from "@shared/layout/Spacing";
+import Text from "@shared/ui/Text";
+import { COLORS } from "@styles/colorPalette";
+
+const ReportScreen = () => {
+  return (
+    <Container>
+      <Spacing size={20} />
+
+      <BackButtonContainer>
+        <BackButton />
+      </BackButtonContainer>
+
+      <Spacing size={38} />
+
+      <TextContainer>
+        <Text color="mainWhite" fontWeight="bold" fontSize={28}>
+          위급 상황인가요?
+        </Text>
+        <Spacing size={16} />
+        <Text color="mainWhite" fontWeight="medium" fontSize={16}>
+          아래 버튼을 누르면
+        </Text>
+        <Text color="mainWhite" fontWeight="medium" fontSize={16}>
+          구조대에 신고할 수 있습니다.
+        </Text>
+      </TextContainer>
+
+      <Spacing size={35} />
+
+      <ImmediatelyReportLink activeOpacity={0.8}>
+        <Text fontSize={48} color="mainRed" fontWeight="semibold">
+          즉시
+        </Text>
+        <Text color="mainGreen" fontSize={36} fontWeight="semibold">
+          신고하기
+        </Text>
+      </ImmediatelyReportLink>
+
+      <Spacing size={26} />
+
+      <DetailReportLink activeOpacity={0.8}>
+        <Text
+          fontSize={48}
+          color="mainGreen"
+          fontWeight="semibold"
+          textAlign="right"
+        >
+          상세
+        </Text>
+        <Text
+          color="mainGreen"
+          fontSize={36}
+          fontWeight="semibold"
+          textAlign="right"
+        >
+          신고하기
+        </Text>
+      </DetailReportLink>
+    </Container>
+  );
+};
+
+const Container = styled.SafeAreaView`
+  flex: 1;
+  background-color: ${COLORS.mainGreen};
+`;
+
+const BackButtonContainer = styled.View`
+  padding-inline: 28px;
+`;
+
+const TextContainer = styled.View`
+  padding-inline: 28px;
+`;
+
+const ImmediatelyReportLink = styled.TouchableOpacity`
+  background-color: ${COLORS.mainWhite};
+  padding-top: 28px;
+  padding-inline: 28px;
+  padding-bottom: 92px;
+`;
+
+const DetailReportLink = styled.TouchableOpacity`
+  background-color: ${COLORS.mainWhite};
+  padding-top: 92px;
+  padding-inline: 28px;
+  padding-bottom: 28px;
+`;
+
+export default ReportScreen;
