@@ -33,6 +33,9 @@
       "@context/*": [
         "./src/context/*"
       ],
+      "@styles/*": [
+        "./src/styles/*"
+      ],
       "@api/*": [
         "./src/api/*"
       ],
