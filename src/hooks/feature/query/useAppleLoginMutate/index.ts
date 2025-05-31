@@ -1,4 +1,4 @@
-import { LOGIN_API_PATH, postLogin } from "@api/v1/oauth/login";
+import { LOGIN_API_PATH, postLogin } from "@api/v1/oauth/apple/login";
 import { useMutation } from "@tanstack/react-query";
 
 const useAppleLoginMutate = () => {

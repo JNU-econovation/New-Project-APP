@@ -1,8 +1,7 @@
-import Button from "@components/common/shared/ui/Button";
-import { AppleSVG } from "@components/common/shared/ui/Icons";
 import styled from "@emotion/native";
 import useAppleLoginMutate from "@hooks/feature/query/useAppleLoginMutate";
-import { setValueToSecureStore } from "@utils/secureStore";
+import Button from "@shared/ui/Button";
+import { AppleSVG } from "@shared/ui/Icons";
 import * as AppleAuthentication from "expo-apple-authentication";
 import { router } from "expo-router";
 import { useCallback } from "react";
@@ -25,31 +24,29 @@ const AppleLoginButton = () => {
 
       console.log(credential);
 
-      //TODO: 로그인 플로우를 확인하기 위한 임시 코드
-      {
-        await setValueToSecureStore("accessToken", credential.identityToken);
-        await setValueToSecureStore(
-          "refreshToken",
-          credential.authorizationCode,
-        );
-      }
+      const { identityToken, email, fullName } = credential;
 
       mutate(
         {
-          authorizationCode: credential.authorizationCode,
-          identityToken: credential.identityToken,
+          identityToken,
+          email: email || "",
+          fullName: {
+            familyName: fullName?.familyName || "",
+            givenName: fullName?.givenName || "",
+          },
         },
         {
-          //TODO: 로그인 플로우를 확인하기 위한 임시 코드
-          onSettled() {
-            router.back();
+          onSuccess: () => {
             router.replace("/(tabs)/home");
+          },
+          onError: (error) => {
+            console.error("애플 로그인 요청 에러", error);
           },
         },
       );
     } catch (e) {
       if (e.code === "ERR_REQUEST_CANCELED") {
-        console.log("User canceled the sign-in flow");
+        console.error("애플 로그인 요청이 취소되었습니다.");
       } else {
         // handle other errors
       }
