@@ -1,10 +1,8 @@
-import { requestKakaoBridge } from "@bridges/request-kakao";
-import WebViewWithInjected from "@components/common/entities/WebViewWithInjected";
 import PATH_ROUTE from "@constants/pathRoute";
+import WebViewWithInjected from "@entities/WebViewWithInjected";
 import { setValueToSecureStore } from "@utils/secureStore";
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
 import WebView from "react-native-webview";
-import { postMessage } from "@utils/bridge";
 
 interface KakaoTokens {
   accessToken: string;
@@ -14,15 +12,10 @@ interface KakaoTokens {
 const LoginWebView = () => {
   const ref = useRef<WebView>(null);
 
-  const requestKakaoLoginBridge = useCallback(() => {
-    postMessage(ref, requestKakaoBridge());
-  }, []);
-
   return (
     <WebViewWithInjected
       ref={ref}
-      source={{ uri: PATH_ROUTE.WEBVIEW.LOGIN }}
-      onReadyToMessage={requestKakaoLoginBridge}
+      source={{ uri: PATH_ROUTE.WEBVIEW.KAKAO_LOGIN }}
       onMessage={({ method, name, body }) => {
         if (name === "request-kakao" && method === "PUT") {
           const { accessToken, requestToken } = body as KakaoTokens;
@@ -30,6 +23,7 @@ const LoginWebView = () => {
           setValueToSecureStore("requestToken", requestToken);
         }
       }}
+      loadingBar
     />
   );
 };
