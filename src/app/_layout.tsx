@@ -16,7 +16,6 @@ export default function RootLayout() {
           <Stack.Screen
             name="(tabs)"
             options={{
-              headerShown: false,
               animation: "fade",
             }}
           />
@@ -26,7 +25,12 @@ export default function RootLayout() {
             name="loginModal"
             options={{
               presentation: "modal",
-              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="report"
+            options={{
+              animation: "none",
             }}
           />
         </Stack>
