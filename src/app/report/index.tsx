@@ -1,20 +1,22 @@
-import BackButton from "@components/common/entities/BackButton";
+import Header from "@components/common/shared/ui/Header";
 import styled from "@emotion/native";
 import Spacing from "@shared/layout/Spacing";
 import Text from "@shared/ui/Text";
 import { COLORS } from "@styles/colorPalette";
+import { router } from "expo-router";
+import { useCallback } from "react";
 
 const ReportScreen = () => {
+  const handleGoToImmediatelyReport = useCallback(() => {
+    router.push("/report/immediatelyReport");
+  }, []);
+
   return (
     <Container>
       <Spacing size={20} />
-
-      <BackButtonContainer>
-        <BackButton />
-      </BackButtonContainer>
+      <Header />
 
       <Spacing size={38} />
-
       <TextContainer>
         <Text color="mainWhite" fontWeight="bold" fontSize={28}>
           위급 상황인가요?
@@ -28,9 +30,10 @@ const ReportScreen = () => {
         </Text>
       </TextContainer>
 
-      <Spacing size={35} />
-
-      <ImmediatelyReportLink activeOpacity={0.8}>
+      <ImmediatelyReportLink
+        activeOpacity={0.8}
+        onPress={handleGoToImmediatelyReport}
+      >
         <Text fontSize={48} color="mainRed" fontWeight="semibold">
           즉시
         </Text>
@@ -59,6 +62,7 @@ const ReportScreen = () => {
           신고하기
         </Text>
       </DetailReportLink>
+      <Spacing size={35} />
     </Container>
   );
 };
@@ -68,11 +72,9 @@ const Container = styled.SafeAreaView`
   background-color: ${COLORS.mainGreen};
 `;
 
-const BackButtonContainer = styled.View`
-  padding-inline: 28px;
-`;
-
 const TextContainer = styled.View`
+  display: flex;
+  flex-grow: 1;
   padding-inline: 28px;
 `;
 
@@ -80,14 +82,15 @@ const ImmediatelyReportLink = styled.TouchableOpacity`
   background-color: ${COLORS.mainWhite};
   padding-top: 28px;
   padding-inline: 28px;
-  padding-bottom: 92px;
+  flex-grow: 1;
 `;
 
 const DetailReportLink = styled.TouchableOpacity`
   background-color: ${COLORS.mainWhite};
-  padding-top: 92px;
   padding-inline: 28px;
   padding-bottom: 28px;
+  flex-grow: 1;
+  justify-content: flex-end;
 `;
 
 export default ReportScreen;
