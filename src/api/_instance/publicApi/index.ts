@@ -6,21 +6,28 @@ const publicApi = axios.create({
   timeout: 1000,
   headers: {
     "Content-Type": "application/json",
-    Accept: "*",
+    Accept: "*/*",
   },
 });
 
 publicApi.interceptors.response.use(
-  (response) => {
+  async (response) => {
     // 만약 토큰이 있는 경우, SecureStore에 저장
     if (response.headers["accessToken"]) {
-      const accessToken = response.headers["accessToken"];
-      const refreshToken = response.headers["refreshToken"];
-      const accessTokenExpiredTime = response.headers["accessTokenExpiredTime"];
+      const accessToken = response.headers["accesstoken"];
+      const refreshToken = response.headers["refreshtoken"];
+      const accessTokenExpiredTime = response.headers["accesstokenexpiredtime"];
 
-      setValueToSecureStore("accessToken", accessToken);
-      setValueToSecureStore("refreshToken", refreshToken);
-      setValueToSecureStore("accessTokenExpiredTime", accessTokenExpiredTime);
+      try {
+        await setValueToSecureStore("accessToken", accessToken);
+        await setValueToSecureStore("refreshToken", refreshToken);
+        await setValueToSecureStore(
+          "accessTokenExpiredTime",
+          accessTokenExpiredTime,
+        );
+      } catch (error) {
+        console.error("Failed to store tokens in SecureStore:", error);
+      }
     }
 
     return response.data;

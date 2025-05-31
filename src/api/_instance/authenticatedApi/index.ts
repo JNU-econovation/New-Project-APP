@@ -9,7 +9,7 @@ const authenticatedApi = axios.create({
   timeout: 1000,
   headers: {
     "Content-Type": "application/json",
-    Accept: "*",
+    Accept: "*/*",
   },
 });
 
