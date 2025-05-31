@@ -14,7 +14,7 @@ interface LoginRequestBody {
   };
 }
 
-export const LOGIN_API_PATH = `${process.env.BASE_URL}api/v1/oauth/api/login`;
+export const LOGIN_API_PATH = `${process.env.EXPO_PUBLIC_BASE_URL}api/v1/oauth/apple/login`;
 
 /**
  * @method POST
