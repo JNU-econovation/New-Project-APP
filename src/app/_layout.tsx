@@ -30,7 +30,8 @@ export default function RootLayout() {
           <Stack.Screen
             name="report"
             options={{
-              animation: "none",
+              animation: "fade",
+              animationDuration: 100,
             }}
           />
         </Stack>
