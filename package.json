@@ -38,6 +38,7 @@
     "expo-location": "^18.1.5",
     "expo-router": "~5.0.6",
     "expo-secure-store": "^14.2.3",
+    "expo-sms": "^13.1.4",
     "expo-splash-screen": "~0.30.8",
     "expo-status-bar": "~2.2.3",
     "expo-symbols": "~0.4.4",
