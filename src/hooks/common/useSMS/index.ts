@@ -30,38 +30,46 @@ const useSMS = ({
   const goSMS = () => {
     if (!enable) return;
     (async () => {
-      const isAvailable = await SMS.isAvailableAsync();
-      setIsLoading(true);
+      try {
+        const isAvailable = await SMS.isAvailableAsync();
+        setIsLoading(true);
 
-      if (isAvailable) {
-        setIsAvailable(true);
-        const { result } = await SMS.sendSMSAsync(addresses, message, options);
+        if (isAvailable) {
+          setIsAvailable(true);
+          const { result } = await SMS.sendSMSAsync(
+            addresses,
+            message,
+            options,
+          );
 
-        if (result === "sent") {
-          console.log("SMS sent successfully");
-          setSendStatus("sent");
-          onSuccess && onSuccess();
-          setIsLoading(false);
-        }
-        if (result === "cancelled") {
-          console.log("SMS sending was cancelled");
-          setSendStatus("cancelled");
-          onCancel && onCancel();
-          setIsLoading(false);
+          if (result === "sent") {
+            console.log("SMS sent successfully");
+            setSendStatus("sent");
+            onSuccess?.();
+          }
+          if (result === "cancelled") {
+            console.log("SMS sending was cancelled");
+            setSendStatus("cancelled");
+            onCancel?.();
+          } else {
+            console.log("SMS sending failed");
+            setSendStatus("failed");
+            onError?.(new Error("SMS sending failed"));
+            setError(new Error("SMS sending failed"));
+          }
         } else {
-          console.log("SMS sending failed");
-          setSendStatus("failed");
-          onError && onError(new Error("SMS sending failed"));
-          setError(new Error("SMS sending failed"));
-          setIsLoading(false);
+          // 해당 기기에서 SMS를 사용할 수 없습니다.
+          console.error("SMS is not available on this device");
+          setIsAvailable(false);
+          setError(new Error("SMS is not available on this device"));
+          onError?.(new Error("SMS is not available on this device"));
         }
-      } else {
-        // 해당 기기에서 SMS를 사용할 수 없습니다.
-        console.error("SMS is not available on this device");
-        setIsAvailable(false);
-        setError(new Error("SMS is not available on this device"));
+      } catch (err) {
+        console.error("Error sending SMS:", err);
+        setError(err as Error);
+        onError?.(err as Error);
+      } finally {
         setIsLoading(false);
-        onError && onError(new Error("SMS is not available on this device"));
       }
     })();
   };
