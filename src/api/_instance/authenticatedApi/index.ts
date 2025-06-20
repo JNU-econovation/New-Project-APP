@@ -5,7 +5,7 @@ import {
 import axios from "axios";
 
 const authenticatedApi = axios.create({
-  baseURL: process.env.EXPO_PUBLIC_BASE_URL,
+  baseURL: process.env.EXPO_PUBLIC_BASE_URL?.replace(/\/$/, ""),
   timeout: 5000,
   headers: {
     "Content-Type": "application/json",
