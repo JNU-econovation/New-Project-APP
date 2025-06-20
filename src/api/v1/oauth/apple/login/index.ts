@@ -14,7 +14,7 @@ interface LoginRequestBody {
   };
 }
 
-export const LOGIN_API_PATH = `/api/v1/oauth/apple/login`;
+export const LOGIN_API_PATH = "/api/v1/oauth/apple/login";
 
 /**
  * @method POST
