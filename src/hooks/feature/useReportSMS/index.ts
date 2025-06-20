@@ -1,6 +1,6 @@
 import useSMS from "@hooks/common/useSMS";
 
-const reportNumber = process.env.EXPO_PUBLIC_REPORT_NUMBER || "";
+const reportNumber = process.env.EXPO_PUBLIC_REPORT_NUMBER;
 
 const REPORT_MESSAGE = ({
   lng,
@@ -19,6 +19,10 @@ interface UseReportSMSProps {
 }
 
 const useReportSMS = ({ lat, lng, enable }: UseReportSMSProps) => {
+  if (!reportNumber) {
+    throw new Error("신고하기 번호가 설정되지 않았습니다.");
+  }
+
   return useSMS({
     addresses: reportNumber,
     message: REPORT_MESSAGE({ lng, lat }),
