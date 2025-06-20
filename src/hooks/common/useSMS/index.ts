@@ -21,6 +21,7 @@ const useSMS = ({
   enable,
 }: useSMSProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
   const [isAvailable, setIsAvailable] = useState(false);
   const [sendStatus, setSendStatus] = useState<
     "sent" | "cancelled" | "failed" | null
@@ -51,10 +52,16 @@ const useSMS = ({
           console.log("SMS sending failed");
           setSendStatus("failed");
           onError && onError(new Error("SMS sending failed"));
+          setError(new Error("SMS sending failed"));
           setIsLoading(false);
         }
       } else {
         // 해당 기기에서 SMS를 사용할 수 없습니다.
+        console.error("SMS is not available on this device");
+        setIsAvailable(false);
+        setError(new Error("SMS is not available on this device"));
+        setIsLoading(false);
+        onError && onError(new Error("SMS is not available on this device"));
       }
     })();
   };
@@ -64,6 +71,7 @@ const useSMS = ({
     isAvailable,
     sendStatus,
     goSMS,
+    error,
   };
 };
 
