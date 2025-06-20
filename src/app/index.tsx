@@ -10,7 +10,7 @@ import { useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
 
-let isAuthenticated = false;
+let isAuthenticated = true;
 
 export default function Index() {
   const [loaded, error] = useFonts({
