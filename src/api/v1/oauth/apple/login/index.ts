@@ -14,10 +14,10 @@ interface LoginRequestBody {
   };
 }
 
-export const LOGIN_API_PATH = `${process.env.EXPO_PUBLIC_BASE_URL}api/v1/oauth/apple/login`;
+export const LOGIN_API_PATH = `/api/v1/oauth/apple/login`;
 
 /**
  * @method POST
  */
 export const postLogin = async (body: LoginRequestBody) =>
-  await publicApi.post(`/${LOGIN_API_PATH}`, body);
+  await publicApi.post(LOGIN_API_PATH, body);
