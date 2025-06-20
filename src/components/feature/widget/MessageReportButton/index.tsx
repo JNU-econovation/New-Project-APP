@@ -5,16 +5,16 @@ import Button from "@shared/ui/Button";
 const MessageReportButton = () => {
   const { location, isLoading: getPositionLoading } = useGetCurrentPosition();
   const { isLoading: SMSLoading, goSMS } = useReportSMS({
-    lat: location?.coords.latitude || 0,
-    lng: location?.coords.longitude || 0,
-    enable: !getPositionLoading,
+    lat: location?.coords.latitude ?? 0,
+    lng: location?.coords.longitude ?? 0,
+    enable: !getPositionLoading && location?.coords != null,
   });
 
   return (
     <Button
       title="동의하고 전송하기"
       color="mainWhite"
-      disabled={getPositionLoading || SMSLoading}
+      disabled={getPositionLoading || SMSLoading || !location?.coords}
       onPress={goSMS}
     />
   );
