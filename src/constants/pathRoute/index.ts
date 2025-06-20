@@ -2,7 +2,6 @@ const webviewBaseUri = process.env.EXPO_PUBLIC_WEB_BASE_URI;
 
 const WEBVIEW = {
   BASE_URL: webviewBaseUri,
-  // LOGIN: `${webviewBaseUri}/login`,
   KAKAO_LOGIN: `${webviewBaseUri}/login/kakao`,
   EMAIL_AUTH: `${webviewBaseUri}/email-auth`,
   COURSE: `${webviewBaseUri}/course`,
