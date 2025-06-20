@@ -13,7 +13,7 @@ const publicApi = axios.create({
 publicApi.interceptors.response.use(
   async (response) => {
     // 만약 토큰이 있는 경우, SecureStore에 저장
-    if (response.headers["accessToken"]) {
+    if (response.headers["accesstoken"]) {
       const accessToken = response.headers["accesstoken"];
       const refreshToken = response.headers["refreshtoken"];
       const accessTokenExpiredTime = response.headers["accesstokenexpiredtime"];
