@@ -8,7 +8,7 @@ import {
   MountainSVG,
   StoreSVG,
 } from "@components/common/shared/ui/Icons";
-import QueryProvider from "@context/query/provider";
+import QueryProvider from "@/src/service/query/provider";
 import { Tabs } from "expo-router";
 
 export default function TabLayout() {

@@ -30,8 +30,8 @@
       "@widget/*": [
         "./src/components/feature/widget/*"
       ],
-      "@context/*": [
-        "./src/context/*"
+      "@service/*": [
+        "./src/service/*"
       ],
       "@styles/*": [
         "./src/styles/*"
