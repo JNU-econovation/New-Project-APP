@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
-import ModalProvider from "@context/modal/provider";
-import QueryProvider from "@context/query/provider";
+import ModalProvider from "@/src/service/modal/provider";
+import QueryProvider from "@/src/service/query/provider";
 import { StatusBar, View } from "react-native";
 
 export default function RootLayout() {
