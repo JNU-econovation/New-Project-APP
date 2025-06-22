@@ -1,6 +1,6 @@
-import Text from "@shared/ui/Text";
-import Textarea from "@shared/ui/Textarea";
+import FieldLayout from "@shared/layout/FieldLayout";
 import Spacing from "@shared/layout/Spacing";
+import Textarea from "@shared/ui/Textarea";
 
 interface TextAreaFieldProps extends React.ComponentProps<typeof Textarea> {
   title: string;
@@ -8,13 +8,15 @@ interface TextAreaFieldProps extends React.ComponentProps<typeof Textarea> {
 
 const TextAreaField = ({ title, ...props }: TextAreaFieldProps) => {
   return (
-    <>
-      <Text fontWeight="bold" fontSize={20}>
-        {title}
-      </Text>
-      <Spacing size={14} />
-      <Textarea {...props} />
-    </>
+    <FieldLayout
+      title={title}
+      content={
+        <>
+          <Spacing size={14} />
+          <Textarea {...props} />
+        </>
+      }
+    />
   );
 };
 
