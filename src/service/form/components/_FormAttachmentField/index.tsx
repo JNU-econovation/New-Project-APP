@@ -1,4 +1,4 @@
-import ImageSelectField from "@components/common/entities/ImageSelectField";
+import ImageSelectField from "@entities/ImageSelectField";
 import { useFieldContext } from "@service/form/context";
 
 interface FormAttachmentFieldProps {
