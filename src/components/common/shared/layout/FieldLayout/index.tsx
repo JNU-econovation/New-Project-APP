@@ -15,7 +15,7 @@ const FieldLayout = ({
 }: FieldLayoutProps) => {
   return (
     <>
-      <HeaderContainer style={{ flexDirection: "row", alignItems: "center" }}>
+      <HeaderContainer>
         <Text fontWeight="bold" fontSize={20}>
           {title}
         </Text>
