@@ -1,8 +1,8 @@
-import Guide1Image from "@components/common/shared/ui/Images/Guide1";
-import Guide2Image from "@components/common/shared/ui/Images/Guide2";
-import Guide3Image from "@components/common/shared/ui/Images/Guide3";
-import Text from "@components/common/shared/ui/Text";
 import styled from "@emotion/native";
+import Guide1Image from "@shared/ui/Images/Guide1";
+import Guide2Image from "@shared/ui/Images/Guide2";
+import Guide3Image from "@shared/ui/Images/Guide3";
+import Text from "@shared/ui/Text";
 import { View } from "react-native";
 
 const SCREEN_HEIGHT = 430;
