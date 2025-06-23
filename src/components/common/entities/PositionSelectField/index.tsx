@@ -1,7 +1,7 @@
 import useGetCurrentPosition from "@hooks/feature/useGetCurrentPosition";
 import FieldLayout from "@shared/layout/FieldLayout";
 import Textarea from "@shared/ui/Textarea";
-import WeekButton from "@shared/ui/WeekButton";
+import WeakButton from "@shared/ui/WeakButton";
 import { router } from "expo-router";
 
 interface PositionSelectFieldProps {
@@ -19,7 +19,7 @@ const PositionSelectField = ({
     <FieldLayout
       title={title}
       titleSideComponent={
-        <WeekButton
+        <WeakButton
           title={titleSideButtonTitle}
           onPress={() => {
             router.push("/report/checkPosition");

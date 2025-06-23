@@ -1,7 +1,7 @@
 import styled from "@emotion/native";
 import useImagePicker from "@hooks/common/useImagePicker";
 import FieldLayout from "@shared/layout/FieldLayout";
-import WeekButton from "@shared/ui/WeekButton";
+import WeakButton from "@shared/ui/WeakButton";
 
 interface ImageSelectFieldProps {
   title: string;
@@ -21,7 +21,7 @@ const ImageSelectField = ({
     <FieldLayout
       title={title}
       titleSideComponent={
-        <WeekButton title={buttonTitle} onPress={pickImage} />
+        <WeakButton title={buttonTitle} onPress={pickImage} />
       }
       content={
         <ImageContainer>
@@ -33,6 +33,7 @@ const ImageSelectField = ({
                 style={{ width: 85, height: 85, borderRadius: 8 }}
               />
             ))}
+          {selectedImagesUri?.length === 0 && <EmptyAttachmentItem />}
         </ImageContainer>
       }
     />
@@ -48,6 +49,15 @@ const AttachmentItem = styled.Image`
   height: 85px;
   border-radius: 8px;
   background-color: #f0f0f0;
+`;
+
+const EmptyAttachmentItem = styled.View`
+  width: 85px;
+  height: 85px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default ImageSelectField;
