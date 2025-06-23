@@ -1,5 +1,6 @@
 import styled from "@emotion/native";
 import { memo, PropsWithChildren } from "react";
+import { Dimensions } from "react-native";
 
 const DEFAULT_BOTTOM_SPACE = 50; // 하단 여백
 
@@ -35,5 +36,7 @@ const Container = styled.View<PositionBottomStyleProps>`
 `;
 
 PositionBottom.DEFAULT_BOTTOM_SPACE = DEFAULT_BOTTOM_SPACE;
+PositionBottom.DISPLAY_HEIGHT =
+  Dimensions.get("window").height - DEFAULT_BOTTOM_SPACE;
 
 export default PositionBottom;
