@@ -11,6 +11,10 @@ const ReportScreen = () => {
     router.push("/report/immediatelyReport");
   }, []);
 
+  const handleGoToDetailReport = useCallback(() => {
+    router.push("/report/detailReport");
+  }, []);
+
   return (
     <Container>
       <Spacing size={20} />
@@ -44,7 +48,7 @@ const ReportScreen = () => {
 
       <Spacing size={26} />
 
-      <DetailReportLink activeOpacity={0.8}>
+      <DetailReportLink activeOpacity={0.8} onPress={handleGoToDetailReport}>
         <Text
           fontSize={48}
           color="mainGreen"

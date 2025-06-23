@@ -23,6 +23,13 @@ export default function RootLayout() {
           animationDuration: 100,
         }}
       />
+      <Stack.Screen
+        name="detailReport"
+        options={{
+          animation: "fade",
+          animationDuration: 100,
+        }}
+      />
     </Stack>
   );
 }
