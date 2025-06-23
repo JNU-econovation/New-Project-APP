@@ -51,7 +51,7 @@ const DetailReport = () => {
           />
           <Spacing size={20} />
           <form.AppField
-            name="address"
+            name="reporter"
             children={(field) => (
               <FieldLayout
                 title="신고자 정보"
