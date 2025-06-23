@@ -27,6 +27,9 @@ const WeakButton = ({
   fontSize,
   startIcon,
   borderColor,
+  fontWeight,
+  paddingHorizontal,
+  paddingVertical,
   onPress,
 }: WeakButtonProps) => {
   return (
@@ -36,9 +39,11 @@ const WeakButton = ({
       style={{ width: fullWidth ? "100%" : undefined }}
       activeOpacity={0.8}
       borderColor={borderColor}
+      paddingHorizontal={paddingHorizontal}
+      paddingVertical={paddingVertical}
     >
       {startIcon && startIcon}
-      <StyledText color={color} fontSize={fontSize}>
+      <StyledText color={color} fontSize={fontSize} fontWeight={fontWeight}>
         {title}
       </StyledText>
     </StyledTouchableOpacity>
