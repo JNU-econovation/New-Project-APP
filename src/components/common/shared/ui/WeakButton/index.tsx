@@ -14,12 +14,12 @@ interface ButtonStyledProps {
   paddingHorizontal?: number;
 }
 
-interface WeekButtonProps extends ButtonStyledProps {
+interface WeakButtonProps extends ButtonStyledProps {
   title: string;
   onPress?: () => void;
 }
 
-const WeekButton = ({
+const WeakButton = ({
   title,
   fullWidth,
   disabled,
@@ -28,7 +28,7 @@ const WeekButton = ({
   startIcon,
   borderColor,
   onPress,
-}: WeekButtonProps) => {
+}: WeakButtonProps) => {
   return (
     <StyledTouchableOpacity
       onPress={onPress}
@@ -68,10 +68,10 @@ const StyledTouchableOpacity = styled.TouchableOpacity<ButtonStyledProps>(
 );
 
 const StyledText = styled.Text<ButtonStyledProps>`
-  color: ${({ color }) => (color ? COLORS[color] : COLORS.black)};
+  color: ${({ color }) => (color ? COLORS[color] : COLORS.gray200)};
   font-size: ${({ fontSize }) => (fontSize ? fontSize + "px" : "16px")};
   font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : "bold")};
   text-align: center;
 `;
 
-export default WeekButton;
+export default WeakButton;
