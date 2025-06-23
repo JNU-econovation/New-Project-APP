@@ -6,6 +6,10 @@ export const detailReportForm = formOptions({
     content: "",
     attachments: [],
     address: "",
+    reporter: {
+      name: "",
+      phone: "",
+    },
   },
 });
 
