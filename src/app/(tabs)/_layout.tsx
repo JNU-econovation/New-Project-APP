@@ -1,4 +1,4 @@
-import { COLORS } from "@/src/styles/colorPalette";
+import QueryProvider from "@service/query/provider";
 import {
   HeroSVG,
   HomeBlockSVG,
@@ -7,8 +7,8 @@ import {
   MapSVG,
   MountainSVG,
   StoreSVG,
-} from "@components/common/shared/ui/Icons";
-import QueryProvider from "@/src/service/query/provider";
+} from "@shared/ui/Icons";
+import { COLORS } from "@styles/colorPalette";
 import { Tabs } from "expo-router";
 
 export default function TabLayout() {
