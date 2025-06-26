@@ -17,7 +17,7 @@ const HomeNavGridSection = () => {
     router.navigate("/report");
   }, []);
   const goManual = useCallback(() => {
-    router.push("/(tabs)/home/course");
+    router.push("/(tabs)/home/safeManual");
   }, []);
 
   return (
