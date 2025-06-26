@@ -11,7 +11,7 @@ const HomeNavGridSection = () => {
     router.push("/(tabs)/home/course");
   }, []);
   const goTravel = useCallback(() => {
-    router.push("/(tabs)/home/course");
+    router.push("/travel");
   }, []);
   const goReport = useCallback(() => {
     router.navigate("/report");

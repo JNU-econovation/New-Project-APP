@@ -32,7 +32,6 @@ type WebViewMessageEvent = NativeSyntheticEvent<WebViewMessage>;
 
 interface WebViewWithInjectedProps {
   source: WebViewSource;
-  // onMessage?: <Data>(reqMessage: MessageEventRequestData<Data>) => void;
   onMessage?: (
     reqMessage: MessageEventRequestData,
   ) => MessageEventResponseData | void;
