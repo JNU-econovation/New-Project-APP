@@ -27,7 +27,7 @@ const CourseDetailWebview = () => {
           };
         }
         if (name === "start-travel" && method === "POST") {
-          router.push("/(tabs)/map/travel");
+          router.push("/travel");
           return {
             name: "start-travel",
             status: "success",

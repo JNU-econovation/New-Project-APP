@@ -34,6 +34,13 @@ export default function RootLayout() {
               animationDuration: 100,
             }}
           />
+          <Stack.Screen
+            name="travel"
+            options={{
+              animation: "fade",
+              animationDuration: 100,
+            }}
+          />
         </Stack>
       </ModalProvider>
     </QueryProvider>
