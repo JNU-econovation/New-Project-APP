@@ -20,6 +20,7 @@ const WEBVIEW = {
   SAFE_MANUAL: `${webviewBaseUri}/safe-manual`,
   SAFE_MANUAL_DETAIL: ({ manual }: { manual: string }) =>
     `${webviewBaseUri}/safe-manual/detail?manual=${manual}`,
+  TRAVEL: `${webviewBaseUri}/travel`,
 } as const;
 
 const PATH_ROUTE = {
