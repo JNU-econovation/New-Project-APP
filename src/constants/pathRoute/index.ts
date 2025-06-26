@@ -17,6 +17,9 @@ const WEBVIEW = {
   MAP_COURSE_SEARCH: `${webviewBaseUri}/map/course-search`,
   MAP_COURSE_DETAIL: `${webviewBaseUri}/map/course-detail`,
   MYPAGE: `${webviewBaseUri}/my-page`,
+  SAFE_MANUAL: `${webviewBaseUri}/safe-manual`,
+  SAFE_MANUAL_DETAIL: ({ manual }: { manual: string }) =>
+    `${webviewBaseUri}/safe-manual/detail?manual=${manual}`,
 } as const;
 
 const PATH_ROUTE = {
