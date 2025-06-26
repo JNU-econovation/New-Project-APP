@@ -10,7 +10,9 @@ import {
   DISABLED_TEXT_SELECT,
   SET_VIEWPORT_RATE,
 } from "@constants/webview";
+import { getPathToRoute } from "@utils/bridge";
 import { logMessageWithTime } from "@utils/log";
+import { router } from "expo-router";
 import {
   forwardRef,
   useCallback,
@@ -84,6 +86,29 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
         if (reqMessage.name === ("log-message" as string)) {
           console.log(reqMessage.body);
           return;
+        }
+
+        // 라우팅 메시지 처리
+        if (
+          reqMessage.name === ("route-to" as string) &&
+          reqMessage.method === "POST"
+        ) {
+          const { path, routeType, params } = reqMessage.body as {
+            path: string;
+            routeType?: "replace" | "push";
+            params?: Record<string, any>[];
+          };
+
+          routeType === "replace"
+            ? router.replace(getPathToRoute({ path, params }))
+            : router.push(getPathToRoute({ path, params }));
+
+          // 동적 에러처리 필요
+
+          return {
+            name: "route-to",
+            status: "success",
+          };
         }
 
         logMessageWithTime(`WebView received: \n${JSON.stringify(reqMessage)}`);

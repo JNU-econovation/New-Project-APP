@@ -1,4 +1,4 @@
-import WebViewWithInjected from "@components/common/entities/WebViewWithInjected";
+import WebViewWithInjected from "@entities/WebViewWithInjected";
 import PATH_ROUTE from "@constants/pathRoute";
 import { router } from "expo-router";
 

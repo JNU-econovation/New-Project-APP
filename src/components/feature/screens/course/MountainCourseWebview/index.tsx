@@ -1,5 +1,5 @@
-import WebViewWithInjected from "@components/common/entities/WebViewWithInjected";
 import PATH_ROUTE from "@constants/pathRoute";
+import WebViewWithInjected from "@entities/WebViewWithInjected";
 import { router, useLocalSearchParams } from "expo-router";
 
 const MountainCourseWebview = () => {

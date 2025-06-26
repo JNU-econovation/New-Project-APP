@@ -19,13 +19,6 @@ const CourseDetailWebview = () => {
             status: "success",
           };
         }
-        if (name === "route-course-detail" && method === "POST") {
-          router.replace("/(tabs)/map/course");
-          return {
-            name: "route-course-detail",
-            status: "success",
-          };
-        }
         if (name === "get-current-position" && method === "GET") {
           return {
             name: "get-current-position",
