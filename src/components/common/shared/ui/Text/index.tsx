@@ -16,7 +16,7 @@ interface TextProps {
     | "thin";
   textAlign?: string;
   opacity?: number;
-  Italic?: boolean;
+  italic?: boolean;
 }
 
 export default styled.Text<TextProps>`
@@ -25,6 +25,6 @@ export default styled.Text<TextProps>`
   font-family: ${({ fontWeight = "regular" }) => `pretendard-${fontWeight}`};
   text-align: ${({ textAlign = "left" }) => textAlign};
   opacity: ${({ opacity = 1 }) => opacity};
-  font-style: ${({ Italic }) => (Italic ? "italic" : "normal")};
-  ${({ Italic }) => Italic && "transform: skewX(-18deg);"}
+  font-style: ${({ italic: Italic }) => (Italic ? "italic" : "normal")};
+  ${({ italic }) => italic && "transform: skewX(-18deg);"}
 `;

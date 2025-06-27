@@ -5,6 +5,8 @@ import Text from "@shared/ui/Text";
 import { COLORS } from "@styles/colorPalette";
 import { useEffect, useState } from "react";
 
+//TODO: prerendering 관련 로직을 따로 분리
+
 const TravelScreen = () => {
   const [count, setCount] = useState(3);
 
@@ -32,7 +34,7 @@ const TravelScreen = () => {
 
         <CounterContainer count={count}>
           <Spacing size={50} />
-          <Text color="mainWhite" fontSize={96} fontWeight="bold" Italic>
+          <Text color="mainWhite" fontSize={96} fontWeight="bold" italic>
             {count}
           </Text>
           <Spacing size={50} />
@@ -57,28 +59,35 @@ const Screen = styled.SafeAreaView<{ count: number }>`
 
 const Container = styled.View`
   flex: 1;
-  background-color: ${COLORS.mainGreen};
   position: relative;
 `;
 
 const CounterContainer = styled.View<{ count: number }>`
-  flex: ${(props) => (props.count === 0 ? 0 : 1)};
-  height: ${(props) => (props.count === 0 ? "0" : "100%")};
+  height: ${({ count }) => (count === 0 ? "0" : "100%")};
+  background-color: ${COLORS.mainGreen};
+  overflow: hidden;
   flex: 1;
-  display: flex;
   align-items: center;
   justify-content: center;
-  background-color: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: ${({ count }) => (count !== 0 ? "10" : "-10")};
+  transition: all 3s ease-in-out;
+  width: 100%;
+  /* opacity: ${({ count }) => (count === 0 ? "0" : "1")}; */
 `;
 
 const WebviewContainer = styled.View<{ count: number }>`
-  flex: ${({ count }) => (count === 0 ? 1 : 0)};
-  height: ${({ count }) => (count === 0 ? "100%" : "0")};
-  display: absolute;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: absolute;
   top: 0;
   left: 0;
-  z-index: ${({ count }) => (count === 0 ? "10" : "-10")};
+  z-index: ${({ count }) => (count === 0 ? "100000000" : "-10")};
   transition: all 3s ease-in-out;
+  background-color: ${COLORS.mainRed};
 `;
 
 export default TravelScreen;
