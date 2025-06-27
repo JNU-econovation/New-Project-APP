@@ -72,6 +72,8 @@ const CounterContainer = styled.View<{ count: number }>`
 `;
 
 const WebviewContainer = styled.View<{ count: number }>`
+  flex: ${({ count }) => (count === 0 ? 1 : 0)};
+  height: ${({ count }) => (count === 0 ? "100%" : "0")};
   display: absolute;
   top: 0;
   left: 0;
