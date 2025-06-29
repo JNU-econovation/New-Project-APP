@@ -1,7 +1,6 @@
 import {
   MessageEventRequestData,
   MessageEventResponseData,
-  WebviewHandshake,
 } from "@/src/model/webview";
 import { COLORS } from "@/src/styles/colorPalette";
 import {
@@ -10,25 +9,14 @@ import {
   DISABLED_TEXT_SELECT,
   SET_VIEWPORT_RATE,
 } from "@constants/webview";
+import WebviewWithBridge from "@service/webview/components/WebviewWithBridge";
 import { getPathToRoute } from "@utils/bridge";
 import { logMessageWithTime } from "@utils/log";
 import { router } from "expo-router";
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
-import { Animated, NativeSyntheticEvent, View } from "react-native";
+import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
+import { Animated, View } from "react-native";
 import WebView from "react-native-webview";
-import type {
-  WebViewMessage,
-  WebViewSource,
-} from "react-native-webview/lib/WebViewTypes";
-
-type WebViewMessageEvent = NativeSyntheticEvent<WebViewMessage>;
+import type { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 
 interface WebViewWithInjectedProps {
   source: WebViewSource;
@@ -44,84 +32,42 @@ const INJECTED_JAVASCRIPT = `${DISABLED_PINCH_GESTURE}${DISABLED_TEXT_SELECT}${D
 const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
   ({ source, onMessage, onReadyToMessage, loadingBar = false }, ref) => {
     const webViewRef = useRef<WebView>(null);
-    const [isReady, setIsReady] = useState(false);
 
     const progressAnim = useRef(new Animated.Value(0)).current;
 
     useImperativeHandle(ref, () => webViewRef.current as WebView);
 
-    useEffect(() => {
-      if (isReady) onReadyToMessage?.();
-    }, [isReady, onReadyToMessage]);
+    const middleware = useCallback((reqMessage: MessageEventRequestData) => {
+      logMessageWithTime(`WebView received: \n${JSON.stringify(reqMessage)}`);
 
-    const handleMessage = useCallback(
-      (event: WebViewMessageEvent) => {
-        const reqMessage = JSON.parse(
-          event.nativeEvent.data,
-        ) as MessageEventRequestData & WebviewHandshake;
+      if (reqMessage.name === ("log-message" as string)) {
+        console.log(reqMessage.body);
+        return;
+      }
 
-        // handshake
-        if (reqMessage.name === "webview-handshake") {
-          const { syn, ack } = reqMessage.flag;
+      // 라우팅 메시지 처리
+      if (
+        reqMessage.name === ("route-to" as string) &&
+        reqMessage.method === "POST"
+      ) {
+        const { path, routeType, params } = reqMessage.body as {
+          path: string;
+          routeType?: "replace" | "push";
+          params?: Record<string, any>[];
+        };
 
-          // 웹으로부터 handshake sync 메시지 수신
-          if (syn === 1 && ack === 0) {
-            // 웹에서 syn을 보냈을 때, syn/ack을 보내준다.
-            webViewRef.current?.postMessage(
-              JSON.stringify({
-                name: "webview-handshake",
-                flag: { syn: 1, ack: 1 },
-              }),
-            );
-            return;
-          }
-          // 웹에서 ack을 보냈을 때 비로소 통신이 가능한 상태가 된다.
-          if (syn === 0 && ack === 1) {
-            setIsReady(true);
-            return;
-          }
-        }
+        routeType === "replace"
+          ? router.replace(getPathToRoute({ path, params }))
+          : router.push(getPathToRoute({ path, params }));
 
-        if (reqMessage.name === ("log-message" as string)) {
-          console.log(reqMessage.body);
-          return;
-        }
+        // 동적 에러처리 필요
 
-        // 라우팅 메시지 처리
-        if (
-          reqMessage.name === ("route-to" as string) &&
-          reqMessage.method === "POST"
-        ) {
-          const { path, routeType, params } = reqMessage.body as {
-            path: string;
-            routeType?: "replace" | "push";
-            params?: Record<string, any>[];
-          };
-
-          routeType === "replace"
-            ? router.replace(getPathToRoute({ path, params }))
-            : router.push(getPathToRoute({ path, params }));
-
-          // 동적 에러처리 필요
-
-          return {
-            name: "route-to",
-            status: "success",
-          };
-        }
-
-        logMessageWithTime(`WebView received: \n${JSON.stringify(reqMessage)}`);
-
-        // normal message
-        if (onMessage) {
-          const responseMessage = JSON.stringify(onMessage(reqMessage));
-          if (!responseMessage) return;
-          logMessageWithTime(`WebView response: \n${responseMessage} \n\n`);
-          webViewRef.current?.postMessage(responseMessage);
-        }
-      },
-      [onMessage],
-    );
+        return {
+          name: "route-to",
+          status: "success",
+        };
+      }
+    }, []);
 
     return (
       <View style={{ flex: 1 }}>
@@ -148,24 +94,21 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
           />
         )}
 
-        <WebView
+        <WebviewWithBridge<MessageEventRequestData, MessageEventResponseData>
           source={source}
           ref={webViewRef}
           injectedJavaScript={INJECTED_JAVASCRIPT}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          scalesPageToFit={false}
-          javaScriptEnabled={true}
-          scrollEnabled={false}
-          onMessage={handleMessage}
+          onBridgeMessage={onMessage}
           onLoadProgress={({ nativeEvent }) => {
             progressAnim.setValue(nativeEvent.progress);
           }}
           onLoadEnd={() => {
             progressAnim.setValue(0);
           }}
-          cacheEnabled={false}
-          cacheMode="LOAD_NO_CACHE"
+          cacheEnabled
+          cacheMode="LOAD_CACHE_ELSE_NETWORK"
+          middleware={middleware}
+          onReadyToMessage={onReadyToMessage}
         />
       </View>
     );
