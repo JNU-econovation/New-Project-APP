@@ -1,12 +1,17 @@
-import MountainCourseWebview from "@components/feature/screens/course/MountainCourseWebview";
-import { SafeAreaView } from "react-native";
+import styled from "@emotion/native";
+import MountainCourseWebview from "@screens/course/MountainCourseWebview";
 
 const MountainCourseScreen = () => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <Container>
       <MountainCourseWebview />
-    </SafeAreaView>
+    </Container>
   );
 };
+
+const Container = styled.SafeAreaView`
+  flex: 1;
+  background-color: white;
+`;
 
 export default MountainCourseScreen;
