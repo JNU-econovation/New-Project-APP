@@ -6,12 +6,6 @@ const MountainSearchWebview = () => {
   return (
     <WebViewWithInjected
       source={{ uri: PATH_ROUTE.WEBVIEW.COURSE }}
-      onMessage={({ method, name, body }) => {
-        if (name === "route-mountain-course" && method === "POST") {
-          const { mountainName } = body as { mountainName: string };
-          router.push(`/(tabs)/home/course/${mountainName}`);
-        }
-      }}
       loadingBar
     />
   );
