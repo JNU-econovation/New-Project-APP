@@ -22,6 +22,15 @@ const WEBVIEW = {
     `${webviewBaseUri}/safe-manual/detail?manual=${manual}`,
   TRAVEL: `${webviewBaseUri}/travel`,
   COURSE_SEARCH: `${webviewBaseUri}/course/search`,
+
+  MY_INFO: `${webviewBaseUri}/my-page/my-info`,
+  FAQ: `${webviewBaseUri}/my-page/faq`,
+  TRAVEL_LOG: `${webviewBaseUri}/my-page/travel-log`,
+  COURSE_BOOKMARK: `${webviewBaseUri}/my-page/course-bookmark`,
+  NOTIFICATION_SETTING: `${webviewBaseUri}/my-page/notification-setting`,
+  CHANGE_PASSWORD: `${webviewBaseUri}/my-page/change-password`,
+  CHECK_TERMS: `${webviewBaseUri}/my-page/check-terms`,
+  INQUIRY: `${webviewBaseUri}/my-page/inquiry`,
 } as const;
 
 const PATH_ROUTE = {
