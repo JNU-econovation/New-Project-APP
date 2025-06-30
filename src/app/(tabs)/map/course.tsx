@@ -1,11 +1,11 @@
-import CourseDetailWebview from "@components/feature/screens/map/CourseDetailWebview";
-import { SafeAreaView, StatusBar } from "react-native";
+import CourseDetailWebview from "@screens/map/CourseDetailWebview";
+import ScreenContainer from "@shared/layout/Screen";
 
 const CourseScreen = () => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <ScreenContainer>
       <CourseDetailWebview />
-    </SafeAreaView>
+    </ScreenContainer>
   );
 };
 

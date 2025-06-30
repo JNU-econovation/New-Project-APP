@@ -1,18 +1,12 @@
-import styled from "@emotion/native";
 import SafeManualDetailWebview from "@screens/SafeManual/SafeManualDetailWebview";
-import { COLORS } from "@styles/colorPalette";
+import ScreenContainer from "@shared/layout/Screen";
 
 const SafeManualDetailScreen = () => {
   return (
-    <Container>
+    <ScreenContainer>
       <SafeManualDetailWebview />
-    </Container>
+    </ScreenContainer>
   );
 };
-
-const Container = styled.SafeAreaView`
-  flex: 1;
-  background-color: ${COLORS.mainWhite};
-`;
 
 export default SafeManualDetailScreen;

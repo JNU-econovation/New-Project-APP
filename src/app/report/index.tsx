@@ -1,6 +1,7 @@
-import Header from "@components/common/shared/ui/Header";
 import styled from "@emotion/native";
+import ScreenContainer from "@shared/layout/Screen";
 import Spacing from "@shared/layout/Spacing";
+import Header from "@shared/ui/Header";
 import Text from "@shared/ui/Text";
 import { COLORS } from "@styles/colorPalette";
 import { router } from "expo-router";
@@ -16,7 +17,7 @@ const ReportScreen = () => {
   }, []);
 
   return (
-    <Container>
+    <ScreenContainer>
       <Spacing size={20} />
       <Header />
 
@@ -67,14 +68,9 @@ const ReportScreen = () => {
         </Text>
       </DetailReportLink>
       <Spacing size={35} />
-    </Container>
+    </ScreenContainer>
   );
 };
-
-const Container = styled.SafeAreaView`
-  flex: 1;
-  background-color: ${COLORS.mainGreen};
-`;
 
 const TextContainer = styled.View`
   display: flex;

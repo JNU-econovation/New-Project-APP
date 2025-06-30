@@ -1,12 +1,12 @@
 import PATH_ROUTE from "@constants/pathRoute";
 import WebViewWithInjected from "@entities/WebViewWithInjected";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { ScreenContainer } from "react-native-screens";
 
 const MyPageScreen = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ScreenContainer>
       <WebViewWithInjected source={{ uri: PATH_ROUTE.WEBVIEW.MYPAGE }} />
-    </SafeAreaView>
+    </ScreenContainer>
   );
 };
 

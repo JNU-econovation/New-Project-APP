@@ -1,11 +1,11 @@
-import MountainSearchWebview from "@components/feature/screens/course/MountainSearchWebview";
-import { SafeAreaView } from "react-native";
+import MountainSearchWebview from "@screens/course/MountainSearchWebview";
+import ScreenContainer from "@shared/layout/Screen";
 
 const CourseScreen = () => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <ScreenContainer>
       <MountainSearchWebview />
-    </SafeAreaView>
+    </ScreenContainer>
   );
 };
 

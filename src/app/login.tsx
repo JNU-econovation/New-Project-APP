@@ -1,13 +1,9 @@
-import Spacing from "@components/common/shared/layout/Spacing";
-import {
-  HikingSVG,
-  LeftArrowWithWhiteBgSVG,
-  StarSVG,
-} from "@components/common/shared/ui/Icons";
-import Text from "@components/common/shared/ui/Text";
-import AppleLoginButton from "@components/feature/widget/AppleLoginButton";
-import KakaoLoginButton from "@components/feature/widget/KakaoLoginButton";
 import styled from "@emotion/native";
+import Spacing from "@shared/layout/Spacing";
+import { HikingSVG, LeftArrowWithWhiteBgSVG, StarSVG } from "@shared/ui/Icons";
+import Text from "@shared/ui/Text";
+import AppleLoginButton from "@widget/AppleLoginButton";
+import KakaoLoginButton from "@widget/KakaoLoginButton";
 import { router } from "expo-router";
 import { TouchableOpacity } from "react-native";
 

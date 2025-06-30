@@ -1,17 +1,12 @@
-import styled from "@emotion/native";
 import MountainCourseWebview from "@screens/course/MountainCourseWebview";
+import ScreenContainer from "@shared/layout/Screen";
 
 const MountainCourseScreen = () => {
   return (
-    <Container>
+    <ScreenContainer>
       <MountainCourseWebview />
-    </Container>
+    </ScreenContainer>
   );
 };
-
-const Container = styled.SafeAreaView`
-  flex: 1;
-  background-color: white;
-`;
 
 export default MountainCourseScreen;

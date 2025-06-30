@@ -1,14 +1,14 @@
 import styled from "@emotion/native";
+import ScreenContainer from "@shared/layout/Screen";
 import Spacing from "@shared/layout/Spacing";
 import Header from "@shared/ui/Header";
 import Text from "@shared/ui/Text";
-import { COLORS } from "@styles/colorPalette";
 import MessageReportButton from "@widget/MessageReportButton";
 import { View } from "react-native";
 
 const immediatelyReport = () => {
   return (
-    <Container>
+    <ScreenContainer>
       <Spacing size={20} />
       <Header headerTitle="즉시 신고하기" />
       <Spacing size={38} />
@@ -34,14 +34,9 @@ const immediatelyReport = () => {
         <MessageReportButton />
       </View>
       <Spacing size={38} />
-    </Container>
+    </ScreenContainer>
   );
 };
-
-const Container = styled.SafeAreaView`
-  flex: 1;
-  background-color: ${COLORS.mainWhite};
-`;
 
 const ContentContainer = styled.View`
   padding-inline: 28px;

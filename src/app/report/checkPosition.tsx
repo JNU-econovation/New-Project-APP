@@ -1,13 +1,13 @@
-import Header from "@components/common/shared/ui/Header";
-import Text from "@components/common/shared/ui/Text";
-import { SafeAreaView } from "react-native";
+import ScreenContainer from "@shared/layout/Screen";
+import Header from "@shared/ui/Header";
+import Text from "@shared/ui/Text";
 
 const CheckPositionScreen = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <ScreenContainer>
       <Header />
       <Text>지도 웹뷰 보여질 예정</Text>
-    </SafeAreaView>
+    </ScreenContainer>
   );
 };
 
