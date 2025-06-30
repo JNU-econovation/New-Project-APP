@@ -7,6 +7,7 @@ const PATH_TO_ROUTE: PathToRoute = {
   "start-travel": "/travel",
   "mountain-course": "/(tabs)/map/course",
   "manual-detail": "/(tabs)/home/safeManual/[manual]",
+  "course-search": "/(tabs)/home/course/search",
 } as const;
 
 export default PATH_TO_ROUTE;
