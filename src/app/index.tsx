@@ -1,5 +1,5 @@
-import StarterScreen from "@components/feature/screens/Starter/StarterScreen";
 import useGetCurrentPosition from "@hooks/feature/useGetCurrentPosition";
+import StarterScreen from "@screens/Starter/StarterScreen";
 import {
   getValueFromSecureStore,
   removeValueFromSecureStore,

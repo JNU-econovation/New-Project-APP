@@ -3,6 +3,7 @@ import styled from "@emotion/native";
 import useDetailReportForm from "@hooks/feature/form/useDetailReportForm";
 import FieldLayout from "@shared/layout/FieldLayout";
 import PositionBottom from "@shared/layout/PositionBottom";
+import ScreenContainer from "@shared/layout/Screen";
 import Spacing from "@shared/layout/Spacing";
 import Header from "@shared/ui/Header";
 import LabeledInput from "@shared/ui/LabeledInput";
@@ -12,7 +13,7 @@ const DetailReport = () => {
   const form = useDetailReportForm();
 
   return (
-    <Container>
+    <ScreenContainer>
       <Spacing size={20} />
       <Header headerTitle="상세 신고하기" />
       <Spacing size={38} />
@@ -81,14 +82,9 @@ const DetailReport = () => {
           <form.SubmitButton title="신고하기" color="mainWhite" fullWidth />
         </PositionBottom>
       </form.AppForm>
-    </Container>
+    </ScreenContainer>
   );
 };
-
-const Container = styled.SafeAreaView`
-  flex: 1;
-  background-color: ${COLORS.mainWhite};
-`;
 
 const ContentContainer = styled.ScrollView`
   padding-inline: 28px;

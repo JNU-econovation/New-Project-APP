@@ -1,12 +1,13 @@
-import Spacing from "@shared/layout/Spacing";
+import styled from "@emotion/native";
 import HomeCanvas from "@screens/Home/HomeCanvas";
 import HomeHeaderSection from "@screens/Home/HomeHeaderSection";
 import HomeNavGridSection from "@screens/Home/HomeNavGridSection";
-import styled from "@emotion/native";
+import ScreenContainer from "@shared/layout/Screen";
+import Spacing from "@shared/layout/Spacing";
 
 const HomeScreen = () => {
   return (
-    <Screen>
+    <ScreenContainer backgroundColor="subGray">
       <Container>
         <Spacing size={20} />
         <HomeHeaderSection />
@@ -15,15 +16,9 @@ const HomeScreen = () => {
         <HomeNavGridSection />
         <Spacing size={20} />
       </Container>
-    </Screen>
+    </ScreenContainer>
   );
 };
-
-const Screen = styled.SafeAreaView`
-  flex: 1;
-  background-color: #efefef;
-`;
-
 const Container = styled.View`
   flex: 1;
   padding-inline: 20px;

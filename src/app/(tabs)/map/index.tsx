@@ -1,11 +1,11 @@
-import MapWebview from "@components/feature/screens/map/MapWebview";
-import { SafeAreaView } from "react-native";
+import MapWebview from "@screens/map/MapWebview";
+import ScreenContainer from "@shared/layout/Screen";
 
 const MapScreen = () => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <ScreenContainer>
       <MapWebview />
-    </SafeAreaView>
+    </ScreenContainer>
   );
 };
 

@@ -1,17 +1,12 @@
-import LoginWebView from "@components/feature/widget/LoginWebView";
-import styled from "@emotion/native";
+import ScreenContainer from "@shared/layout/Screen";
+import LoginWebView from "@widget/LoginWebView";
 
 const LoginModalScreen = () => {
   return (
-    <Container>
+    <ScreenContainer>
       <LoginWebView />
-    </Container>
+    </ScreenContainer>
   );
 };
-
-const Container = styled.View`
-  flex: 1;
-  position: relative;
-`;
 
 export default LoginModalScreen;
