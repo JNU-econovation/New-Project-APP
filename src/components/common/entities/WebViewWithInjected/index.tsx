@@ -67,6 +67,15 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
           status: "success",
         };
       }
+
+      if (reqMessage.name === "route-back" && reqMessage.method === "POST") {
+        router.back();
+
+        return {
+          name: "route-back",
+          status: "success",
+        };
+      }
     }, []);
 
     return (
