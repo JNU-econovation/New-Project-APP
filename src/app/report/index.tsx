@@ -17,7 +17,7 @@ const ReportScreen = () => {
   }, []);
 
   return (
-    <ScreenContainer>
+    <ScreenContainer backgroundColor="mainGreen">
       <Spacing size={20} />
       <Header />
 

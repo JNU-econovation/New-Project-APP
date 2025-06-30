@@ -12,12 +12,6 @@ const MountainCourseWebview = () => {
       source={{
         uri: PATH_ROUTE.WEBVIEW.COURSE_SEARCH_RESULT({ mountainName }),
       }}
-      onMessage={({ method, name, body }) => {
-        if (name === "route-back" && method === "POST") router.back();
-        if (name === "route-course-detail" && method === "POST") {
-          router.replace("/(tabs)/map/course");
-        }
-      }}
     />
   );
 };
