@@ -1,7 +1,7 @@
 import CourseDetailWebview from "@screens/map/CourseDetailWebview";
 import ScreenContainer from "@shared/layout/Screen";
 
-const CourseScreen = () => {
+const CourseDetailScreen = () => {
   return (
     <ScreenContainer>
       <CourseDetailWebview />
@@ -9,4 +9,4 @@ const CourseScreen = () => {
   );
 };
 
-export default CourseScreen;
+export default CourseDetailScreen;
