@@ -17,6 +17,11 @@ const SafeManualDetailWebview = () => {
           manual: manual,
         }),
       }}
+      onMessage={({ method, name }) => {
+        if (name === "route-back" && method === "POST") {
+          router.back();
+        }
+      }}
     />
   );
 };
