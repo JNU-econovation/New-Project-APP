@@ -1,18 +1,14 @@
 import useGetCurrentPosition from "@hooks/feature/useGetCurrentPosition";
-import StarterScreen from "@screens/Starter/StarterScreen";
-import {
-  getValueFromSecureStore,
-  removeValueFromSecureStore,
-} from "@utils/secureStore";
+import useGetNetworkState from "@hooks/feature/useGetNetworkState";
+import { getValueFromSecureStore } from "@utils/secureStore";
 import { useFonts } from "expo-font";
 import { Redirect, SplashScreen } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 SplashScreen.preventAutoHideAsync();
 
-let isAuthenticated = true;
-
 export default function Index() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loaded, error] = useFonts({
     "pretendard-black": require("@/assets/fonts/Pretendard-Black.otf"),
     "pretendard-bold": require("@/assets/fonts/Pretendard-Bold.otf"),
@@ -25,37 +21,31 @@ export default function Index() {
     "pretendard-thin": require("@/assets/fonts/Pretendard-Thin.otf"),
   });
 
+  const { networkState } = useGetNetworkState();
+  console.log(networkState);
+
   useGetCurrentPosition();
 
-  useEffect(() => {
-    //TODO: 로그인 플로우를 확인하기 위한 임시 코드
-    {
-      removeValueFromSecureStore("accessToken");
-      removeValueFromSecureStore("refreshToken");
-    }
-
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded, error]);
-
-  useEffect(() => {
-    const checkLogin = async () => {
-      getValueFromSecureStore("accessToken").then((accessToken) => {
+  const checkLogin = async () => {
+    getValueFromSecureStore("accessToken").then(
+      (accessToken) => {
         if (accessToken) {
-          isAuthenticated = true;
+          setIsAuthenticated(true);
         }
-      });
-    };
+      },
+      (e) => console.error("Access token not found", e),
+    );
+  };
 
+  useEffect(() => {
     checkLogin();
   }, []);
 
-  if (!loaded && !error) {
-    return null;
-  }
+  useEffect(() => {
+    if (loaded || error) SplashScreen.hideAsync();
+  }, [loaded, error]);
 
+  if (!loaded && !error) return null;
   if (isAuthenticated) return <Redirect href="/(tabs)/home" />;
-
-  return <StarterScreen />;
+  return <Redirect href={"/starter"} />;
 }
