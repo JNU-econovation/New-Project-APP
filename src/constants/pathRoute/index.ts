@@ -1,8 +1,8 @@
-const webviewBaseUri = process.env.EXPO_PUBLIC_WEB_BASE_URI;
+const webviewBaseUri = process.env.EXPO_PUBLIC_WEB_BASE_URI as string;
 
 const WEBVIEW = {
   BASE_URL: webviewBaseUri,
-  KAKAO_LOGIN: `${webviewBaseUri}/login/kakao`,
+  KAKAO_LOGIN: `${webviewBaseUri}/login`,
   EMAIL_AUTH: `${webviewBaseUri}/email-auth`,
   COURSE: `${webviewBaseUri}/course`,
   COURSE_SEARCH_RESULT: ({
@@ -35,8 +35,13 @@ const WEBVIEW = {
   // INQUIRY: `${webviewBaseUri}/my-page/inquiry`,
 } as const;
 
+const REMOTE = {
+  KAKAO_LOGIN: `https://accounts.kakao.com/login/`,
+};
+
 const PATH_ROUTE = {
   WEBVIEW,
+  REMOTE,
 } as const;
 
 export default PATH_ROUTE;
