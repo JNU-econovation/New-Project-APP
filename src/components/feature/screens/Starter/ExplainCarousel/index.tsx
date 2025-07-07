@@ -1,7 +1,10 @@
 import { COLORS } from "@/src/styles/colorPalette";
-import ExplainItems from "@components/feature/process/ExplainItems";
+import {
+  LeftArrowSVG,
+  RightArrowSVG,
+} from "@components/common/shared/ui/Icons";
 import styled from "@emotion/native";
-
+import ExplainItems from "@process/ExplainItems";
 import { useCallback, useRef, useState } from "react";
 import { Dimensions, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
@@ -10,10 +13,6 @@ import Carousel, {
   Pagination,
 } from "react-native-reanimated-carousel";
 import LoginButton from "../LoginButton";
-import {
-  LeftArrowSVG,
-  RightArrowSVG,
-} from "@components/common/shared/ui/Icons";
 
 const { width, height } = Dimensions.get("window");
 
