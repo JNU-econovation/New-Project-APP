@@ -1,7 +1,7 @@
-import styled from "@emotion/native";
-import LoginButton from "../LoginButton";
-import ExplainCarousel from "../ExplainCarousel";
 import { COLORS } from "@/src/styles/colorPalette";
+import styled from "@emotion/native";
+import ExplainCarousel from "@screens/Starter/ExplainCarousel";
+import LoginButton from "@screens/Starter/LoginButton";
 
 const StarterScreen = () => {
   return (
