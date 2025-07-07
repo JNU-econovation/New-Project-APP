@@ -18,13 +18,15 @@ const AppleLoginButton = () => {
         ],
       });
 
+      // AppleAuthentication.AppleAuthenticationOperation.LOGOUT;
+
       if (!credential.identityToken || !credential.authorizationCode) {
         throw new Error("Invalid credential");
       }
 
-      console.log(credential);
-
       const { identityToken, email, fullName } = credential;
+
+      console.log("애플 로그인 요청", credential);
 
       mutate(
         {
@@ -37,6 +39,7 @@ const AppleLoginButton = () => {
         },
         {
           onSuccess: () => {
+            router.dismissAll();
             router.replace("/(tabs)/home");
           },
           onError: (error) => {
