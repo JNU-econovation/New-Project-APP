@@ -25,6 +25,7 @@ class RWindow {
     this.RWND_BUFFER.delete(id);
 
     const callbacks = this.callbackBuffer.get(id);
+    this.callbackBuffer.delete(id);
 
     return callbacks ?? [];
   }
