@@ -32,6 +32,7 @@ class RWindow {
 
   public clear() {
     this.RWND_BUFFER.clear();
+    this.callbackBuffer.clear();
   }
 
   public addListener<ResMessageType>(
