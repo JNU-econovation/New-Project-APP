@@ -8,9 +8,7 @@ interface PostMessageProps<MessageType, ResponseType> {
 }
 
 const usePostMessageBridge = () => {
-  const ref = useRef<WebView<{
-    postMessage: (message: string) => void;
-  }> | null>(null);
+  const ref = useRef<WebView | null>(null);
 
   const postMessage = <ReqType, ResponseType>({
     message,
