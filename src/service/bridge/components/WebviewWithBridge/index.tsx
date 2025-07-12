@@ -69,6 +69,13 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
         return;
       }
 
+      if (!isReady) {
+        console.warn(
+          "[WebviewWithBridge] 웹부의 핸드쉐이크라 아직 완료되지 않았습니다. syn/ack 메시지를 확인해주세요.",
+        );
+        return;
+      }
+
       // body가 있는 일반 요청 메시지 처리
       if (!body) return;
 
@@ -83,7 +90,7 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
           );
         Bridge.createMessage(webViewRef, {
           ack: _id,
-          body: onBridgeMessage(body),
+          body: resMessage,
         }).send();
       }
     },
