@@ -139,7 +139,7 @@
       "uuid": "5f1e2a3b-4c5d-6e7f-8901-23456789abcd",
       "type": "http",
       "documentation": "카카오 소셜로그인을 요청한다.",
-      "method": "post",
+      "method": "get",
       "endpoint": "api/v1/oauth/kakao/login",
       "responses": [
         {
@@ -626,6 +626,18 @@
     {
       "key": "Content-Type",
       "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET, POST, PUT, DELETE, OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Authorization"
     }
   ],
   "proxyReqHeaders": [
