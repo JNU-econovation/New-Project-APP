@@ -9,7 +9,7 @@ import {
   DISABLED_TEXT_SELECT,
   SET_VIEWPORT_RATE,
 } from "@constants/webview";
-import WebviewWithBridge from "@service/webview/components/WebviewWithBridge";
+import WebviewWithBridge from "@service/bridge/components/WebviewWithBridge";
 import { getPathToRoute } from "@utils/bridge";
 import { logMessageWithTime } from "@utils/log";
 import { router } from "expo-router";

@@ -18,8 +18,6 @@ const AppleLoginButton = () => {
         ],
       });
 
-      // AppleAuthentication.AppleAuthenticationOperation.LOGOUT;
-
       if (!credential.identityToken || !credential.authorizationCode) {
         throw new Error("Invalid credential");
       }

@@ -1,6 +1,6 @@
 import PATH_ROUTE from "@constants/pathRoute";
 import WebViewWithInjected from "@entities/WebViewWithInjected";
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 
 const SafeManualDetailWebview = () => {
   const { manual } = useLocalSearchParams();
