@@ -14,7 +14,12 @@ const usePostMessageBridge = () => {
     message,
     onResponse,
   }: PostMessageProps<ReqType, ResponseType>) => {
-    if (ref.current) {
+    if (!ref.current) {
+      console.warn("[usePostMessageBridge] WebView ref is not available");
+      return;
+    }
+
+    try {
       const newMessage = Bridge.createMessage<ReqType>(ref, {
         ack: null,
         body: message,
@@ -22,6 +27,8 @@ const usePostMessageBridge = () => {
       newMessage.send<ResponseType>((response) => {
         if (onResponse) return onResponse(response);
       });
+    } catch (error) {
+      console.error("[usePostMessageBridge] Failed to send message:", error);
     }
   };
 
