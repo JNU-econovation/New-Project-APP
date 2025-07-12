@@ -12,13 +12,6 @@ const CourseDetailWebview = () => {
         uri: PATH_ROUTE.WEBVIEW.MAP_COURSE_DETAIL,
       }}
       onMessage={({ method, name, body }) => {
-        if (name === "route-back" && method === "POST") {
-          router.back();
-          return {
-            name: "route-back",
-            status: "success",
-          };
-        }
         if (name === "get-current-position" && method === "GET") {
           return {
             name: "get-current-position",
@@ -33,6 +26,11 @@ const CourseDetailWebview = () => {
             status: "success",
           };
         }
+        return {
+          name: "unknown-message",
+          status: "error",
+          data: "Unknown message received",
+        };
       }}
     />
   );

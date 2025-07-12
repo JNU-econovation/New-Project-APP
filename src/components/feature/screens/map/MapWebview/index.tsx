@@ -1,24 +1,16 @@
-import WebViewWithInjected from "@entities/WebViewWithInjected";
 import PATH_ROUTE from "@constants/pathRoute";
-import { router } from "expo-router";
+import WebViewWithInjected from "@entities/WebViewWithInjected";
 import useGetCurrentPosition from "@hooks/feature/useGetCurrentPosition";
 
 const MapWebview = () => {
-  const location = useGetCurrentPosition();
+  const { location } = useGetCurrentPosition();
 
   return (
     <WebViewWithInjected
       source={{
         uri: PATH_ROUTE.WEBVIEW.MAP,
       }}
-      onMessage={({ method, name, body }) => {
-        if (name === "route-back" && method === "POST") {
-          router.back();
-          return {
-            name: "route-back",
-            status: "success",
-          };
-        }
+      onMessage={({ method, name }) => {
         if (name === "get-current-position" && method === "GET") {
           return {
             name: "get-current-position",
@@ -26,6 +18,12 @@ const MapWebview = () => {
             data: location,
           };
         }
+
+        return {
+          name: "unknown-message",
+          status: "error",
+          data: "Unknown message received",
+        };
       }}
     />
   );
