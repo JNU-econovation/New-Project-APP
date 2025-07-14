@@ -30,6 +30,10 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
   const webViewRef = useRef<WebView>(null);
 
   useEffect(() => {
+    console.log(isReady);
+  }, [isReady]);
+
+  useEffect(() => {
     if (isReady) onReadyToMessage?.();
   }, [isReady, onReadyToMessage]);
 
@@ -50,31 +54,26 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
 
       // handshake
       // 웹으로부터 handshake sync 메시지 수신
-      if (!isReady && syn === 1 && ack === null) {
-        // Alert.alert("[app] handshake syn/ack received : " + _id);
-        // 웹에서 syn을 보냈을 때, syn/ack을 보내준다.
-        Bridge.createMessage(webViewRef, {
-          syn: 1,
-          ack: _id,
-        }).send<WebviewHandshake>(({ ack, flag: { syn } }) => {
-          // Alert.alert("[app] 끝끝!!!!!!!!!!!!!!!!!!!!!!!");
-          console.log(
-            `[${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}]handshake end`,
-          );
-          if (!isReady && syn === 0 && ack !== null) {
-            setIsReady(true);
-            return;
-          }
-        });
-        return;
+      if (!isReady) {
+        if (!isReady && syn === 1 && ack === null) {
+          // 웹에서 syn을 보냈을 때, syn/ack을 보내준다.
+          Bridge.createMessage(webViewRef, {
+            syn: 1,
+            ack: _id,
+          }).send<WebviewHandshake>(({ ack, flag: { syn } }) => {
+            if (!isReady && syn === 0 && ack !== null) {
+              console.log(
+                `[${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}]handshake end`,
+              );
+              setIsReady(true);
+              return;
+            }
+          });
+          return;
+        }
       }
 
-      if (!isReady) {
-        console.warn(
-          "[WebviewWithBridge] 웹부의 핸드쉐이크라 아직 완료되지 않았습니다. syn/ack 메시지를 확인해주세요.",
-        );
-        return;
-      }
+      if (!isReady) return;
 
       // body가 있는 일반 요청 메시지 처리
       if (!body) return;
@@ -94,7 +93,7 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
         }).send();
       }
     },
-    [onBridgeMessage, middleware],
+    [onBridgeMessage, middleware, isReady],
   );
 
   return <WebView ref={webViewRef} onMessage={handleMessage} {...props} />;
