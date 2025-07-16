@@ -18,7 +18,9 @@ interface GetPathToRouteProps {
 export const getPathToRoute = ({ path, params }: GetPathToRouteProps): Href => {
   let result = PATH_TO_ROUTE[path] as string;
   if (!result) {
-    throw new Error(`Path not found for key: ${path}`);
+    throw new Error(
+      `[getPathToRoute] 존재하지 않는 주소로 이동을 요청하였습니다 :  ${path}`,
+    );
   }
 
   // params 배열의 각 원소를 순회하며 [key]를 value로 치환
