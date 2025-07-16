@@ -15,6 +15,7 @@ const PATH_TO_ROUTE: PathToRoute = {
   "check-terms": "/(tabs)/mypage/checkTerms",
   "customer-center": "/(tabs)/mypage/customerCenter/[tab]",
   "mountain-course": "/(tabs)/home/course/[mountainName]",
+  starter: "/starter",
 } as const;
 
 export default PATH_TO_ROUTE;
