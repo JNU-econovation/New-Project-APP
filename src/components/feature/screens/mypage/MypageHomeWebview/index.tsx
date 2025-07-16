@@ -11,11 +11,12 @@ const MypageHomeWebview = () => {
       onMessage={({ method, name }) => {
         if (name === "logout" && method === "DELETE") {
           try {
-            logout();
-            return {
-              name: "logout",
-              status: "success",
-            };
+            logout().then(() => {
+              return {
+                name: "logout",
+                status: "success",
+              };
+            });
           } catch (error) {
             console.error("Logout failed:", error);
             return {
