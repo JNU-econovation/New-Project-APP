@@ -2,7 +2,6 @@ import WebView from "react-native-webview";
 
 import { WebviewBridgeMessage } from "../types";
 import RWindow from "./RWindow";
-// import { Alert } from "react-native";
 
 class Message<BodyType = unknown> {
   private _id: string;
@@ -35,7 +34,6 @@ class Message<BodyType = unknown> {
     ref: React.RefObject<WebView<{}> | null>,
     message: WebviewBridgeMessage<ResMessage>,
   ) => {
-    // Alert.alert("[app] 앱에서 보냄 : ", JSON.stringify(message));
     ref.current?.postMessage(JSON.stringify(message));
   };
 
