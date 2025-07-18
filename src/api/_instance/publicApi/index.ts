@@ -25,6 +25,13 @@ publicApi.interceptors.response.use(
           "accessTokenExpiredTime",
           accessTokenExpiredTime,
         );
+
+        response.data = {
+          ...response.data,
+          accessToken,
+          refreshToken,
+          accessTokenExpiredTime,
+        };
       } catch (error) {
         console.error("Failed to store tokens in SecureStore:", error);
       }
