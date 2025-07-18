@@ -1,3 +1,4 @@
+import { useTokenStore } from "@/src/store/secureStorage/useTokenStore";
 import styled from "@emotion/native";
 import useAppleLoginMutate from "@hooks/feature/query/useAppleLoginMutate";
 import Button from "@shared/ui/Button";
@@ -7,6 +8,8 @@ import { router } from "expo-router";
 import { useCallback } from "react";
 
 const AppleLoginButton = () => {
+  const { setAccessToken, setRefreshToken, setAccessTokenExpiredTime } =
+    useTokenStore();
   const { mutate } = useAppleLoginMutate();
 
   const login = useCallback(async () => {
@@ -34,7 +37,14 @@ const AppleLoginButton = () => {
           },
         },
         {
-          onSuccess: () => {
+          onSuccess: ({
+            accessToken,
+            refreshToken,
+            accessTokenExpiredTime,
+          }: any) => {
+            setAccessToken(accessToken);
+            setRefreshToken(refreshToken);
+            setAccessTokenExpiredTime(accessTokenExpiredTime);
             router.dismissAll();
             router.replace("/(tabs)/home");
           },
