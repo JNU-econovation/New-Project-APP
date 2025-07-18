@@ -6,12 +6,12 @@ const WEBVIEW = {
   EMAIL_AUTH: `${webviewBaseUri}/email-auth`,
   COURSE: `${webviewBaseUri}/course`,
   COURSE_SEARCH_RESULT: ({
-    mountainName,
+    mountainId,
     sort = "my",
   }: {
-    mountainName: string;
+    mountainId: string;
     sort?: string;
-  }) => `${webviewBaseUri}/course/${mountainName}?sort=${sort}`,
+  }) => `${webviewBaseUri}/course/${mountainId}?sort=${sort}`,
   COURSE_DETAIL: "",
   MAP: `${webviewBaseUri}/map`,
   MAP_COURSE_SEARCH: `${webviewBaseUri}/map/course-search`,
