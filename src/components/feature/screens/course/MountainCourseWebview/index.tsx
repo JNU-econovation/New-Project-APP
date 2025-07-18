@@ -3,14 +3,14 @@ import WebViewWithInjected from "@entities/WebViewWithInjected";
 import { router, useLocalSearchParams } from "expo-router";
 
 const MountainCourseWebview = () => {
-  const { mountainName } = useLocalSearchParams() as {
-    mountainName: string;
+  const { mountainId } = useLocalSearchParams() as {
+    mountainId: string;
   };
 
   return (
     <WebViewWithInjected
       source={{
-        uri: PATH_ROUTE.WEBVIEW.COURSE_SEARCH_RESULT({ mountainName }),
+        uri: PATH_ROUTE.WEBVIEW.COURSE_SEARCH_RESULT({ mountainId }),
       }}
     />
   );
