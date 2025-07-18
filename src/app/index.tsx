@@ -1,14 +1,14 @@
 import useGetCurrentPosition from "@hooks/feature/useGetCurrentPosition";
-import useGetNetworkState from "@hooks/feature/useGetNetworkState";
+import { useTokenStore } from "@store/secureStorage/useTokenStore";
 import { getValueFromSecureStore } from "@utils/secureStore";
 import { useFonts } from "expo-font";
 import { Redirect, SplashScreen } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function Index() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { accessToken, setAccessToken, setRefreshToken } = useTokenStore();
   const [loaded, error] = useFonts({
     "pretendard-black": require("@/assets/fonts/Pretendard-Black.otf"),
     "pretendard-bold": require("@/assets/fonts/Pretendard-Bold.otf"),
@@ -21,20 +21,20 @@ export default function Index() {
     "pretendard-thin": require("@/assets/fonts/Pretendard-Thin.otf"),
   });
 
-  const { networkState } = useGetNetworkState();
-  console.log(networkState);
-
   useGetCurrentPosition();
 
   const checkLogin = async () => {
-    getValueFromSecureStore("accessToken").then(
-      (accessToken) => {
-        if (accessToken) {
-          setIsAuthenticated(true);
-        }
-      },
-      (e) => console.error("Access token not found", e),
-    );
+    try {
+      const accessToken = await getValueFromSecureStore("accessToken");
+      const refreshToken = await getValueFromSecureStore("refreshToken");
+
+      if (accessToken && refreshToken) {
+        setAccessToken(accessToken);
+        setRefreshToken(refreshToken);
+      }
+    } catch (error) {
+      console.error("[global index] Error checking login status:", error);
+    }
   };
 
   useEffect(() => {
@@ -46,6 +46,6 @@ export default function Index() {
   }, [loaded, error]);
 
   if (!loaded && !error) return null;
-  if (isAuthenticated) return <Redirect href="/(tabs)/home" />;
+  if (accessToken) return <Redirect href="/(tabs)/home" />;
   return <Redirect href={"/starter"} />;
 }
