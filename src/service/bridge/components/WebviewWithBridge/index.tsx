@@ -13,7 +13,9 @@ import type { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes"
 
 interface WebViewWithBridgeProps<ReqMessage, ResMessage>
   extends Omit<ComponentProps<typeof WebView>, "onMessage"> {
-  onBridgeMessage?: (reqMessage: ReqMessage) => ResMessage | void;
+  onBridgeMessage?:
+    | ((reqMessage: ReqMessage) => ResMessage | void)
+    | ((reqMessage: ReqMessage) => Promise<ResMessage | void>);
   onReadyToMessage?: () => void;
   middleware?: (message: ReqMessage) => void;
   ref?: Ref<WebView>;
@@ -83,6 +85,27 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
       // normal message
       if (onBridgeMessage) {
         const resMessage = onBridgeMessage(body);
+
+        // onBridgeMessage가 Promise를 반환하는 경우
+        if (resMessage instanceof Promise) {
+          resMessage
+            .then((response) => {
+              if (!response) {
+                throw new Error(
+                  "전달받은 브리지에 대한 응답이 없습니다. onBridgeMessage를 확인해주세요.",
+                );
+              }
+              Bridge.createMessage(webViewRef, {
+                ack: _id,
+                body: response,
+              }).send();
+            })
+            .catch((error) => {
+              console.error("Error in onBridgeMessage:", error);
+            });
+          return;
+        }
+
         if (!resMessage)
           throw new Error(
             "전달받은 브리지에 대한 응답이 없습니다. onBridgeMessage를 확인해주세요.",
@@ -96,7 +119,18 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
     [onBridgeMessage, middleware, isReady],
   );
 
-  return <WebView ref={webViewRef} onMessage={handleMessage} {...props} />;
+  return (
+    <WebView
+      ref={webViewRef}
+      onMessage={handleMessage}
+      // iOS 제스처 방지
+      bounces={false}
+      scrollEnabled={true}
+      decelerationRate="normal"
+      contentInsetAdjustmentBehavior="never"
+      {...props}
+    />
+  );
 };
 
 export default WebviewWithBridge;
