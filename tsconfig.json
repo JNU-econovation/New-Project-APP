@@ -45,6 +45,9 @@
       "@bridges/*": [
         "./src/bridges/*"
       ],
+      "@store/*": [
+        "./src/store/*"
+      ],
       "@/*": [
         "./*"
       ]
