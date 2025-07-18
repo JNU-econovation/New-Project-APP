@@ -1,3 +1,5 @@
+import { getValueFromSecureStore } from "@utils/secureStore";
+
 export const DISABLED_PINCH_GESTURE = `
 (() => {
   // iOS 핀치 줌 방지 - 제스처 이벤트
@@ -60,5 +62,29 @@ export const SET_VIEWPORT_RATE = `
   meta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
   meta.setAttribute('name', 'viewport');
   document.head.appendChild(meta);
+})();
+`;
+
+export const INJECT_TOKEN = (accessToken: string, refreshToken: string) => `
+(() => {
+  try {
+    const token = '${accessToken}';
+    const accessToken = localStorage.getItem('accessToken');
+
+    if(!accessToken || accessToken !== token) {
+      localStorage.setItem('accessToken', token);
+    }
+
+    const refreshToken = '${refreshToken}';
+    if(!localStorage.getItem('refreshToken') || localStorage.getItem('refreshToken') !== refreshToken) {
+      localStorage.setItem('refreshToken', refreshToken);
+    }
+      
+    return true;
+    
+  } catch (error) {
+    console.error('[INJECT_TOKEN] 토큰 주입 실패:', error);
+    return false;
+  }
 })();
 `;
