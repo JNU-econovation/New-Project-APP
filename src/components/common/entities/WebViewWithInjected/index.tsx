@@ -7,35 +7,84 @@ import {
   DISABLED_PINCH_GESTURE,
   DISABLED_SCROLL,
   DISABLED_TEXT_SELECT,
+  INJECT_TOKEN,
   SET_VIEWPORT_RATE,
 } from "@constants/webview";
 import WebviewWithBridge from "@service/bridge/components/WebviewWithBridge";
-import { getPathToRoute } from "@utils/bridge";
+import { useTokenStore } from "@store/secureStorage/useTokenStore/index";
 import { logMessageWithTime } from "@utils/log";
+import { getValueFromSecureStore } from "@utils/secureStore";
 import { router } from "expo-router";
-import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
-import { Animated, View } from "react-native";
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { Animated, BackHandler, View } from "react-native";
 import WebView from "react-native-webview";
 import type { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 
+type OnMessage = (
+  reqMessage: MessageEventRequestData,
+) => MessageEventResponseData | void;
+
+type PromiseOnMessage = ({
+  method,
+  name,
+}: MessageEventRequestData<unknown>) => Promise<MessageEventResponseData | void>;
+
 interface WebViewWithInjectedProps {
   source: WebViewSource;
-  onMessage?: (
-    reqMessage: MessageEventRequestData,
-  ) => MessageEventResponseData | void;
+  onMessage?: OnMessage | PromiseOnMessage;
   onReadyToMessage?: () => void;
   loadingBar?: boolean;
 }
 
-const INJECTED_JAVASCRIPT = `${DISABLED_PINCH_GESTURE}${DISABLED_TEXT_SELECT}${DISABLED_SCROLL}${SET_VIEWPORT_RATE}`;
-
 const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
   ({ source, onMessage, onReadyToMessage, loadingBar = false }, ref) => {
     const webViewRef = useRef<WebView>(null);
-
     const progressAnim = useRef(new Animated.Value(0)).current;
 
+    const [canGoBack, setCanGoBack] = useState(false);
+    const [canGoForward, setCanGoForward] = useState(false);
+
+    const { accessToken, refreshToken } = useTokenStore();
+
+    const INJECTED_JAVASCRIPT = useMemo(
+      () =>
+        `${DISABLED_PINCH_GESTURE}${DISABLED_TEXT_SELECT}${DISABLED_SCROLL}${SET_VIEWPORT_RATE}${INJECT_TOKEN(accessToken ?? "", refreshToken ?? "")}`,
+      [accessToken, refreshToken],
+    );
+
     useImperativeHandle(ref, () => webViewRef.current as WebView);
+
+    useEffect(() => {
+      const backAction = () => {
+        if (canGoBack) {
+          webViewRef.current?.goBack();
+          return true;
+        }
+        return false;
+      };
+
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction,
+      );
+      return () => {
+        backHandler.remove();
+      };
+    }, [webViewRef, canGoBack]);
+
+    // iOS 제스처 방지를 위한 추가 처리
+    const handleNavigationStateChange = useCallback((navState: any) => {
+      setCanGoBack(navState.canGoBack);
+      setCanGoForward(navState.canGoForward);
+    }, []);
 
     const middleware = useCallback((reqMessage: MessageEventRequestData) => {
       logMessageWithTime(`WebView received: \n${JSON.stringify(reqMessage)}`);
@@ -45,35 +94,51 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
         return;
       }
 
-      // 라우팅 메시지 처리
-      if (
-        reqMessage.name === ("route-to" as string) &&
-        reqMessage.method === "POST"
-      ) {
-        const { path, routeType, params } = reqMessage.body as {
-          path: string;
-          routeType?: "replace" | "push";
-          params?: Record<string, any>[];
-        };
+      // // 라우팅 메시지 처리
+      // if (
+      //   reqMessage.name === ("route-to" as string) &&
+      //   reqMessage.method === "POST"
+      // ) {
+      //   const { path, routeType, params } = reqMessage.body as {
+      //     path: string;
+      //     routeType?: "replace" | "push";
+      //     params?: Record<string, any>[];
+      //   };
 
-        routeType === "replace"
-          ? router.replace(getPathToRoute({ path, params }))
-          : router.push(getPathToRoute({ path, params }));
+      //   routeType === "replace"
+      //     ? router.replace(getPathToRoute({ path, params }))
+      //     : router.push(getPathToRoute({ path, params }));
 
-        // 동적 에러처리 필요
+      //   // 동적 에러처리 필요
 
-        return {
-          name: "route-to",
-          status: "success",
-        };
-      }
+      //   return {
+      //     name: "route-to",
+      //     status: "success",
+      //   };
+      // }
 
+      // 뒤로가기 메시지 처리
       if (reqMessage.name === "route-back" && reqMessage.method === "POST") {
         router.back();
 
         return {
           name: "route-back",
           status: "success",
+        };
+      }
+
+      // 토큰 요청 메시지 처리
+      if (reqMessage.name === "get-token" && reqMessage.method === "GET") {
+        const accessToken = getValueFromSecureStore("accessToken");
+        const refreshToken = getValueFromSecureStore("refreshToken");
+
+        return {
+          name: "get-token",
+          status: "success",
+          body: {
+            accessToken,
+            refreshToken,
+          },
         };
       }
     }, []);
@@ -114,10 +179,15 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
           onLoadEnd={() => {
             progressAnim.setValue(0);
           }}
-          cacheEnabled
-          cacheMode="LOAD_CACHE_ELSE_NETWORK"
+          cacheEnabled={false}
+          cacheMode="LOAD_NO_CACHE"
+          allowsLinkPreview={false}
+          // cacheMode="LOAD_CACHE_ELSE_NETWORK"
           middleware={middleware}
           onReadyToMessage={onReadyToMessage}
+          // 뒤로가기, 앞으로가기 기능
+          onNavigationStateChange={handleNavigationStateChange}
+          allowsBackForwardNavigationGestures={false}
         />
       </View>
     );
