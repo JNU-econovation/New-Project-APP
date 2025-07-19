@@ -48,7 +48,13 @@
       "@store/*": [
         "./src/store/*"
       ],
-      "@/*": [
+      "@model/*": [
+        "./src/model/*"
+      ],
+      "@styles/*": [
+        "./src/styles/*"
+      ],
+      "@/": [
         "./*"
       ]
     }
