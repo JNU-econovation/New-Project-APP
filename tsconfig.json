@@ -51,9 +51,6 @@
       "@model/*": [
         "./src/model/*"
       ],
-      "@styles/*": [
-        "./src/styles/*"
-      ],
       "@/": [
         "./*"
       ]
