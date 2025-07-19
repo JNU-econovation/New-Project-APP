@@ -3,7 +3,7 @@ import { useTokenStore } from "@store/secureStorage/useTokenStore";
 import { getValueFromSecureStore } from "@utils/secureStore";
 import { useFonts } from "expo-font";
 import { Redirect, SplashScreen } from "expo-router";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,7 +23,7 @@ export default function Index() {
 
   useGetCurrentPosition();
 
-  const checkLogin = async () => {
+  const checkLogin = useCallback(async () => {
     try {
       const accessToken = await getValueFromSecureStore("accessToken");
       const refreshToken = await getValueFromSecureStore("refreshToken");
@@ -35,11 +35,11 @@ export default function Index() {
     } catch (error) {
       console.error("[global index] Error checking login status:", error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     checkLogin();
-  }, []);
+  }, [checkLogin]);
 
   useEffect(() => {
     if (loaded || error) SplashScreen.hideAsync();
