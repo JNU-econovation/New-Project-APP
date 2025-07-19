@@ -68,16 +68,16 @@ export const SET_VIEWPORT_RATE = `
 export const INJECT_TOKEN = (accessToken: string, refreshToken: string) => `
 (() => {
   try {
-    const token = '${accessToken}';
-    const accessToken = localStorage.getItem('accessToken');
-
-    if(!accessToken || accessToken !== token) {
-      localStorage.setItem('accessToken', token);
+    const newAccessToken = ${JSON.stringify(accessToken)};
+    const currentAccessToken = localStorage.getItem('accessToken');
+    if(!currentAccessToken || newAccessToken !== currentAccessToken) {
+      localStorage.setItem('accessToken', newAccessToken);
     }
 
-    const refreshToken = '${refreshToken}';
-    if(!localStorage.getItem('refreshToken') || localStorage.getItem('refreshToken') !== refreshToken) {
-      localStorage.setItem('refreshToken', refreshToken);
+    const newRefreshToken = ${JSON.stringify(refreshToken)};
+    const currentRefreshToken = localStorage.getItem('refreshToken');
+    if(!currentRefreshToken || currentRefreshToken !== newRefreshToken) {
+      localStorage.setItem('refreshToken', newRefreshToken);
     }
       
     return true;
