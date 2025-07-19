@@ -1,4 +1,4 @@
-import { COLORS } from "@/src/styles/colorPalette";
+import { COLORS } from "@styles/colorPalette";
 import Text from "@components/common/shared/ui/Text";
 import styled from "@emotion/native";
 import { SafeAreaView } from "react-native-safe-area-context";

@@ -14,7 +14,6 @@ import { useTokenStore } from "@store/secureStorage/useTokenStore/index";
 import { COLORS } from "@styles/colorPalette";
 import { getPathToRoute } from "@utils/bridge";
 import { logMessageWithTime } from "@utils/log";
-import { getValueFromSecureStore } from "@utils/secureStore";
 import { router } from "expo-router";
 import {
   forwardRef,

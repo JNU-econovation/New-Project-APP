@@ -1,4 +1,4 @@
-import { COLORS } from "@/src/styles/colorPalette";
+import { COLORS } from "@styles/colorPalette";
 import styled from "@emotion/native";
 import ExplainCarousel from "@screens/Starter/ExplainCarousel";
 import LoginButton from "@screens/Starter/LoginButton";
