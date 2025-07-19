@@ -1,4 +1,4 @@
-import { COLORS } from "@/src/styles/colorPalette";
+import { COLORS } from "@styles/colorPalette";
 import Spacing from "@components/common/shared/layout/Spacing";
 import Text from "@components/common/shared/ui/Text";
 import styled from "@emotion/native";

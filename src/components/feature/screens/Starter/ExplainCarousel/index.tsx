@@ -1,4 +1,4 @@
-import { COLORS } from "@/src/styles/colorPalette";
+import { COLORS } from "@styles/colorPalette";
 import {
   LeftArrowSVG,
   RightArrowSVG,
