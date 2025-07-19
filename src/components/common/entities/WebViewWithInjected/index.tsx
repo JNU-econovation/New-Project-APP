@@ -1,17 +1,18 @@
 import {
-  MessageEventRequestData,
-  MessageEventResponseData,
-} from "@/src/model/webview";
-import { COLORS } from "@/src/styles/colorPalette";
-import {
   DISABLED_PINCH_GESTURE,
   DISABLED_SCROLL,
   DISABLED_TEXT_SELECT,
   INJECT_TOKEN,
   SET_VIEWPORT_RATE,
 } from "@constants/webview";
+import {
+  MessageEventRequestData,
+  MessageEventResponseData,
+} from "@model/webview";
 import WebviewWithBridge from "@service/bridge/components/WebviewWithBridge";
 import { useTokenStore } from "@store/secureStorage/useTokenStore/index";
+import { COLORS } from "@styles/colorPalette";
+import { getPathToRoute } from "@utils/bridge";
 import { logMessageWithTime } from "@utils/log";
 import { getValueFromSecureStore } from "@utils/secureStore";
 import { router } from "expo-router";
@@ -94,28 +95,28 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
         return;
       }
 
-      // // 라우팅 메시지 처리
-      // if (
-      //   reqMessage.name === ("route-to" as string) &&
-      //   reqMessage.method === "POST"
-      // ) {
-      //   const { path, routeType, params } = reqMessage.body as {
-      //     path: string;
-      //     routeType?: "replace" | "push";
-      //     params?: Record<string, any>[];
-      //   };
+      // 라우팅 메시지 처리
+      if (
+        reqMessage.name === ("route-to" as string) &&
+        reqMessage.method === "POST"
+      ) {
+        const { path, routeType, params } = reqMessage.body as {
+          path: string;
+          routeType?: "replace" | "push";
+          params?: Record<string, any>[];
+        };
 
-      //   routeType === "replace"
-      //     ? router.replace(getPathToRoute({ path, params }))
-      //     : router.push(getPathToRoute({ path, params }));
+        routeType === "replace"
+          ? router.replace(getPathToRoute({ path, params }))
+          : router.push(getPathToRoute({ path, params }));
 
-      //   // 동적 에러처리 필요
+        // 동적 에러처리 필요
 
-      //   return {
-      //     name: "route-to",
-      //     status: "success",
-      //   };
-      // }
+        return {
+          name: "route-to",
+          status: "success",
+        };
+      }
 
       // 뒤로가기 메시지 처리
       if (reqMessage.name === "route-back" && reqMessage.method === "POST") {
@@ -124,21 +125,6 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
         return {
           name: "route-back",
           status: "success",
-        };
-      }
-
-      // 토큰 요청 메시지 처리
-      if (reqMessage.name === "get-token" && reqMessage.method === "GET") {
-        const accessToken = getValueFromSecureStore("accessToken");
-        const refreshToken = getValueFromSecureStore("refreshToken");
-
-        return {
-          name: "get-token",
-          status: "success",
-          body: {
-            accessToken,
-            refreshToken,
-          },
         };
       }
     }, []);
