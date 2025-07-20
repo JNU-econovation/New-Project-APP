@@ -81,10 +81,10 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
     }, [webViewRef, canGoBack]);
 
     // iOS 제스처 방지를 위한 추가 처리
-    const handleNavigationStateChange = useCallback((navState: any) => {
-      setCanGoBack(navState.canGoBack);
-      setCanGoForward(navState.canGoForward);
-    }, []);
+    // const handleNavigationStateChange = useCallback((navState: any) => {
+    //   setCanGoBack(navState.canGoBack);
+    //   setCanGoForward(navState.canGoForward);
+    // }, []);
 
     const middleware = useCallback((reqMessage: MessageEventRequestData) => {
       logMessageWithTime(`WebView received: \n${JSON.stringify(reqMessage)}`);
@@ -171,7 +171,7 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
           middleware={middleware}
           onReadyToMessage={onReadyToMessage}
           // 뒤로가기, 앞으로가기 기능
-          onNavigationStateChange={handleNavigationStateChange}
+          // onNavigationStateChange={handleNavigationStateChange}
           allowsBackForwardNavigationGestures={false}
         />
       </View>
