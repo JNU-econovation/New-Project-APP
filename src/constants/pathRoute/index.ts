@@ -4,7 +4,7 @@ const WEBVIEW = {
   BASE_URL: webviewBaseUri,
   KAKAO_LOGIN: `${webviewBaseUri}/login`,
   EMAIL_AUTH: `${webviewBaseUri}/email-auth`,
-  COURSE: `${webviewBaseUri}/course`,
+  MOUNTAIN: `${webviewBaseUri}/mountain`,
   COURSE_SEARCH_RESULT: ({
     mountainId,
     sort = "my",
