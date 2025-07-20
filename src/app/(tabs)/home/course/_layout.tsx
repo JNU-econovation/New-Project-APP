@@ -14,6 +14,7 @@ const _layout = () => {
           animationDuration: 50,
         }}
       />
+      <Stack.Screen name="[mountainId]" />
     </Stack>
   );
 };
