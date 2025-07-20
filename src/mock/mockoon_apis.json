@@ -142,7 +142,7 @@
         {
           "uuid": "f8577e2c-42d9-44e8-a87c-f34ee809df6e",
           "body": "{\n    \"data\": {\n        \"courses\": [\n            {\n                \"id\": 6,\n                \"name\": \"중심사-중머리재-원효분소\",\n                \"length\": 4.6,\n                \"duration\": 128,\n                \"difficulty\": \"어려움\",\n                \"bookmark\": true\n            },{\n                \"id\": 62,\n                \"name\": \"중심사-중머리재-원효분소\",\n                \"length\": 4.6,\n                \"duration\": 1440,\n                \"difficulty\": \"쉬움\",\n                \"bookmark\": true\n            },{\n                \"id\": 61,\n                \"name\": \"중심사-중머리재-원효분소\",\n                \"length\": 4.9,\n                \"duration\": 120,\n                \"difficulty\": \"보통\",\n                \"bookmark\": false\n            },{\n                \"id\": 36,\n                \"name\": \"중심사-중머리재-원효분소\",\n                \"length\": 40.6,\n                \"duration\": 34,\n                \"difficulty\": \"어려움\",\n                \"bookmark\": false\n            }\n        ]\n    },\n\t\"status\": \"success\"\n}",
-          "latency": 1000,
+          "latency": 0,
           "statusCode": 200,
           "label": "",
           "headers": [],
@@ -150,15 +150,7 @@
           "filePath": "",
           "databucketID": "",
           "sendFileAsBody": false,
-          "rules": [
-            {
-              "target": "header",
-              "modifier": "Authorization",
-              "value": "",
-              "invert": true,
-              "operator": "null"
-            }
-          ],
+          "rules": [],
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
@@ -220,7 +212,7 @@
     },
     {
       "key": "Access-Control-Allow-Headers",
-      "value": "Content-Type, Authorization"
+      "value": "*"
     }
   ],
   "proxyReqHeaders": [
