@@ -1,11 +1,9 @@
 import PATH_ROUTE from "@constants/pathRoute";
 import WebViewWithInjected from "@entities/WebViewWithInjected";
 import useLogout from "@hooks/feature/useLogout";
-import { useTokenStore } from "@store/secureStorage/useTokenStore";
 
 const MypageHomeWebview = () => {
   const { logout } = useLogout();
-  const { accessToken } = useTokenStore();
 
   return (
     <WebViewWithInjected

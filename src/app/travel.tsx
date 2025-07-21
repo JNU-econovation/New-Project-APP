@@ -7,8 +7,10 @@ import { useEffect, useState } from "react";
 
 //TODO: prerendering 관련 로직을 따로 분리
 
+const DEFAULT_COUNT = 3;
+
 const TravelScreen = () => {
-  const [count, setCount] = useState(3);
+  const [count, setCount] = useState(DEFAULT_COUNT);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
