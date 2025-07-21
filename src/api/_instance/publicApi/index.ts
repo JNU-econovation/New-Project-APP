@@ -40,6 +40,14 @@ publicApi.interceptors.response.use(
     return response.data;
   },
   (error) => {
+    console.error(
+      "Public API error:",
+      error,
+      "url:",
+      error.config?.url,
+      "method:",
+      error.config?.method,
+    );
     return Promise.reject(error);
   },
 );
