@@ -33,18 +33,45 @@
         {
           "type": "route",
           "uuid": "c032fa5e-fce9-4806-b273-6b4a2bfae7c8"
+        },
+        {
+          "type": "folder",
+          "uuid": "f703da0a-9253-4fb3-a3c0-9a30017918a4"
+        },
+        {
+          "type": "folder",
+          "uuid": "b639e2c5-9bc6-4ec4-95d9-12968bc5b767"
         }
       ]
     },
     {
       "uuid": "b639e2c5-9bc6-4ec4-95d9-12968bc5b767",
       "name": "🏕️ Facilities & Infrastructure",
-      "children": []
+      "children": [
+        {
+          "type": "route",
+          "uuid": "4ff6a2a8-fea6-4123-8d3f-4040405ae3aa"
+        }
+      ]
     },
     {
       "uuid": "dd72ca52-cb22-48cc-b2e7-2cacadf740aa",
       "name": "🏷️ Tags & Categories",
       "children": []
+    },
+    {
+      "uuid": "f703da0a-9253-4fb3-a3c0-9a30017918a4",
+      "name": "Base(거점)",
+      "children": [
+        {
+          "type": "route",
+          "uuid": "6fb32c8d-b450-4154-8041-4f13c76fa384"
+        },
+        {
+          "type": "route",
+          "uuid": "28b49b10-87e2-4844-b74a-920af57fb91c"
+        }
+      ]
     }
   ],
   "routes": [
@@ -160,6 +187,101 @@
         }
       ],
       "responseMode": null
+    },
+    {
+      "uuid": "4ff6a2a8-fea6-4123-8d3f-4040405ae3aa",
+      "type": "http",
+      "documentation": "시설(화장실, 쉼터 등)을 조회합니다.",
+      "method": "get",
+      "endpoint": "api/v1/facilities",
+      "responses": [
+        {
+          "uuid": "9ee84a3a-844e-43c5-b52b-6597c0538ace",
+          "body": "{\n \"data\": {\n   \"mountainId\": 1,\n   \"facilities\": [\n     {\n       \"facilityId\": 1,\n       \"facilityType\": \"TOILET\",\n       \"facilityName\": \"화장실 A\",\n       \"coordinate\": [126.98431883836851, 35.14355267384146]\n     },\n     {\n       \"facilityId\": 2,\n       \"facilityType\": \"TOILET\",\n       \"facilityName\": \"화장실 B\",\n       \"coordinate\": [126.97742893060085, 35.138251575091914]\n     },\n     {\n       \"facilityId\": 2341,\n       \"facilityType\": \"EMERGENCY_KIT\",\n       \"facilityName\": \"응키 A\",\n       \"coordinate\": [126.98194862955503, 35.14322785358835]\n     },\n     {\n       \"facilityId\": 213,\n       \"facilityType\": \"SHELTER\",\n       \"facilityName\": \"쉼터 A\",\n       \"coordinate\": [126.98194862955503, 35.14322785358835]\n     },\n     {\n       \"facilityId\": 251,\n       \"facilityType\": \"MARKET\",\n       \"facilityName\": \"마켓 A\",\n       \"coordinate\": [126.98194862955503, 35.14322785358835]\n     },\n     {\n       \"facilityId\": 261,\n       \"facilityType\": \"SHELTER\",\n       \"facilityName\": \"쉼터 A\",\n       \"coordinate\": [126.99270608375296, 35.10457844655706]\n     },\n     {\n       \"facilityId\": 281,\n       \"facilityType\": \"MARKET\",\n       \"facilityName\": \"마켓 A\",\n       \"coordinate\": [127.00323602615697, 35.114169169637215]\n     },\n     {\n       \"facilityId\": 21123,\n       \"facilityType\": \"RENTAL\",\n       \"facilityName\": \"RENTAL A\",\n       \"coordinate\": [127.00323602615697, 35.114169169637215]\n     },\n     {\n       \"facilityId\": 2123123,\n       \"facilityType\": \"MARKET\",\n       \"facilityName\": \"당근 A\",\n       \"coordinate\": [126.99867264688197, 35.1162603754162]\n     }\n   ]\n },\n \"status\": \"success\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "mountainId",
+              "value": "",
+              "invert": true,
+              "operator": "null"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "6fb32c8d-b450-4154-8041-4f13c76fa384",
+      "type": "http",
+      "documentation": "특정 산의 거점(base)를 조회한다.",
+      "method": "get",
+      "endpoint": "api/v1/bases",
+      "responses": [
+        {
+          "uuid": "8c8b4ba5-e238-48a9-95b5-c885bd13fe04",
+          "body": "{\n  \"data\": {\n    \"mountainId\": 1,\n    \"bases\": [\n      {\n        \"baseId\": 1,\n        \"name\": \"교리터널\",\n        \"coordinate\": [\n          126.979223621632,\n          35.070906194893\n        ]\n      },\n      {\n        \"baseId\": 2,\n        \"name\": \"규봉\",\n        \"coordinate\": [\n          127.0160852,\n          35.1185479\n        ]\n      },\n      {\n        \"baseId\": 3,\n        \"name\": \"규봉암\",\n        \"coordinate\": [\n          127.0161729,\n          35.1183113\n        ]\n      },\n      {\n        \"baseId\": 4,\n        \"name\": \"너릿재\",\n        \"coordinate\": [\n          126.9572814,\n          35.07795368\n        ]\n      },\n      {\n        \"baseId\": 5,\n        \"name\": \"늦재\",\n        \"coordinate\": [\n          126.9820064,\n          35.143218\n        ]\n      },\n      {\n        \"baseId\": 6,\n        \"name\": \"담양경상리\",\n        \"coordinate\": [\n          127.033206059354,\n          35.1507622842581\n        ]\n      },\n      {\n        \"baseId\": 7,\n        \"name\": \"당산나무\",\n        \"coordinate\": [\n          126.972125113781,\n          35.1256944736997\n        ]\n      },\n      {\n        \"baseId\": 8,\n        \"name\": \"동화사터\",\n        \"coordinate\": [\n          126.9854894,\n          35.13310602\n        ]\n      },\n      {\n        \"baseId\": 9,\n        \"name\": \"만연사\",\n        \"coordinate\": [\n          126.986567122924,\n          35.0845540009366\n        ]\n      },\n      {\n        \"baseId\": 10,\n        \"name\": \"무등산편백자연휴양림\",\n        \"coordinate\": [\n          127.02525066854,\n          35.0921551744249\n        ]\n      },\n      {\n        \"baseId\": 11,\n        \"name\": \"북산\",\n        \"coordinate\": [\n          127.0242756,\n          35.1411077\n        ]\n      },\n      {\n        \"baseId\": 12,\n        \"name\": \"새인봉\",\n        \"coordinate\": [\n          126.9655478,\n          35.12133025\n        ]\n      },\n      {\n        \"baseId\": 13,\n        \"name\": \"서석대\",\n        \"coordinate\": [\n          127.0026686,\n          35.12092492\n        ]\n      },\n      {\n        \"baseId\": 14,\n        \"name\": \"서인봉\",\n        \"coordinate\": [\n          126.9810868,\n          35.11732844\n        ]\n      },\n      {\n        \"baseId\": 15,\n        \"name\": \"시무지기폭포\",\n        \"coordinate\": [\n          127.0231746,\n          35.1281959\n        ]\n      },\n      {\n        \"baseId\": 16,\n        \"name\": \"안양산\",\n        \"coordinate\": [\n          127.0192404,\n          35.1008716\n        ]\n      },\n      {\n        \"baseId\": 17,\n        \"name\": \"원효사\",\n        \"coordinate\": [\n          126.9854474,\n          35.14848918\n        ]\n      },\n      {\n        \"baseId\": 18,\n        \"name\": \"원효사입구\",\n        \"coordinate\": [\n          126.985212424637,\n          35.1477305979936\n        ]\n      },\n      {\n        \"baseId\": 19,\n        \"name\": \"인계리\",\n        \"coordinate\": [\n          127.033642594001,\n          35.1248164327792\n        ]\n      },\n      {\n        \"baseId\": 20,\n        \"name\": \"장불재\",\n        \"coordinate\": [\n          126.9985684,\n          35.11612516\n        ]\n      },\n      {\n        \"baseId\": 21,\n        \"name\": \"중머리재\",\n        \"coordinate\": [\n          126.9843647,\n          35.11886432\n        ]\n      },\n      {\n        \"baseId\": 22,\n        \"name\": \"증심교\",\n        \"coordinate\": [\n          126.963405989889,\n          35.1314293384178\n        ]\n      },\n      {\n        \"baseId\": 23,\n        \"name\": \"증심사주차장\",\n        \"coordinate\": [\n          126.956774973978,\n          35.1337932344148\n        ]\n      },\n      {\n        \"baseId\": 24,\n        \"name\": \"토끼등\",\n        \"coordinate\": [\n          126.9779191,\n          35.13117145\n        ]\n      },\n      {\n        \"baseId\": 25,\n        \"name\": \"도원마을(도원탐방지원센터)\",\n        \"coordinate\": [\n          127.029387653321,\n          35.1145825326321\n        ]\n      },\n      {\n        \"baseId\": 26,\n        \"name\": \"도원마을(영신마을)\",\n        \"coordinate\": [\n          127.033604792924,\n          35.1195930318044\n        ]\n      },\n      {\n        \"baseId\": 27,\n        \"name\": \"용추삼거리\",\n        \"coordinate\": [\n          126.994059593531,\n          35.1193879768912\n        ]\n      },\n      {\n        \"baseId\": 28,\n        \"name\": \"옛길갈림길\",\n        \"coordinate\": [\n          126.996818485178,\n          35.1228267898449\n        ]\n      }\n    ]\n  },\n  \"status\": \"success\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "28b49b10-87e2-4844-b74a-920af57fb91c",
+      "type": "http",
+      "documentation": "산의 모든 거점의 상세 정보를 조회한다.",
+      "method": "get",
+      "endpoint": "api/v1/bases/:mountainId/details",
+      "responses": [
+        {
+          "uuid": "166bba1a-cb84-4b5e-8f0c-879e46493537",
+          "body": "{\n  \"data\": {\n    \"mountainId\": 1,\n    \"baseDetails\": [\n      {\n        \"baseId\": 1,\n        \"name\": \"교리터널\",\n        \"weather\": \"맑음\",\n        \"temperature\": 25,\n        \"recommendedOutfit\": null,\n        \"images\": [\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock1.png\",\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock2.png\"\n        ]\n      },\n      {\n        \"baseId\": 2,\n        \"name\": \"규봉\",\n        \"weather\": \"맑음\",\n        \"temperature\": 25,\n        \"recommendedOutfit\": null,\n        \"images\": [\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock1.png\",\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock2.png\"\n        ]\n      },\n      {\n        \"baseId\": 28,\n        \"name\": \"옛길갈림길\",\n        \"weather\": \"맑음\",\n        \"temperature\": 25,\n        \"recommendedOutfit\": null,\n        \"images\": [\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock1.png\",\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock2.png\"\n        ]\n      },\n      {\n        \"baseId\": 3,\n        \"name\": \"무등산 정상\",\n        \"weather\": \"맑음\",\n        \"temperature\": 22,\n        \"recommendedOutfit\": null,\n        \"images\": [\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock3.png\",\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock4.png\"\n        ]\n      },\n      {\n        \"baseId\": 4,\n        \"name\": \"서석대\",\n        \"weather\": \"흐림\",\n        \"temperature\": 23,\n        \"recommendedOutfit\": null,\n        \"images\": [\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock5.png\",\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock6.png\"\n        ]\n      },\n      {\n        \"baseId\": 5,\n        \"name\": \"입석대\",\n        \"weather\": \"맑음\",\n        \"temperature\": 24,\n        \"recommendedOutfit\": null,\n        \"images\": [\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock7.png\",\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock8.png\"\n        ]\n      },\n      {\n        \"baseId\": 6,\n        \"name\": \"장불재\",\n        \"weather\": \"구름많음\",\n        \"temperature\": 21,\n        \"recommendedOutfit\": null,\n        \"images\": [\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock9.png\",\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock10.png\"\n        ]\n      },\n      {\n        \"baseId\": 7,\n        \"name\": \"원효사\",\n        \"weather\": \"맑음\",\n        \"temperature\": 26,\n        \"recommendedOutfit\": null,\n        \"images\": [\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock11.png\",\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock12.png\"\n        ]\n      },\n      {\n        \"baseId\": 8,\n        \"name\": \"증심사\",\n        \"weather\": \"맑음\",\n        \"temperature\": 27,\n        \"recommendedOutfit\": null,\n        \"images\": [\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock13.png\",\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock14.png\"\n        ]\n      },\n      {\n        \"baseId\": 9,\n        \"name\": \"용추폭포\",\n        \"weather\": \"구름많음\",\n        \"temperature\": 20,\n        \"recommendedOutfit\": null,\n        \"images\": [\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock15.png\",\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock16.png\"\n        ]\n      },\n      {\n        \"baseId\": 10,\n        \"name\": \"덕산재\",\n        \"weather\": \"맑음\",\n        \"temperature\": 24,\n        \"recommendedOutfit\": null,\n        \"images\": [\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock17.png\",\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock18.png\"\n        ]\n      },\n      {\n        \"baseId\": 11,\n        \"name\": \"의재미술관\",\n        \"weather\": \"맑음\",\n        \"temperature\": 26,\n        \"recommendedOutfit\": null,\n        \"images\": [\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock19.png\",\n          \"https://oasis-joa.s3.ap-northeast-2.amazonaws.com/soop/mock20.png\"\n        ]\n      }\n    ]\n  },\n  \"status\": \"success\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
     }
   ],
   "rootChildren": [
@@ -174,10 +296,6 @@
     {
       "type": "folder",
       "uuid": "cc61ca52-cb22-48cc-b2e7-2cacadf740ff"
-    },
-    {
-      "type": "folder",
-      "uuid": "b639e2c5-9bc6-4ec4-95d9-12968bc5b767"
     },
     {
       "type": "folder",
