@@ -32,6 +32,14 @@ authenticatedApi.interceptors.response.use(
     return response.data.data;
   },
   (error) => {
+    console.error(
+      "authenticated API error:",
+      error,
+      "url:",
+      error.config?.url,
+      "method:",
+      error.config?.method,
+    );
     return Promise.reject(error);
   },
 );
