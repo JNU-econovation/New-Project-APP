@@ -14,7 +14,7 @@ import { useTokenStore } from "@store/secureStorage/useTokenStore/index";
 import { COLORS } from "@styles/colorPalette";
 import { getPathToRoute } from "@utils/bridge";
 import { logMessageWithTime } from "@utils/log";
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import {
   forwardRef,
   useCallback,
@@ -48,6 +48,7 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
   ({ source, onMessage, onReadyToMessage, loadingBar = false }, ref) => {
     const webViewRef = useRef<WebView>(null);
     const progressAnim = useRef(new Animated.Value(0)).current;
+    const navigation = useNavigation();
 
     const [canGoBack, setCanGoBack] = useState(false);
     const [canGoForward, setCanGoForward] = useState(false);
@@ -61,6 +62,18 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
     );
 
     useImperativeHandle(ref, () => webViewRef.current as WebView);
+
+    // useEffect(() => {
+    //   navigation.setOptions({
+    //     gestureEnabled: !canGoBack,
+    //   });
+    // }, [navigation, canGoBack]);
+    useEffect(() => {
+      navigation.setOptions({
+        gestureEnabled: false,
+        swipeEnabled: false,
+      });
+    }, []);
 
     useEffect(() => {
       const backAction = () => {
@@ -171,8 +184,11 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
           middleware={middleware}
           onReadyToMessage={onReadyToMessage}
           // 뒤로가기, 앞으로가기 기능
-          // onNavigationStateChange={handleNavigationStateChange}
-          allowsBackForwardNavigationGestures={false}
+          // allowsBackForwardNavigationGestures={false}
+          onNavigationStateChange={(navState) => {
+            setCanGoBack(navState.canGoBack);
+            setCanGoForward(navState.canGoForward);
+          }}
         />
       </View>
     );
