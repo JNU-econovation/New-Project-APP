@@ -2,6 +2,7 @@ import ModalProvider from "@service/modal/provider";
 import QueryProvider from "@service/query/provider";
 import { Stack } from "expo-router";
 import { StatusBar } from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function RootLayout() {
   return (
@@ -25,6 +26,8 @@ export default function RootLayout() {
             name="loginModal"
             options={{
               presentation: "modal",
+              headerShown: true,
+              headerTitle: "카카오 로그인",
             }}
           />
           <Stack.Screen
@@ -43,6 +46,7 @@ export default function RootLayout() {
           />
         </Stack>
       </ModalProvider>
+      <Toast />
     </QueryProvider>
   );
 }
