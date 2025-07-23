@@ -19,6 +19,7 @@ interface WebViewWithBridgeProps<ReqMessage, ResMessage>
   onReadyToMessage?: () => void;
   middleware?: (message: ReqMessage) => void;
   ref?: Ref<WebView>;
+  strictMode?: boolean;
 }
 
 const WebviewWithBridge = <ReqMessage, ResMessage>({
@@ -26,6 +27,7 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
   onReadyToMessage,
   middleware,
   ref,
+  strictMode = true,
   ...props
 }: WebViewWithBridgeProps<ReqMessage, ResMessage>) => {
   const [isReady, setIsReady] = useState(false);
@@ -91,9 +93,16 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
           resMessage
             .then((response) => {
               if (!response) {
-                throw new Error(
-                  "전달받은 브리지에 대한 응답이 없습니다. onBridgeMessage를 확인해주세요.",
-                );
+                if (strictMode)
+                  throw new Error(
+                    "전달받은 브리지에 대한 응답이 없습니다. onBridgeMessage를 확인해주세요.\n" +
+                      `전달 받은 브리지 : ${JSON.stringify(body)}`,
+                  );
+                else
+                  console.warn(
+                    "전달받은 브리지에 대한 응답이 없습니다. onBridgeMessage를 확인해주세요.\n" +
+                      `전달 받은 브리지 : ${JSON.stringify(body)}`,
+                  );
               }
               Bridge.createMessage(webViewRef, {
                 ack: _id,
@@ -106,10 +115,19 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
           return;
         }
 
-        if (!resMessage)
-          throw new Error(
-            "전달받은 브리지에 대한 응답이 없습니다. onBridgeMessage를 확인해주세요.",
-          );
+        if (!resMessage) {
+          if (strictMode)
+            throw new Error(
+              "전달받은 브리지에 대한 응답이 없습니다. onBridgeMessage를 확인해주세요.\n" +
+                `전달 받은 브리지 : ${JSON.stringify(body)}`,
+            );
+          else
+            console.warn(
+              "전달받은 브리지에 대한 응답이 없습니다. onBridgeMessage를 확인해주세요.\n" +
+                `전달 받은 브리지 : ${JSON.stringify(body)}`,
+            );
+        }
+
         Bridge.createMessage(webViewRef, {
           ack: _id,
           body: resMessage,
@@ -128,6 +146,10 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
       scrollEnabled={true}
       decelerationRate="normal"
       contentInsetAdjustmentBehavior="never"
+      //임시 코드
+      allowFileAccess={true}
+      allowFileAccessFromFileURLs={true}
+      allowUniversalAccessFromFileURLs={true}
       {...props}
     />
   );
