@@ -1,13 +1,16 @@
-import { useTokenStore } from "@/src/store/secureStorage/useTokenStore";
 import styled from "@emotion/native";
+import useScreenDisable from "@hooks/common/useScreenDisable";
 import useAppleLoginMutate from "@hooks/feature/query/useAppleLoginMutate";
 import Button from "@shared/ui/Button";
 import { AppleSVG } from "@shared/ui/Icons";
+import { useTokenStore } from "@store/secureStorage/useTokenStore";
+import { setValueToSecureStore } from "@utils/secureStore";
 import * as AppleAuthentication from "expo-apple-authentication";
 import { router } from "expo-router";
 import { useCallback } from "react";
 
 const AppleLoginButton = () => {
+  const { setScreenDisable, resetScreenDisable } = useScreenDisable();
   const { setAccessToken, setRefreshToken, setAccessTokenExpiredTime } =
     useTokenStore();
   const { mutate } = useAppleLoginMutate();
@@ -37,25 +40,31 @@ const AppleLoginButton = () => {
           },
         },
         {
-          onSuccess: ({
-            accessToken,
-            refreshToken,
-            accessTokenExpiredTime,
-          }: any) => {
+          onSuccess: ({ accessToken, refreshToken, expirationTime }: any) => {
             setAccessToken(accessToken);
             setRefreshToken(refreshToken);
-            setAccessTokenExpiredTime(accessTokenExpiredTime);
+            setAccessTokenExpiredTime(expirationTime);
+
+            setValueToSecureStore("accessToken", accessToken);
+            setValueToSecureStore("refreshToken", refreshToken);
+            setValueToSecureStore("expirationTime", `${expirationTime}`);
+
+            resetScreenDisable();
             router.dismissAll();
             router.replace("/(tabs)/home");
           },
           onError: (error) => {
-            console.error("애플 로그인 요청 에러", error);
+            // console.error("애플 로그인 요청 에러", error);
+            resetScreenDisable();
+          },
+          onSettled: () => {
+            setScreenDisable();
           },
         },
       );
     } catch (e) {
       if (e.code === "ERR_REQUEST_CANCELED") {
-        console.error("애플 로그인 요청이 취소되었습니다.");
+        // console.error("애플 로그인 요청이 취소되었습니다.");
       } else {
         // handle other errors
       }
