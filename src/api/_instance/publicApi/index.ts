@@ -1,5 +1,6 @@
-import { setValueToSecureStore } from "@utils/secureStore";
 import axios from "axios";
+
+const { EXPO_PUBLIC_MODE } = process.env;
 
 const publicApi = axios.create({
   baseURL: process.env.EXPO_PUBLIC_BASE_URL?.replace(/\/$/, ""),
@@ -10,44 +11,58 @@ const publicApi = axios.create({
   },
 });
 
-publicApi.interceptors.response.use(
-  async (response) => {
-    // 만약 토큰이 있는 경우, SecureStore에 저장
-    if (response.headers["accesstoken"]) {
-      const accessToken = response.headers["accesstoken"];
-      const refreshToken = response.headers["refreshtoken"];
-      const accessTokenExpiredTime = response.headers["accesstokenexpiredtime"];
-
-      try {
-        await setValueToSecureStore("accessToken", accessToken);
-        await setValueToSecureStore("refreshToken", refreshToken);
-        await setValueToSecureStore(
-          "accessTokenExpiredTime",
-          accessTokenExpiredTime,
-        );
-
-        response.data = {
-          ...response.data,
-          accessToken,
-          refreshToken,
-          accessTokenExpiredTime,
-        };
-      } catch (error) {
-        console.error("Failed to store tokens in SecureStore:", error);
+publicApi.interceptors.request.use(
+  (config) => {
+    if (EXPO_PUBLIC_MODE === "development") {
+      console.log(
+        "==================[Public API Request]======================",
+      );
+      console.log("[method:]", config.method?.toUpperCase());
+      console.log("[url:]", config.url);
+      console.log("[data:]", config.data);
+      console.log("[params:]", config.params);
+    }
+    return config;
+  },
+  (error) => {
+    if (EXPO_PUBLIC_MODE === "development") {
+      console.error(
+        "==================[Public API Request Error]======================",
+      );
+      console.error("[error:]", error.message);
+      if (error.config) {
+        console.error("[url:]", error.config.url);
+        console.error("[data:]", error.config.data);
+        console.error("[params:]", error.config.params);
       }
     }
+    console.error("[error:]", error);
+    return Promise.reject(error);
+  },
+);
 
+publicApi.interceptors.response.use(
+  async (response) => {
+    if (EXPO_PUBLIC_MODE === "development") {
+      console.log(
+        "==================[Public API Response]======================",
+      );
+      console.log("[status:]", response.status);
+      console.log("[url:]", response.config.url);
+      console.log("[data:]", response.data);
+    }
     return response.data;
   },
   (error) => {
-    console.error(
-      "Public API error:",
-      error,
-      "url:",
-      error.config?.url,
-      "method:",
-      error.config?.method,
-    );
+    if (EXPO_PUBLIC_MODE === "development") {
+      console.error(
+        "==================[Public API error]======================",
+      );
+      console.error("[error :]", error);
+      console.error("[url:]", error.config?.url);
+      console.error("[data:]", error.response?.data);
+      console.error("[status:]", error.response?.status);
+    }
     return Promise.reject(error);
   },
 );
