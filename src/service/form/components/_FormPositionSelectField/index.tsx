@@ -1,4 +1,4 @@
-import PositionSelectField from "@components/common/entities/PositionSelectField";
+import PositionSelectField from "@entities/PositionSelectField";
 
 interface PositionSelectFieldProps {
   title: string;

@@ -146,10 +146,6 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
       scrollEnabled={true}
       decelerationRate="normal"
       contentInsetAdjustmentBehavior="never"
-      //임시 코드
-      allowFileAccess={true}
-      allowFileAccessFromFileURLs={true}
-      allowUniversalAccessFromFileURLs={true}
       {...props}
     />
   );

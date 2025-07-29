@@ -1,7 +1,7 @@
 import * as SMS from "expo-sms";
 import { useEffect, useState } from "react";
 
-interface useSMSProps {
+interface UseSMSProps {
   addresses: string | string[];
   message: string;
   options?: SMS.SMSOptions;
@@ -19,7 +19,7 @@ const useSMS = ({
   onCancel,
   onError,
   enable,
-}: useSMSProps) => {
+}: UseSMSProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [isAvailable, setIsAvailable] = useState(false);

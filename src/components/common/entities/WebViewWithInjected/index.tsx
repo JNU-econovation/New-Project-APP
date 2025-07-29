@@ -10,6 +10,7 @@ import {
   MessageEventResponseData,
 } from "@model/webview";
 import WebviewWithBridge from "@service/bridge/components/WebviewWithBridge";
+import useToast from "@service/toast";
 import { useTokenStore } from "@store/secureStorage/useTokenStore/index";
 import { COLORS } from "@styles/colorPalette";
 import { getPathToRoute } from "@utils/bridge";
@@ -50,10 +51,18 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
     const progressAnim = useRef(new Animated.Value(0)).current;
     const navigation = useNavigation();
 
+    const showToast = useToast();
+
     const [canGoBack, setCanGoBack] = useState(false);
     const [canGoForward, setCanGoForward] = useState(false);
 
-    const { accessToken, refreshToken } = useTokenStore();
+    const {
+      accessToken,
+      refreshToken,
+      setAccessToken,
+      setRefreshToken,
+      setAccessTokenExpiredTime,
+    } = useTokenStore();
 
     const INJECTED_JAVASCRIPT = useMemo(
       () =>
@@ -63,11 +72,6 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
 
     useImperativeHandle(ref, () => webViewRef.current as WebView);
 
-    // useEffect(() => {
-    //   navigation.setOptions({
-    //     gestureEnabled: !canGoBack,
-    //   });
-    // }, [navigation, canGoBack]);
     useEffect(() => {
       navigation.setOptions({
         gestureEnabled: false,
@@ -93,12 +97,6 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
       };
     }, [webViewRef, canGoBack]);
 
-    // iOS 제스처 방지를 위한 추가 처리
-    // const handleNavigationStateChange = useCallback((navState: any) => {
-    //   setCanGoBack(navState.canGoBack);
-    //   setCanGoForward(navState.canGoForward);
-    // }, []);
-
     const middleware = useCallback((reqMessage: MessageEventRequestData) => {
       logMessageWithTime(`WebView received: \n${JSON.stringify(reqMessage)}`);
 
@@ -122,7 +120,7 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
           ? router.replace(getPathToRoute({ path, params }))
           : router.push(getPathToRoute({ path, params }));
 
-        // 동적 에러처리 필요
+        // TODO: 동적 에러처리 필요
 
         return {
           name: "route-to",
@@ -132,12 +130,28 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
 
       // 뒤로가기 메시지 처리
       if (reqMessage.name === "route-back" && reqMessage.method === "POST") {
-        router.back();
+        // router.back();
+        try {
+          router.back();
+        } catch (error) {
+          console.log(error);
+          router.push("/(tabs)/home");
+        }
 
         return {
           name: "route-back",
           status: "success",
         };
+      }
+
+      if (reqMessage.name === "show-toast" && reqMessage.method === "POST") {
+        const toastProps = reqMessage.body as {
+          type: "success" | "info" | "error";
+          text1: string;
+          text2: string;
+        };
+
+        showToast(toastProps);
       }
     }, []);
 
@@ -168,8 +182,10 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
 
         <WebviewWithBridge<MessageEventRequestData, MessageEventResponseData>
           source={source}
+          style={{ flex: 1 }}
           ref={webViewRef}
           injectedJavaScript={INJECTED_JAVASCRIPT}
+          strictMode={false} // 시연용 코드
           onBridgeMessage={onMessage}
           onLoadProgress={({ nativeEvent }) => {
             progressAnim.setValue(nativeEvent.progress);
@@ -189,6 +205,9 @@ const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
             setCanGoBack(navState.canGoBack);
             setCanGoForward(navState.canGoForward);
           }}
+          // onError={(e) => {
+          //   router.back();
+          // }}
         />
       </View>
     );
