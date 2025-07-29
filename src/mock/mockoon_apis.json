@@ -72,6 +72,25 @@
           "uuid": "28b49b10-87e2-4844-b74a-920af57fb91c"
         }
       ]
+    },
+    {
+      "uuid": "c2ba4d2e-75d8-479c-af80-2e7a7ea36623",
+      "name": "courses",
+      "children": []
+    },
+    {
+      "uuid": "2bd15565-2056-434b-aa68-bff15c71e41c",
+      "name": "bookmarks",
+      "children": [
+        {
+          "type": "route",
+          "uuid": "8e492e0a-b2fe-42c8-a0dc-0549f672b056"
+        },
+        {
+          "type": "route",
+          "uuid": "6156909e-e40d-4ddc-8f3b-a8526b1c1b5d"
+        }
+      ]
     }
   ],
   "routes": [
@@ -126,7 +145,7 @@
       "responses": [
         {
           "uuid": "145658bd-ac17-4bd2-84cb-f9984fd69400",
-          "body": "\n{\n\t\t\"data\" : {\n\t\t\turl : \"https://api.soop.euichan.com/api/v1/oauth/kakao/callback?code=gC4Enumw5HOnxgTLJsyTr1FrND-6YIQ3ohFvPhBBkhgGrMX6EfIZ-gAAAAQKDRlTAAABl9mkTOxDz1szkZmFRA\"\n\t\t}\n\t\t\"status\" : \"success\"\n}\n\n",
+          "body": "\n{\n\t\t\"data\" : {\n\t\t\turi : \"https://accounts.kakao.com/login/?continue=https%3A%2F%2Fkauth.kakao.com%2Foauth%2Fauthorize%3Fclient_id%3Dadf1cfad349f0843a6920c411c3005c2%26redirect_uri%3Dhttps%253A%252F%252Fapi.econo.soop.euichan.com%253A8080%252Fapi%252Fv1%252Foauth%252Fkakao%252Fcallback%26response_type%3Dcode%26through_account%3Dtrue#login\"\n\t\t}\n\t\t\"status\" : \"success\"\n}\n\n",
           "latency": 0,
           "statusCode": 200,
           "label": "성공",
@@ -168,7 +187,7 @@
       "responses": [
         {
           "uuid": "f8577e2c-42d9-44e8-a87c-f34ee809df6e",
-          "body": "{\n    \"data\": {\n        \"courses\": [\n            {\n                \"id\": 6,\n                \"name\": \"중심사-중머리재-원효분소\",\n                \"length\": 4.6,\n                \"duration\": 128,\n                \"difficulty\": \"어려움\",\n                \"bookmark\": true\n            },{\n                \"id\": 62,\n                \"name\": \"중심사-중머리재-원효분소\",\n                \"length\": 4.6,\n                \"duration\": 1440,\n                \"difficulty\": \"쉬움\",\n                \"bookmark\": true\n            },{\n                \"id\": 61,\n                \"name\": \"중심사-중머리재-원효분소\",\n                \"length\": 4.9,\n                \"duration\": 120,\n                \"difficulty\": \"보통\",\n                \"bookmark\": false\n            },{\n                \"id\": 36,\n                \"name\": \"중심사-중머리재-원효분소\",\n                \"length\": 40.6,\n                \"duration\": 34,\n                \"difficulty\": \"어려움\",\n                \"bookmark\": false\n            }\n        ]\n    },\n\t\"status\": \"success\"\n}",
+          "body": "{\n    \"data\": {\n        \"courses\": [\n            {\n                \"id\": 6,\n                \"name\": \"중심사-중머리재-원효분소\",\n                \"length\": 4.6,\n                \"duration\": 128,\n                \"difficulty\": \"HARD\",\n                \"bookmark\": true,\n                \"image\" : \"https://images.pexels.com/photos/2080960/pexels-photo-2080960.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1\"\n            },{\n                \"id\": 62,\n                \"name\": \"중심사-중머리재-원효분소\",\n                \"length\": 4.6,\n                \"duration\": 1440,\n                \"difficulty\": \"EASY\",\n                \"bookmark\": true,\n                \"image\" : \"https://imagescdn.gettyimagesbank.com/500/201907/jv11372422.jpg\"\n            },{\n                \"id\": 61,\n                \"name\": \"중심사-중머리재-원효분소\",\n                \"length\": 4.9,\n                \"duration\": 120,\n                \"difficulty\": \"HARD\",\n                \"bookmark\": false,\n                \"image\" : \"https://images.pexels.com/photos/2080960/pexels-photo-2080960.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1\"\n            },{\n                \"id\": 36,\n                \"name\": \"중심사-중머리재-원효분소\",\n                \"length\": 40.6,\n                \"duration\": 34,\n                \"difficulty\": \"NORMAL\",\n                \"bookmark\": false,\n                \"image\" : \"https://imagescdn.gettyimagesbank.com/500/201907/jv11372422.jpg\"\n            }\n        ]\n    },\n\t\"status\": \"success\"\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -282,6 +301,64 @@
         }
       ],
       "responseMode": null
+    },
+    {
+      "uuid": "8e492e0a-b2fe-42c8-a0dc-0549f672b056",
+      "type": "http",
+      "documentation": "북마크 삭제",
+      "method": "delete",
+      "endpoint": "api/v1/bookmarks/:courseId",
+      "responses": [
+        {
+          "uuid": "234717ef-51bb-41ca-8084-7b7114cbe92e",
+          "body": "{\n\t\t\"data\" : null\n\t\t\"status\" : \"success\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "6156909e-e40d-4ddc-8f3b-a8526b1c1b5d",
+      "type": "http",
+      "documentation": "북마크 등록",
+      "method": "post",
+      "endpoint": "api/v1/bookmarks",
+      "responses": [
+        {
+          "uuid": "36b1d705-076e-47f8-a734-9ca226a32e19",
+          "body": "{\n\t\t\"data\" : null\n\t\t\"status\" : \"success\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
     }
   ],
   "rootChildren": [
@@ -300,6 +377,14 @@
     {
       "type": "folder",
       "uuid": "dd72ca52-cb22-48cc-b2e7-2cacadf740aa"
+    },
+    {
+      "type": "folder",
+      "uuid": "c2ba4d2e-75d8-479c-af80-2e7a7ea36623"
+    },
+    {
+      "type": "folder",
+      "uuid": "2bd15565-2056-434b-aa68-bff15c71e41c"
     }
   ],
   "proxyMode": false,
