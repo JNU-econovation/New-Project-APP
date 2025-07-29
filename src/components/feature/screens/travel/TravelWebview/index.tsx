@@ -1,6 +1,5 @@
-import WebViewWithInjected from "@entities/WebViewWithInjected";
 import PATH_ROUTE from "@constants/pathRoute";
-import { router } from "expo-router";
+import WebViewWithInjected from "@entities/WebViewWithInjected";
 
 const TravelWebview = () => {
   return (

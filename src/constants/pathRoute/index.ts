@@ -13,14 +13,14 @@ const WEBVIEW = {
     sort?: string;
   }) => `${webviewBaseUri}/course/${mountainId}?sort=${sort}`,
   COURSE_DETAIL: "",
-  MAP: `${webviewBaseUri}/map`,
+  MAP: `${webviewBaseUri}/map?tag=BASE`,
   MAP_COURSE_SEARCH: `${webviewBaseUri}/map/course-search`,
   MAP_COURSE_DETAIL: `${webviewBaseUri}/map/course-detail`,
   MYPAGE: `${webviewBaseUri}/my-page`,
   SAFE_MANUAL: `${webviewBaseUri}/safe-manual`,
   SAFE_MANUAL_DETAIL: ({ manual }: { manual: string }) =>
     `${webviewBaseUri}/safe-manual/detail?manual=${manual}`,
-  TRAVEL: `${webviewBaseUri}/travel`,
+  TRAVEL: `${webviewBaseUri}/travel?tag=BASE`,
   COURSE_SEARCH: `${webviewBaseUri}/course/search`,
 
   MY_INFO: `${webviewBaseUri}/my-page/my-info`,
@@ -33,6 +33,9 @@ const WEBVIEW = {
   CUSTOMER_CENTER: (tab: string) =>
     `${webviewBaseUri}/customer-center?tab=${tab}`,
   // INQUIRY: `${webviewBaseUri}/my-page/inquiry`,
+
+  CHECK_POSITION: (lat: number, lng: number) =>
+    `${webviewBaseUri}/check-position?lat=${lat}&lng=${lng}`,
 } as const;
 
 const REMOTE = {
