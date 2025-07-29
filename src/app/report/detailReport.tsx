@@ -40,7 +40,7 @@ const DetailReport = () => {
               <field.AttachmentField title="첨부 파일" buttonTitle="파일 +" />
             )}
           />
-          <Spacing size={20} />
+          <Spacing size={24} />
           <form.AppField
             name="address"
             children={(field) => (
@@ -50,7 +50,7 @@ const DetailReport = () => {
               />
             )}
           />
-          <Spacing size={20} />
+          <Spacing size={24} />
           <form.AppField
             name="reporter"
             children={(field) => (
@@ -79,7 +79,12 @@ const DetailReport = () => {
           <Spacing size={30} />
         </ContentContainer>
         <PositionBottom>
-          <form.SubmitButton title="신고하기" color="mainWhite" fullWidth />
+          <form.SubmitButton
+            title="신고하기"
+            color="mainWhite"
+            fullWidth
+            disabled={form.isSubmitting}
+          />
         </PositionBottom>
       </form.AppForm>
     </ScreenContainer>
