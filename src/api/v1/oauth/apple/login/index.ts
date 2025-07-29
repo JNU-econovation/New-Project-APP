@@ -19,5 +19,7 @@ export const LOGIN_API_PATH = "/api/v1/oauth/apple/login";
 /**
  * @method POST
  */
-export const postLogin = async (body: LoginRequestBody) =>
-  await publicApi.post(LOGIN_API_PATH, body);
+export const postLogin = async (body: LoginRequestBody) => {
+  const response = await publicApi.post(LOGIN_API_PATH, body);
+  return response.data;
+};
