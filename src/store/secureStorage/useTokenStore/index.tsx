@@ -1,4 +1,7 @@
-import { setValueToSecureStore } from "@utils/secureStore";
+import {
+  setValueToSecureStore,
+  removeValueFromSecureStore,
+} from "@utils/secureStore";
 import { create } from "zustand";
 
 interface TokensStore {
@@ -46,10 +49,20 @@ export const useTokenStore = create<TokensStore>((set, get) => ({
       set({ accessTokenExpiredTime: prevAccessTokenExpiredTime }),
     );
   },
-  clearTokens: () =>
+  clearTokens: () => {
     set({
       accessToken: null,
       refreshToken: null,
       accessTokenExpiredTime: null,
-    }),
+    });
+
+    Promise.all([
+      removeValueFromSecureStore("accessToken"),
+      removeValueFromSecureStore("refreshToken"),
+      removeValueFromSecureStore("accessTokenExpiredTime"),
+    ]).catch(() => {
+      // secure store 삭제 실패 시 로그만 출력하고 상태는 유지
+      console.warn("Failed to clear tokens from secure store");
+    });
+  },
 }));
