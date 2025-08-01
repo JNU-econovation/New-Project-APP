@@ -61,13 +61,6 @@ const WebViewWithInjected = ({
     [accessToken, refreshToken],
   );
 
-  // useEffect(() => {
-  //   navigation.setOptions({
-  //     gestureEnabled: false,
-  //     swipeEnabled: false,
-  //   });
-  // }, []);
-
   useEffect(() => {
     const backAction = () => {
       if (canGoBack) {
@@ -122,7 +115,7 @@ const WebViewWithInjected = ({
       try {
         router.back();
       } catch (error) {
-        console.log(error);
+        console.warn(error);
         router.push("/(tabs)/home");
       }
 
@@ -188,11 +181,9 @@ const WebViewWithInjected = ({
         cacheEnabled={false}
         cacheMode="LOAD_NO_CACHE"
         allowsLinkPreview={false}
-        // cacheMode="LOAD_CACHE_ELSE_NETWORK"
         middleware={middleware}
         onReadyToMessage={onReadyToMessage}
         // 뒤로가기, 앞으로가기 기능
-        // allowsBackForwardNavigationGestures={false}
         onNavigationStateChange={(navState) => {
           setCanGoBack(navState.canGoBack);
           setCanGoForward(navState.canGoForward);

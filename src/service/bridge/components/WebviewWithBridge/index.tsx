@@ -35,11 +35,8 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
   const webViewRef = (ref as React.RefObject<WebView>) || useRef<WebView>(null);
 
   useEffect(() => {
-    console.log(isReady);
-  }, [isReady]);
-
-  useEffect(() => {
     if (isReady) onReadyToMessage?.();
+    // Bridge.clear();
   }, [isReady, onReadyToMessage]);
 
   const handleMessage = useCallback(
@@ -145,7 +142,6 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
       // iOS 제스처 방지
       bounces={false}
       scrollEnabled={true}
-      // decelerationRate="normal"
       decelerationRate={Platform.OS === "ios" ? "normal" : 0.998}
       contentInsetAdjustmentBehavior="never"
       {...props}
