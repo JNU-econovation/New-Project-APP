@@ -1,16 +1,23 @@
-import Button from "@components/common/shared/ui/Button";
-import { KakaoSVG } from "@components/common/shared/ui/Icons";
 import styled from "@emotion/native";
+import Button from "@shared/ui/Button";
+import { KakaoSVG } from "@shared/ui/Icons";
 import { router } from "expo-router";
+import { useCallback } from "react";
 
 const KakaoLoginButton = () => {
-  const handleKakaoLogin = () =>
+  const handleKakaoLogin = useCallback(() => {
+    if (process.env.EXPO_PUBLIC_SERVER_MODE === "mock") {
+      router.dismissAll();
+      router.replace("/(tabs)/home");
+      return;
+    }
     router.push({
       pathname: "/loginModal",
       params: {
         type: "kakao",
       },
     });
+  }, []);
 
   return (
     <Container>
