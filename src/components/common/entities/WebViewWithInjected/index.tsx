@@ -150,7 +150,8 @@ const WebViewWithInjected = ({
               backgroundColor: COLORS.mainGreen,
               zIndex: 9999,
               width: "100%",
-              borderBottomRightRadius: 2,
+              borderTopEndRadius: 1,
+              borderBottomEndRadius: 1,
             },
             {
               width: progressAnim.interpolate({
