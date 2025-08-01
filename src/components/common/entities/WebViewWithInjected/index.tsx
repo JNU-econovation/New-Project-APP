@@ -15,16 +15,8 @@ import { useTokenStore } from "@store/secureStorage/useTokenStore/index";
 import { COLORS } from "@styles/colorPalette";
 import { getPathToRoute } from "@utils/bridge";
 import { logMessageWithTime } from "@utils/log";
-import { router, useNavigation } from "expo-router";
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { router } from "expo-router";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Animated, BackHandler, View } from "react-native";
 import WebView from "react-native-webview";
 import type { WebViewSource } from "react-native-webview/lib/WebViewTypes";
@@ -45,173 +37,169 @@ interface WebViewWithInjectedProps {
   loadingBar?: boolean;
 }
 
-const WebViewWithInjected = forwardRef<WebView, WebViewWithInjectedProps>(
-  ({ source, onMessage, onReadyToMessage, loadingBar = false }, ref) => {
-    const webViewRef = useRef<WebView>(null);
-    const progressAnim = useRef(new Animated.Value(0)).current;
-    const navigation = useNavigation();
+const WebViewWithInjected = ({
+  source,
+  onMessage,
+  onReadyToMessage,
+  loadingBar = false,
+}: WebViewWithInjectedProps) => {
+  const webViewRef = useRef<WebView>(null);
+  const progressAnim = useRef(new Animated.Value(0)).current;
+  // const navigation = useNavigation();
 
-    const showToast = useToast();
+  const showToast = useToast();
 
-    const [canGoBack, setCanGoBack] = useState(false);
-    const [canGoForward, setCanGoForward] = useState(false);
+  const [canGoBack, setCanGoBack] = useState(false);
+  const [canGoForward, setCanGoForward] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-    const {
-      accessToken,
-      refreshToken,
-      setAccessToken,
-      setRefreshToken,
-      setAccessTokenExpiredTime,
-    } = useTokenStore();
+  const { accessToken, refreshToken } = useTokenStore();
 
-    const INJECTED_JAVASCRIPT = useMemo(
-      () =>
-        `${DISABLED_PINCH_GESTURE}${DISABLED_TEXT_SELECT}${DISABLED_SCROLL}${SET_VIEWPORT_RATE}${INJECT_TOKEN(accessToken ?? "", refreshToken ?? "")}`,
-      [accessToken, refreshToken],
+  const INJECTED_JAVASCRIPT = useMemo(
+    () =>
+      `${DISABLED_PINCH_GESTURE}${DISABLED_TEXT_SELECT}${DISABLED_SCROLL}${SET_VIEWPORT_RATE}${INJECT_TOKEN(accessToken ?? "", refreshToken ?? "")}`,
+    [accessToken, refreshToken],
+  );
+
+  // useEffect(() => {
+  //   navigation.setOptions({
+  //     gestureEnabled: false,
+  //     swipeEnabled: false,
+  //   });
+  // }, []);
+
+  useEffect(() => {
+    const backAction = () => {
+      if (canGoBack) {
+        webViewRef.current?.goBack();
+        console.log(webViewRef.current);
+        return true;
+      }
+      return false;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction,
     );
+    return () => {
+      backHandler.remove();
+    };
+  }, [webViewRef, canGoBack]);
 
-    useImperativeHandle(ref, () => webViewRef.current as WebView);
+  const middleware = useCallback((reqMessage: MessageEventRequestData) => {
+    logMessageWithTime(`WebView received: \n${JSON.stringify(reqMessage)}`);
 
-    useEffect(() => {
-      navigation.setOptions({
-        gestureEnabled: false,
-        swipeEnabled: false,
-      });
-    }, []);
+    const { name, method, body } = reqMessage;
 
-    useEffect(() => {
-      const backAction = () => {
-        if (canGoBack) {
-          webViewRef.current?.goBack();
-          return true;
-        }
-        return false;
+    if (name === ("log-message" as string)) {
+      console.log(body);
+      return;
+    }
+
+    // 라우팅 메시지 처리
+    if (name === ("route-to" as string) && method === "POST") {
+      const { path, routeType, params } = body as {
+        path: string;
+        routeType?: "replace" | "push";
+        params?: Record<string, any>[];
       };
 
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction,
-      );
-      return () => {
-        backHandler.remove();
+      routeType === "replace"
+        ? router.replace(getPathToRoute({ path, params }))
+        : router.push(getPathToRoute({ path, params }));
+
+      // TODO: 동적 에러처리 필요
+
+      return {
+        name: "route-to",
+        status: "success",
       };
-    }, [webViewRef, canGoBack]);
+    }
 
-    const middleware = useCallback((reqMessage: MessageEventRequestData) => {
-      logMessageWithTime(`WebView received: \n${JSON.stringify(reqMessage)}`);
-
-      if (reqMessage.name === ("log-message" as string)) {
-        console.log(reqMessage.body);
-        return;
+    // 뒤로가기 메시지 처리
+    if (name === "route-back" && method === "POST") {
+      try {
+        router.back();
+      } catch (error) {
+        console.log(error);
+        router.push("/(tabs)/home");
       }
 
-      // 라우팅 메시지 처리
-      if (
-        reqMessage.name === ("route-to" as string) &&
-        reqMessage.method === "POST"
-      ) {
-        const { path, routeType, params } = reqMessage.body as {
-          path: string;
-          routeType?: "replace" | "push";
-          params?: Record<string, any>[];
-        };
+      return {
+        name: "route-back",
+        status: "success",
+      };
+    }
 
-        routeType === "replace"
-          ? router.replace(getPathToRoute({ path, params }))
-          : router.push(getPathToRoute({ path, params }));
+    // 토스트 메시지 처리
+    if (name === "show-toast" && method === "POST") {
+      const toastProps = body as {
+        type: "success" | "info" | "error";
+        text1: string;
+        text2: string;
+      };
 
-        // TODO: 동적 에러처리 필요
+      showToast(toastProps);
+    }
+  }, []);
 
-        return {
-          name: "route-to",
-          status: "success",
-        };
-      }
-
-      // 뒤로가기 메시지 처리
-      if (reqMessage.name === "route-back" && reqMessage.method === "POST") {
-        // router.back();
-        try {
-          router.back();
-        } catch (error) {
-          console.log(error);
-          router.push("/(tabs)/home");
-        }
-
-        return {
-          name: "route-back",
-          status: "success",
-        };
-      }
-
-      if (reqMessage.name === "show-toast" && reqMessage.method === "POST") {
-        const toastProps = reqMessage.body as {
-          type: "success" | "info" | "error";
-          text1: string;
-          text2: string;
-        };
-
-        showToast(toastProps);
-      }
-    }, []);
-
-    return (
-      <View style={{ flex: 1 }}>
-        {loadingBar && (
-          <Animated.View
-            style={[
-              {
-                position: "absolute",
-                top: 0,
-                left: 0,
-                height: 4,
-                backgroundColor: COLORS.mainGreen,
-                zIndex: 9999,
-                width: "100%",
-                borderBottomRightRadius: 2,
-              },
-              {
-                width: progressAnim.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: ["0%", "100%"],
-                }),
-              },
-            ]}
-          />
-        )}
-
-        <WebviewWithBridge<MessageEventRequestData, MessageEventResponseData>
-          source={source}
-          style={{ flex: 1 }}
-          ref={webViewRef}
-          injectedJavaScript={INJECTED_JAVASCRIPT}
-          strictMode={false} // 시연용 코드
-          onBridgeMessage={onMessage}
-          onLoadProgress={({ nativeEvent }) => {
-            progressAnim.setValue(nativeEvent.progress);
-          }}
-          onLoadEnd={() => {
-            progressAnim.setValue(0);
-          }}
-          cacheEnabled={false}
-          cacheMode="LOAD_NO_CACHE"
-          allowsLinkPreview={false}
-          // cacheMode="LOAD_CACHE_ELSE_NETWORK"
-          middleware={middleware}
-          onReadyToMessage={onReadyToMessage}
-          // 뒤로가기, 앞으로가기 기능
-          // allowsBackForwardNavigationGestures={false}
-          onNavigationStateChange={(navState) => {
-            setCanGoBack(navState.canGoBack);
-            setCanGoForward(navState.canGoForward);
-          }}
-          // onError={(e) => {
-          //   router.back();
-          // }}
+  return (
+    <View style={{ flex: 1 }}>
+      {loadingBar && isLoading && (
+        <Animated.View
+          style={[
+            {
+              position: "absolute",
+              top: 0,
+              left: 0,
+              height: 2,
+              backgroundColor: COLORS.mainGreen,
+              zIndex: 9999,
+              width: "100%",
+              borderBottomRightRadius: 2,
+            },
+            {
+              width: progressAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: ["0%", "100%"],
+              }),
+            },
+          ]}
         />
-      </View>
-    );
-  },
-);
+      )}
+
+      <WebviewWithBridge<MessageEventRequestData, MessageEventResponseData>
+        source={source}
+        style={{ flex: 1 }}
+        ref={webViewRef}
+        injectedJavaScript={INJECTED_JAVASCRIPT}
+        onBridgeMessage={onMessage}
+        onLoadStart={() => {
+          setIsLoading(true);
+        }}
+        onLoadProgress={({ nativeEvent }) => {
+          progressAnim.setValue(nativeEvent.progress);
+        }}
+        onLoadEnd={() => {
+          progressAnim.setValue(0);
+          setIsLoading(false);
+        }}
+        cacheEnabled={false}
+        cacheMode="LOAD_NO_CACHE"
+        allowsLinkPreview={false}
+        // cacheMode="LOAD_CACHE_ELSE_NETWORK"
+        middleware={middleware}
+        onReadyToMessage={onReadyToMessage}
+        // 뒤로가기, 앞으로가기 기능
+        // allowsBackForwardNavigationGestures={false}
+        onNavigationStateChange={(navState) => {
+          setCanGoBack(navState.canGoBack);
+          setCanGoForward(navState.canGoForward);
+        }}
+      />
+    </View>
+  );
+};
 
 export default WebViewWithInjected;
