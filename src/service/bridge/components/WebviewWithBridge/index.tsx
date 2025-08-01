@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { Platform } from "react-native";
 import WebView from "react-native-webview";
 import type { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 
@@ -31,7 +32,7 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
   ...props
 }: WebViewWithBridgeProps<ReqMessage, ResMessage>) => {
   const [isReady, setIsReady] = useState(false);
-  const webViewRef = useRef<WebView>(null);
+  const webViewRef = (ref as React.RefObject<WebView>) || useRef<WebView>(null);
 
   useEffect(() => {
     console.log(isReady);
@@ -144,7 +145,8 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
       // iOS 제스처 방지
       bounces={false}
       scrollEnabled={true}
-      decelerationRate="normal"
+      // decelerationRate="normal"
+      decelerationRate={Platform.OS === "ios" ? "normal" : 0.998}
       contentInsetAdjustmentBehavior="never"
       {...props}
     />
