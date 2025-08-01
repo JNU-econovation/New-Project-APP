@@ -1,4 +1,5 @@
 import WebView from "react-native-webview";
+
 import type { Flag, WebviewBridgeMessage } from "../types";
 import Message from "./Message";
 import RWindow from "./RWindow";
@@ -27,8 +28,12 @@ export class WebViewBridge {
 
   public renderCallback = (ack: string, body: unknown) => {
     const callbacks = this.R_WND.popCallbacksById(ack);
-    // console.log("renderCallback", ack, body, callbacks);
 
     callbacks.forEach((callback) => callback(body));
+  };
+
+  public clear = () => {
+    this.R_WND.clear();
+    return this.R_WND;
   };
 }
