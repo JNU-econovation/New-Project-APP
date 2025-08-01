@@ -1,10 +1,10 @@
-import MountainSearchWebview from "@screens/course/MountainSearchWebview";
+import CourseWebview from "@screens/course/CourseWebview";
 import ScreenContainer from "@shared/layout/Screen";
 
 const CourseScreen = () => {
   return (
     <ScreenContainer>
-      <MountainSearchWebview />
+      <CourseWebview />
     </ScreenContainer>
   );
 };
