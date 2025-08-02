@@ -43,3 +43,6 @@ app-example
 ios/
 android/
 credentials.json
+
+#claude
+.claude
