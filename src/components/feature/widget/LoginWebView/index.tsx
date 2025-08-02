@@ -2,27 +2,34 @@ import PATH_ROUTE from "@constants/pathRoute";
 import WebViewWithInjected from "@entities/WebViewWithInjected";
 import { useTokenStore } from "@store/secureStorage/useTokenStore";
 import { router } from "expo-router";
-import { useRef } from "react";
-import WebView from "react-native-webview";
 
 const LoginWebView = () => {
-  const ref = useRef<WebView>(null);
-
   const { setAccessToken, setRefreshToken, setAccessTokenExpiredTime } =
     useTokenStore();
 
   return (
     <WebViewWithInjected
-      ref={ref}
       source={{ uri: PATH_ROUTE.WEBVIEW.KAKAO_LOGIN }}
       onMessage={({ method, name, body }) => {
         if (name === "put-token" && method === "POST") {
-          const { accessToken, refreshToken, accessTokenExpiredTime } =
-            body as {
-              accessToken: string;
-              refreshToken: string;
-              accessTokenExpiredTime: number;
+          if (
+            !body ||
+            typeof body !== "object" ||
+            !("accessToken" in body) ||
+            !("refreshToken" in body) ||
+            !("accessTokenExpiredTime" in body) ||
+            typeof body.accessToken !== "string" ||
+            typeof body.refreshToken !== "string" ||
+            typeof body.accessTokenExpiredTime !== "number"
+          ) {
+            console.error("Invalid token data received");
+            return {
+              name: "put-token",
+              status: "error",
+              message: "Invalid token data received",
             };
+          }
+          const { accessToken, refreshToken, accessTokenExpiredTime } = body;
 
           setAccessToken(accessToken);
           setRefreshToken(refreshToken);
