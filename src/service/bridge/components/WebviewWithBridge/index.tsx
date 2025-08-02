@@ -32,7 +32,8 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
   ...props
 }: WebViewWithBridgeProps<ReqMessage, ResMessage>) => {
   const [isReady, setIsReady] = useState(false);
-  const webViewRef = (ref as React.RefObject<WebView>) || useRef<WebView>(null);
+  const internalRef = useRef<WebView>(null);
+  const webViewRef = ref ? (ref as React.RefObject<WebView>) : internalRef;
 
   useEffect(() => {
     if (isReady) onReadyToMessage?.();
