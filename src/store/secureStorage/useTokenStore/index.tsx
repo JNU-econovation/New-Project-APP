@@ -8,15 +8,15 @@ interface TokensStore {
   accessToken: string | null;
   refreshToken: string | null;
   accessTokenExpiredTime: number | null;
+  _prevAccessToken: string | null;
+  _prevRefreshToken: string | null;
+  _prevAccessTokenExpiredTime: number | null;
+
   setAccessToken: (token: string) => void;
   setRefreshToken: (token: string) => void;
   setAccessTokenExpiredTime: (time: number) => void;
   clearTokens: () => void;
 }
-
-let prevAccessToken: string | null = null;
-let prevRefreshToken: string | null = null;
-let prevAccessTokenExpiredTime: number | null = null;
 
 /**
  * 주의!! secure store에 접근하는 사이드 이팩트를 포함하고있습니다!!!
@@ -28,22 +28,28 @@ export const useTokenStore = create<TokensStore>((set, get) => ({
   accessToken: null,
   refreshToken: null,
   accessTokenExpiredTime: null,
+  _prevAccessToken: null,
+  _prevRefreshToken: null,
+  _prevAccessTokenExpiredTime: null,
   setAccessToken: (token: string) => {
-    prevAccessToken = get().accessToken;
+    const prevAccessToken = get().accessToken;
+    // set({ _prevAccessToken: prevAccessToken });
     set({ accessToken: token });
     setValueToSecureStore("accessToken", token).catch(() =>
       set({ accessToken: prevAccessToken }),
     );
   },
   setRefreshToken: (token: string) => {
-    prevRefreshToken = get().refreshToken;
+    const prevRefreshToken = get().refreshToken;
+    // set({ _prevRefreshToken: prevRefreshToken });
     set({ refreshToken: token });
     setValueToSecureStore("refreshToken", token).catch(() =>
       set({ refreshToken: prevRefreshToken }),
     );
   },
   setAccessTokenExpiredTime: (time: number) => {
-    prevAccessTokenExpiredTime = get().accessTokenExpiredTime;
+    const prevAccessTokenExpiredTime = get().accessTokenExpiredTime;
+    // set({ _prevAccessTokenExpiredTime: prevAccessTokenExpiredTime });
     set({ accessTokenExpiredTime: time });
     setValueToSecureStore("accessTokenExpiredTime", `${time}`).catch(() =>
       set({ accessTokenExpiredTime: prevAccessTokenExpiredTime }),
@@ -54,6 +60,9 @@ export const useTokenStore = create<TokensStore>((set, get) => ({
       accessToken: null,
       refreshToken: null,
       accessTokenExpiredTime: null,
+      _prevAccessToken: null,
+      _prevRefreshToken: null,
+      _prevAccessTokenExpiredTime: null,
     });
 
     Promise.all([
