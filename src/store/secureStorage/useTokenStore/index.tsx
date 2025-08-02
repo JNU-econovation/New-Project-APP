@@ -35,24 +35,32 @@ export const useTokenStore = create<TokensStore>((set, get) => ({
     const prevAccessToken = get().accessToken;
     // set({ _prevAccessToken: prevAccessToken });
     set({ accessToken: token });
-    setValueToSecureStore("accessToken", token).catch(() =>
-      set({ accessToken: prevAccessToken }),
-    );
+    setValueToSecureStore("accessToken", token).catch((error) => {
+      console.error("Failed to save access token to secure store:", error);
+      set({ accessToken: prevAccessToken });
+    });
   },
   setRefreshToken: (token: string) => {
     const prevRefreshToken = get().refreshToken;
     // set({ _prevRefreshToken: prevRefreshToken });
     set({ refreshToken: token });
-    setValueToSecureStore("refreshToken", token).catch(() =>
-      set({ refreshToken: prevRefreshToken }),
-    );
+    setValueToSecureStore("refreshToken", token).catch((error) => {
+      console.error("Failed to save refresh token to secure store:", error);
+      set({ refreshToken: prevRefreshToken });
+    });
   },
   setAccessTokenExpiredTime: (time: number) => {
     const prevAccessTokenExpiredTime = get().accessTokenExpiredTime;
     // set({ _prevAccessTokenExpiredTime: prevAccessTokenExpiredTime });
     set({ accessTokenExpiredTime: time });
-    setValueToSecureStore("accessTokenExpiredTime", `${time}`).catch(() =>
-      set({ accessTokenExpiredTime: prevAccessTokenExpiredTime }),
+    setValueToSecureStore("accessTokenExpiredTime", `${time}`).catch(
+      (error) => {
+        console.error(
+          "Failed to save access token expired time to secure store:",
+          error,
+        );
+        set({ accessTokenExpiredTime: prevAccessTokenExpiredTime });
+      },
     );
   },
   clearTokens: () => {
