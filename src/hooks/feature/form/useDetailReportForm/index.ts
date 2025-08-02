@@ -5,6 +5,8 @@ import useSMS from "@hooks/common/useSMS";
 import { useReportPositionStore } from "@store/report/useReportPositionStore";
 import { convertToDMS } from "@utils/coords";
 
+const REPORT_NUMBER = process.env.EXPO_PUBLIC_REPORT_NUMBER;
+
 export const detailReportForm = formOptions({
   defaultValues: {
     content: "",
@@ -32,8 +34,6 @@ const useDetailReportForm = () => {
     };
   } | null>(null);
   const [smsSent, setSmsSent] = useState(false);
-
-  const REPORT_NUMBER = process.env.EXPO_PUBLIC_REPORT_NUMBER;
 
   const sms = useSMS({
     addresses: smsData?.addresses || "",

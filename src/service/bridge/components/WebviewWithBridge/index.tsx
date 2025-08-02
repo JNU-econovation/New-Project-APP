@@ -114,22 +114,23 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
         }
 
         if (!resMessage) {
-          if (strictMode)
-            throw new Error(
+          const handleMissingResponse = (body: any, strictMode: boolean) => {
+            const errorMessage =
               "전달받은 브리지에 대한 응답이 없습니다. onBridgeMessage를 확인해주세요.\n" +
-                `전달 받은 브리지 : ${JSON.stringify(body)}`,
-            );
-          else
-            console.warn(
-              "전달받은 브리지에 대한 응답이 없습니다. onBridgeMessage를 확인해주세요.\n" +
-                `전달 받은 브리지 : ${JSON.stringify(body)}`,
-            );
-        }
+              `전달 받은 브리지 : ${JSON.stringify(body)}`;
 
-        Bridge.createMessage(webViewRef, {
-          ack: _id,
-          body: resMessage,
-        }).send();
+            if (strictMode) {
+              throw new Error(errorMessage);
+            } else {
+              console.warn(errorMessage);
+            }
+          };
+          handleMissingResponse(body, strictMode);
+          Bridge.createMessage(webViewRef, {
+            ack: _id,
+            body: resMessage,
+          }).send();
+        }
       }
     },
     [onBridgeMessage, middleware, isReady],
