@@ -127,6 +127,24 @@ const WebviewWithBridge = <ReqMessage, ResMessage>({
               console.error("Error in onBridgeMessage:", error);
             });
           return;
+        } else {
+          // onBridgeMessage가 일반 값을 반환하는 경우
+          if (!resMessage) {
+            if (strictMode)
+              throw new Error(
+                "전달받은 브리지에 대한 응답이 없습니다. onBridgeMessage를 확인해주세요.\n" +
+                  `전달 받은 브리지 : ${JSON.stringify(body)}`,
+              );
+            else
+              console.warn(
+                "전달받은 브리지에 대한 응답이 없습니다. onBridgeMessage를 확인해주세요.\n" +
+                  `전달 받은 브리지 : ${JSON.stringify(body)}`,
+              );
+          }
+          Bridge.createMessage(webViewRef, {
+            ack: _id,
+            body: resMessage,
+          }).send();
         }
 
         if (!resMessage) {
