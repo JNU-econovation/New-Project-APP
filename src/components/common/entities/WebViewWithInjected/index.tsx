@@ -65,7 +65,6 @@ const WebViewWithInjected = ({
     const backAction = () => {
       if (canGoBack) {
         webViewRef.current?.goBack();
-        console.log(webViewRef.current);
         return true;
       }
       return false;
@@ -134,6 +133,11 @@ const WebViewWithInjected = ({
       };
 
       showToast(toastProps);
+
+      return {
+        name: "show-toast",
+        status: "success",
+      };
     }
   }, []);
 
@@ -184,6 +188,7 @@ const WebViewWithInjected = ({
         allowsLinkPreview={false}
         middleware={middleware}
         onReadyToMessage={onReadyToMessage}
+        strictMode={false}
         // 뒤로가기, 앞으로가기 기능
         onNavigationStateChange={(navState) => {
           setCanGoBack(navState.canGoBack);
