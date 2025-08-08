@@ -7,10 +7,10 @@ interface PostMessageProps<MessageType, ResponseType> {
   onResponse?: (response: ResponseType) => void;
 }
 
-const usePostMessageBridge = () => {
+const usePostMessageBridge = <ReqType, ResponseType>() => {
   const ref = useRef<WebView | null>(null);
 
-  const postMessage = <ReqType, ResponseType>({
+  const postMessage = ({
     message,
     onResponse,
   }: PostMessageProps<ReqType, ResponseType>) => {
