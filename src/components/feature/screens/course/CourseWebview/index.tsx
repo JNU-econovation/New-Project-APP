@@ -9,9 +9,23 @@ const CourseWebview = () => {
     <WebViewWithInjected
       source={{ uri: PATH_ROUTE.WEBVIEW.MOUNTAIN }}
       loadingBar
-      onMessage={({ method, name }) => {
+      onMessage={({ method, name, body }) => {
         if (name === "start-travel" && method === "POST") {
-          router.push("/travel");
+          if (
+            !body ||
+            typeof body !== "object" ||
+            !("courseId" in body) ||
+            typeof body.courseId !== "string"
+          ) {
+            return {
+              name: "start-travel",
+              status: "error",
+              error: "courseId is required",
+            };
+          }
+
+          const { courseId } = body;
+          router.push(`/travel/${courseId}`);
           return {
             name: "start-travel",
             status: "success",
