@@ -194,6 +194,7 @@ const WebViewWithInjected = ({
           setCanGoBack(navState.canGoBack);
           setCanGoForward(navState.canGoForward);
         }}
+        webviewDebuggingEnabled={true}
       />
     </View>
   );
