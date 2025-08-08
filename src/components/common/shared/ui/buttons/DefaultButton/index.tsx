@@ -11,12 +11,12 @@ interface ButtonStyledProps {
   fontWeight?: "bold";
 }
 
-interface ButtonProps extends ButtonStyledProps {
+interface DefaultButtonProps extends ButtonStyledProps {
   title: string;
   onPress?: () => void;
 }
 
-const Button = ({
+const DefaultButton = ({
   title,
   fullWidth,
   backgroundColor,
@@ -25,7 +25,7 @@ const Button = ({
   fontSize,
   startIcon,
   onPress,
-}: ButtonProps) => {
+}: DefaultButtonProps) => {
   return (
     <StyledTouchableOpacity
       onPress={onPress}
@@ -66,4 +66,4 @@ const StyledText = styled.Text<ButtonStyledProps>`
   text-align: center;
 `;
 
-export default Button;
+export default DefaultButton;
