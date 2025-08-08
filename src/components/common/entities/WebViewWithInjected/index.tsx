@@ -5,6 +5,7 @@ import {
   INJECT_TOKEN,
   SET_VIEWPORT_RATE,
 } from "@constants/webview";
+import useGetCurrentPosition from "@hooks/feature/useGetCurrentPosition";
 import {
   MessageEventRequestData,
   MessageEventResponseData,
@@ -31,6 +32,7 @@ type PromiseOnMessage = ({
 }: MessageEventRequestData<unknown>) => Promise<MessageEventResponseData | void>;
 
 interface WebViewWithInjectedProps {
+  ref?: React.RefObject<WebView | null>;
   source: WebViewSource;
   onMessage?: OnMessage | PromiseOnMessage;
   onReadyToMessage?: () => void;
@@ -38,6 +40,7 @@ interface WebViewWithInjectedProps {
 }
 
 const WebViewWithInjected = ({
+  ref,
   source,
   onMessage,
   onReadyToMessage,
@@ -45,7 +48,6 @@ const WebViewWithInjected = ({
 }: WebViewWithInjectedProps) => {
   const webViewRef = useRef<WebView>(null);
   const progressAnim = useRef(new Animated.Value(0)).current;
-  // const navigation = useNavigation();
 
   const showToast = useToast();
 
@@ -60,6 +62,14 @@ const WebViewWithInjected = ({
       `${DISABLED_PINCH_GESTURE}${DISABLED_TEXT_SELECT}${DISABLED_SCROLL}${SET_VIEWPORT_RATE}${INJECT_TOKEN(accessToken ?? "", refreshToken ?? "")}`,
     [accessToken, refreshToken],
   );
+
+  const { location } = useGetCurrentPosition();
+
+  useEffect(() => {
+    if (ref) {
+      ref.current = webViewRef.current;
+    }
+  }, [webViewRef.current, ref]);
 
   useEffect(() => {
     const backAction = () => {
@@ -139,6 +149,16 @@ const WebViewWithInjected = ({
         status: "success",
       };
     }
+
+    // 위치 정보 처리
+
+    if (name === "get-current-position" && method === "GET") {
+      return {
+        name: "get-current-position",
+        status: "success",
+        data: location,
+      };
+    }
   }, []);
 
   return (
@@ -171,6 +191,7 @@ const WebViewWithInjected = ({
         source={source}
         style={{ flex: 1 }}
         ref={webViewRef}
+        // ref={ref}
         injectedJavaScript={INJECTED_JAVASCRIPT}
         onBridgeMessage={onMessage}
         onLoadStart={() => {
