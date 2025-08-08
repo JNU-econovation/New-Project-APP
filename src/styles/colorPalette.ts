@@ -1,9 +1,15 @@
 export const COLORS = {
   mainGreen: "#2b7552",
+  green10: "#d7e5de",
+  green20: "#eaf1ee",
   mainWhite: "#ffffff",
   subGray: "#dadada",
   gray200: "#828282",
+  gray20: "#7f7f7f",
+  gray30: "#d9d9d9",
+  inputGray: "#f7f7f7",
   black: "#000000",
-  kakaoYellow: "#FAE64D",
+  kakaoYellow: "#fae64d",
   mainRed: "#FF5151",
+  errorMessage: "#ff0000",
 } as const;
