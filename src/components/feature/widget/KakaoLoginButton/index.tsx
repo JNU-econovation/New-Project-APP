@@ -1,5 +1,5 @@
 import styled from "@emotion/native";
-import Button from "@shared/ui/Button";
+import DefaultButton from "@shared/ui/buttons/DefaultButton";
 import { KakaoSVG } from "@shared/ui/Icons";
 import { router } from "expo-router";
 import { useCallback } from "react";
@@ -21,7 +21,7 @@ const KakaoLoginButton = () => {
 
   return (
     <Container>
-      <Button
+      <DefaultButton
         title="카카오톡으로 3초만에 시작하기"
         backgroundColor="kakaoYellow"
         color="black"

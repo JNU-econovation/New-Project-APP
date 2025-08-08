@@ -1,5 +1,5 @@
-import PositionBottom from "@components/common/shared/layout/PositionBottom";
-import Button from "@components/common/shared/ui/Button";
+import PositionBottom from "@shared/layout/PositionBottom";
+import DefaultButton from "@shared/ui/buttons/DefaultButton";
 import { router } from "expo-router";
 
 import { Image } from "react-native";
@@ -15,7 +15,7 @@ const LoginButton = () => {
           alignSelf: "flex-end",
         }}
       />
-      <Button
+      <DefaultButton
         title="로그인 하러 가기"
         fullWidth
         color="mainWhite"

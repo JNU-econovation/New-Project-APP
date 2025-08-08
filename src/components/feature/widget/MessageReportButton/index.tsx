@@ -1,6 +1,6 @@
 import useGetCurrentPosition from "@hooks/feature/useGetCurrentPosition";
 import useReportSMS from "@hooks/feature/useReportSMS";
-import Button from "@shared/ui/Button";
+import DefaultButton from "@shared/ui/buttons/DefaultButton";
 
 const MessageReportButton = () => {
   const { location, isLoading: getPositionLoading } = useGetCurrentPosition();
@@ -11,7 +11,7 @@ const MessageReportButton = () => {
   });
 
   return (
-    <Button
+    <DefaultButton
       title="동의하고 전송하기"
       color="mainWhite"
       disabled={getPositionLoading || SMSLoading || !location?.coords}
