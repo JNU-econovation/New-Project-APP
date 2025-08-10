@@ -1,4 +1,3 @@
-import * as Location from "expo-location";
 import useSetMapPolylineBridge from "@hooks/feature/bridge/useSetMapPolylineBridge";
 import useGetCoursePathByCourseId from "@hooks/feature/useGetCoursePathByCourseId";
 import SocketManager from "@service/socket/manager";
@@ -6,12 +5,12 @@ import useToast from "@service/toast";
 import { useTokenStore } from "@store/secureStorage/useTokenStore";
 import useTravelStateStore from "@store/travel";
 import { COLORS } from "@styles/colorPalette";
+import * as Location from "expo-location";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 
 const TRAVEL_SOCKET_URL =
   process.env.EXPO_PUBLIC_TRAVEL_NAVIGATE_SOCKET_URL || "";
-// process.env.EXPO_PUBLIC_TRAVEL_SOCKET_URL || "";
 const TRAVEL_SOCKET_INTERVAL = 1200;
 
 interface UseTravelCourseProps {
@@ -20,8 +19,16 @@ interface UseTravelCourseProps {
 const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
   const socketManager = SocketManager.getInstance();
   const { accessToken } = useTokenStore.getState();
-  const { setTravelState, travelState, intervalId, setIntervalId } =
-    useTravelStateStore();
+  const {
+    travelState,
+    intervalId,
+    addTimelog,
+    setTravelState,
+    setIntervalId,
+    setDistance,
+    pushTraveledPath,
+    setConnectedURL,
+  } = useTravelStateStore();
   const showToast = useToast();
   const coordinates = useGetCoursePathByCourseId({ courseId });
   const { ref, sendSetMapPolylineMessage } = useSetMapPolylineBridge();
@@ -33,6 +40,8 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
       const socket = socketManager.getSocket(TRAVEL_SOCKET_URL);
       let { latitude, longitude } = (await Location.getCurrentPositionAsync({}))
         .coords;
+
+      pushTraveledPath([longitude, latitude]);
       if (socket && shouldStartTravel) {
         socket.sendMessage({
           event: "start",
@@ -61,19 +70,22 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
         console.log("[useTravelCourse] 소켓 연결 성공");
         // callback?.();
         setShouldStartTravel(true);
+        setConnectedURL(TRAVEL_SOCKET_URL);
       },
       onClose: () => {
         console.warn("[useTravelCourse] 소켓 연결이 종료되었습니다.");
         setTravelState("idle");
+        setConnectedURL(null);
       },
       onError: (error) => {
         console.error("[useTravelCourse] 소켓 연결 오류:", error);
         setTravelState("idle");
+        setConnectedURL(null);
       },
       onMessage: ({ event, status, data }) => {
         console.log("소캣 메시지 수신:", { event, status, data });
         if (event === "current-position" && status === "success" && data) {
-          console.log("[useTravelCourse] 현재 위치:", data);
+          // console.log("[useTravelCourse] 현재 위치:", data);
 
           if (
             typeof data.index === "number" &&
@@ -81,7 +93,8 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
             typeof data.isDeviation === "boolean"
           ) {
             const { index, isArrived, isDeviation, travelDistance } = data;
-            console.log("[useTravelWithCourse] 서버로부터 받은 데이터:", data);
+            // console.log("[useTravelWithCourse] 서버로부터 받은 데이터:", data);
+            setDistance(travelDistance);
 
             sendSetMapPolylineMessage([
               {
@@ -111,7 +124,7 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
               Location.getCurrentPositionAsync({})
                 .then(({ coords: { longitude, latitude } }) => {
                   socketManager.getSocket(TRAVEL_SOCKET_URL)?.sendMessage({
-                    event: "stop",
+                    event: "end",
                     data: {
                       coordinate: [longitude, latitude],
                       courseId,
@@ -140,8 +153,9 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
           }
         }
         if (event === "start" && status === "success" && data) {
-          console.log("[useTravelCourse] 여행 시작:", data);
+          // console.log("[useTravelCourse] 여행 시작:", data);
           setTravelState("in-progress");
+          addTimelog("start", Date.now());
           const newIntervalId = setInterval(async () => {
             if (!TRAVEL_SOCKET_URL) {
               console.warn(
@@ -168,12 +182,18 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
         }
         if (event === "pause" && status === "success" && data) {
           console.log("[useTravelCourse] 여행 일시 정지:", data);
+          setTravelState("paused");
+          addTimelog("pause", Date.now());
         }
         if (event === "restart" && status === "success" && data) {
           console.log("[useTravelCourse] 여행 재시작:", data);
+          setTravelState("in-progress");
+          addTimelog("restart", Date.now());
         }
-        if (event === "stop" && status === "success" && data) {
+        if (event === "end" && status === "success" && data) {
           console.log("[useTravelCourse] 여행 끝:", data);
+          router.replace("/");
+          socketManager.disconnectSocket(TRAVEL_SOCKET_URL);
         }
       },
     });
