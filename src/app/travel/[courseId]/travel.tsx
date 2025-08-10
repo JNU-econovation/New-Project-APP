@@ -1,5 +1,5 @@
-import TravelMapWebview from "@screens/travel/TravelMapWebview";
 import TravelMonitorSection from "@screens/travel/TravelMonitorSection";
+import TravelWithCourseMapWebview from "@screens/travel/TravelWithCourseMapWebview";
 import PositionBottom from "@shared/layout/PositionBottom";
 import Spacing from "@shared/layout/Spacing";
 import { Suspense } from "react";
@@ -9,7 +9,7 @@ const WithoutCourseTravel = () => {
     <>
       <Spacing size={16} />
       <Suspense>
-        <TravelMapWebview />
+        <TravelWithCourseMapWebview />
       </Suspense>
       <PositionBottom bottom={24}>
         <TravelMonitorSection />
