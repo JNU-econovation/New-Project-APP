@@ -1,4 +1,4 @@
-import TravelWithCourseMapWebview from "@components/feature/screens/travel/TravelWithCourseMapWebview";
+import TravelWithoutCourseMapWebview from "@screens/travel/TravelWithoutCourseMapWebview";
 import TravelMonitorSection from "@screens/travel/TravelMonitorSection";
 import PositionBottom from "@shared/layout/PositionBottom";
 import Spacing from "@shared/layout/Spacing";
@@ -7,7 +7,7 @@ const WithoutCourseTravel = () => {
   return (
     <>
       <Spacing size={16} />
-      <TravelWithCourseMapWebview />
+      <TravelWithoutCourseMapWebview />
       <PositionBottom bottom={24}>
         <TravelMonitorSection />
       </PositionBottom>
