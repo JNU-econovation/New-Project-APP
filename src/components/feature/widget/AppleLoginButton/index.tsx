@@ -1,7 +1,7 @@
 import styled from "@emotion/native";
 import useScreenDisable from "@hooks/common/useScreenDisable";
-import useAppleLoginMutate from "@hooks/feature/query/useAppleLoginMutate";
-import Button from "@shared/ui/Button";
+import useAppleLoginMutate from "@hooks/feature/query/mutate/useAppleLoginMutate";
+import DefaultButton from "@shared/ui/buttons/DefaultButton";
 import { AppleSVG } from "@shared/ui/Icons";
 import { useTokenStore } from "@store/secureStorage/useTokenStore";
 import { setValueToSecureStore } from "@utils/secureStore";
@@ -73,7 +73,7 @@ const AppleLoginButton = () => {
 
   return (
     <Container>
-      <Button
+      <DefaultButton
         title="apple로 계속하기"
         backgroundColor="black"
         color="mainWhite"
