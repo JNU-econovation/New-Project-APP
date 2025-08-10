@@ -1,21 +1,23 @@
 import styled from "@emotion/native";
+import TravelContinueButton from "@screens/travel/TravelContinueButton";
+import TravelEndButton from "@screens/travel/TravelEndButton";
+import TravelPauseButton from "@screens/travel/TravelPauseButton";
 import Spacing from "@shared/layout/Spacing";
-import PauseButton from "@shared/ui/buttons/PauseButton";
-import StopButton from "@shared/ui/buttons/StopButton";
 import Text from "@shared/ui/Text";
+import useTravelStateStore from "@store/travel";
 import { COLORS } from "@styles/colorPalette";
 import { msToTimeText } from "@utils/time";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-const INTERVAL_CYCLE = 1000; // 1 second
+const INTERVAL_CYCLE = 100; // 100 milliseconds
 
 const TravelMonitorSection = () => {
-  const refer = useRef({ startTime: Date.now() }); //전역변수로 변경하기
   const [elapsedTime, setElapsedTime] = useState(0); // milliseconds
+  const { distance, travelState, getElapsedTime } = useTravelStateStore();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setElapsedTime(Date.now() - refer.current.startTime);
+      setElapsedTime(getElapsedTime());
     }, INTERVAL_CYCLE);
     return () => clearInterval(interval);
   }, []);
@@ -24,8 +26,9 @@ const TravelMonitorSection = () => {
     <Container>
       <Spacing size={24} />
       <ButtonContainer>
-        <PauseButton />
-        <StopButton />
+        {travelState === "in-progress" && <TravelPauseButton />}
+        {travelState === "paused" && <TravelContinueButton />}
+        <TravelEndButton />
       </ButtonContainer>
 
       <TimeDisplay>{msToTimeText(elapsedTime)}</TimeDisplay>
@@ -39,7 +42,7 @@ const TravelMonitorSection = () => {
         <MetricItem>
           <MetricIcon>🏃‍♂️‍➡️</MetricIcon>
           <MetricData>
-            <MetricValue>0.00</MetricValue>
+            <MetricValue>{distance.toFixed(2)}</MetricValue>
             <MetricUnit>km</MetricUnit>
           </MetricData>
         </MetricItem>
