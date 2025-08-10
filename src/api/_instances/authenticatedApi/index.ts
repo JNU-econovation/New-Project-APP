@@ -36,7 +36,7 @@ authenticatedApi.interceptors.response.use(
       console.log("[url:]", response.config.url);
       console.log("[data:]", response.data);
     }
-    return response.data.data;
+    return response.data;
   },
   (error) => {
     if (EXPO_PUBLIC_MODE === "development") {

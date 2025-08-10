@@ -3,7 +3,7 @@
  * @path - /api/v1/oauth/apple/login
  */
 
-import publicApi from "@api/_instance/publicApi";
+import publicApi from "@api/_instances/publicApi";
 
 interface LoginRequestBody {
   identityToken: string;
