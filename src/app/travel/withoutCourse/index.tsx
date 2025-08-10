@@ -1,8 +1,9 @@
 import styled from "@emotion/native";
-import TravelWebview from "@screens/travel/TravelWebview";
 import Spacing from "@shared/layout/Spacing";
 import Text from "@shared/ui/Text";
+import useTravelStateStore from "@store/travel";
 import { COLORS } from "@styles/colorPalette";
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
 
 //TODO: prerendering 관련 로직을 따로 분리
@@ -16,10 +17,19 @@ const DEFAULT_COUNT = 3;
  *
  * 코스를 지정하지 않고 탐험을 하는 화면
  */
+
 const TravelScreen = () => {
   const [count, setCount] = useState(DEFAULT_COUNT);
+  const { travelState } = useTravelStateStore();
 
   useEffect(() => {
+    if (travelState !== "idle") {
+      console.warn("[TravelScreen] 여행이 이미 시작되었습니다.");
+
+      router.replace("/travel/withoutCourse/withoutCourseTravel"); // 기본 코스 ID로 이동
+      return;
+    }
+
     const intervalId = setInterval(() => {
       setCount((prevCount) => {
         if (prevCount > 1) {
@@ -31,16 +41,21 @@ const TravelScreen = () => {
       });
     }, 1000);
 
-    return () => clearInterval(intervalId);
+    const timeout = setTimeout(() => {
+      setCount(0);
+      // router.replace("/travel/withoutCourseTravel");
+      router.replace("/travel/withoutCourse/withoutCourseTravel");
+    }, DEFAULT_COUNT * 1000);
+
+    return () => {
+      clearInterval(intervalId);
+      clearTimeout(timeout);
+    };
   }, []);
 
   return (
     <Screen count={count}>
       <Container>
-        <WebviewContainer count={count}>
-          <TravelWebview />
-        </WebviewContainer>
-
         <CounterContainer count={count}>
           <Spacing size={50} />
           <Text color="mainWhite" fontSize={96} fontWeight="bold" italic>
