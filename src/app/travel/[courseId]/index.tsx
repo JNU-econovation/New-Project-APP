@@ -27,7 +27,7 @@ const TravelScreen = () => {
     if (travelState !== "idle") {
       console.warn("[TravelScreen] 여행이 이미 시작되었습니다.");
 
-      router.replace("/travel/navigation"); // 기본 코스 ID로 이동
+      router.replace(`/travel/${courseId}/travel`); // 기본 코스 ID로 이동
       return;
     }
 
