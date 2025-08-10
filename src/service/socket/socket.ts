@@ -3,13 +3,14 @@ import { Alert } from "react-native";
 export interface SocketServiceOptions {
   url: string;
   token: string;
-  onMessage?: (data: any) => void;
+  onMessage?: (data: SocketMessage) => void;
   onError?: (error: any) => void;
   onOpen?: () => void;
   onClose?: () => void;
 }
 
 interface SocketMessage {
+  event: string;
   status: string;
   data?: any;
 }
@@ -19,8 +20,10 @@ export const socketMessageTypeGuard = (
 ): message is SocketMessage =>
   message &&
   typeof message === "object" &&
+  "event" in message &&
   "status" in message &&
   "data" in message &&
+  typeof message.event === "string" &&
   typeof message.status === "string" &&
   typeof message.data === "object";
 
@@ -53,6 +56,7 @@ export default class Socket {
     this.socket?.addEventListener("message", (event) => {
       const response = JSON.parse(event.data);
 
+      // console.log("[SocketService] 메시지 수신:", response);
       if (
         socketMessageTypeGuard(response) &&
         response.status === "success" &&
@@ -101,7 +105,6 @@ export default class Socket {
     event: "open" | "message" | "error" | "close",
     listener: (event: any) => void,
   ) {
-    Alert.alert("리스너 등록");
     if (!this.socket) {
       console.warn(
         "[SocketService] No socket connection to add event listener.",
