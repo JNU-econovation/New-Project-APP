@@ -1,5 +1,5 @@
 import { getPathwayOfCourse, PATHWAY_API_PATH } from "@api/v1/pathways";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { usePrefetchQuery } from "@tanstack/react-query";
 
 interface UseCoursePathwayPrefetchProps {
   courseId: string;
@@ -8,7 +8,7 @@ interface UseCoursePathwayPrefetchProps {
 const useCoursePathwayPrefetch = ({
   courseId,
 }: UseCoursePathwayPrefetchProps) => {
-  return useSuspenseQuery({
+  return usePrefetchQuery({
     queryKey: [PATHWAY_API_PATH(courseId)],
     queryFn: () => getPathwayOfCourse(courseId),
     staleTime: 1000 * 60 * 60,
