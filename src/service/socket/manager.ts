@@ -20,11 +20,13 @@ export default class SocketManager {
     onOpen,
     onMessage,
     onClose,
-    ...SocketServiceOptions
+    ...restOptions
   }: SocketServiceOptions) {
     const existingSocket = this.getSocket(url);
     if (existingSocket) {
-      console.log(`[SocketManager] Socket for ${url} already exists. Using existing connection.`);
+      console.log(
+        `[SocketManager] Socket for ${url} already exists. Using existing connection.`,
+      );
       return;
     }
 
@@ -51,7 +53,7 @@ export default class SocketManager {
       onOpen: handleOpen,
       onMessage: handleMessage,
       onClose: handleClose,
-      ...SocketServiceOptions,
+      ...restOptions,
     });
   }
 
