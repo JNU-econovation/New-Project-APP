@@ -3,7 +3,7 @@ import { CourseDifficulty } from "@model/course";
 import { Coordinate } from "@model/map";
 
 export const PATHWAY_API_PATH = (courseId: string) =>
-  `api/v1/pathways?courseId=${courseId}`;
+  `api/v1/pathways?courseId=${encodeURIComponent(courseId)}`;
 
 interface Pathway {
   pathwayId: string;
