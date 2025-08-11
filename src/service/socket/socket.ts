@@ -97,8 +97,13 @@ export default class Socket {
   }
 
   //
+
   sendMessage(message: any) {
-    this.socket?.send(JSON.stringify(message));
+    if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
+      console.warn("[SocketService] Cannot send: socket not open.");
+      return;
+    }
+    this.socket.send(JSON.stringify(message));
   }
 
   public addEventListener(
