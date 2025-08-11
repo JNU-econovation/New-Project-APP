@@ -27,6 +27,7 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
     setDistance,
     pushTraveledPath,
     setConnectedURL,
+    reset,
   } = useTravelStateStore();
   const showToast = useToast();
   const coordinates = useGetCoursePathByCourseId({ courseId });
@@ -83,11 +84,13 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
         console.warn("[useTravelCourse] 소켓 연결이 종료되었습니다.");
         setTravelState("idle");
         setConnectedURL(null);
+        reset();
       },
       onError: (error) => {
         console.error("[useTravelCourse] 소켓 연결 오류:", error);
         setTravelState("idle");
         setConnectedURL(null);
+        reset();
       },
       onMessage: ({ event, status, data }) => {
         console.log("소캣 메시지 수신:", { event, status, data });
@@ -164,6 +167,10 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
           // console.log("[useTravelCourse] 여행 시작:", data);
           setTravelState("in-progress");
           addTimelog("start", Date.now());
+          if (intervalId) {
+            clearInterval(intervalId);
+            setIntervalId(null);
+          }
           const newIntervalId = setInterval(async () => {
             if (!TRAVEL_SOCKET_URL) {
               console.warn(
@@ -176,7 +183,7 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
               let { latitude, longitude } = (
                 await Location.getCurrentPositionAsync({})
               ).coords;
-              // const { latitude, longitude } = location?.coords;
+              pushTraveledPath([longitude, latitude]);
               socket.sendMessage({
                 event: "current-position",
                 data: {
@@ -200,8 +207,14 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
         }
         if (event === "end" && status === "success" && data) {
           console.log("[useTravelCourse] 여행 끝:", data);
-          router.replace("/");
           socketManager.disconnectSocket(TRAVEL_SOCKET_URL);
+          if (intervalId) {
+            clearInterval(intervalId);
+            setIntervalId(null);
+          }
+          // setTravelState("completed");
+          addTimelog("end", Date.now());
+          router.replace("/");
         }
       },
     });
@@ -213,6 +226,7 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
       return;
     }
     socketManager.disconnectSocket(TRAVEL_SOCKET_URL);
+    reset(); //전역 상태 초기화
   };
 
   return {

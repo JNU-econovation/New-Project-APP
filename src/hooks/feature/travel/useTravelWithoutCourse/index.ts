@@ -8,7 +8,7 @@ import * as Location from "expo-location";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 
-const TRAVEL_SOCKET_URL = process.env.EXPO_PUBLIC_TRAVEL_SOCKET_URL || "";
+const TRAVEL_SOCKET_URL = process.env.EXPO_PUBLIC_TRAVEL_SOCKET_URL;
 const TRAVEL_SOCKET_INTERVAL = 12000;
 
 const useTravelWithoutCourse = () => {
@@ -23,6 +23,7 @@ const useTravelWithoutCourse = () => {
     pushTraveledPath,
     traveledPath,
     setConnectedURL,
+    reset,
   } = useTravelStateStore();
   const showToast = useToast();
   const { ref, sendSetMapPolylineMessage } = useSetMapPolylineBridge();
@@ -31,6 +32,12 @@ const useTravelWithoutCourse = () => {
   // location이 준비되면 start 메시지 전송
   useEffect(() => {
     (async () => {
+      if (!TRAVEL_SOCKET_URL) {
+        console.warn(
+          "[useTravelWithoutCourse] 소켓 URL이 정의되지 않았습니다.",
+        );
+        return;
+      }
       const socket = socketManager.getSocket(TRAVEL_SOCKET_URL);
       let { latitude, longitude } = (await Location.getCurrentPositionAsync({}))
         .coords;
@@ -49,6 +56,10 @@ const useTravelWithoutCourse = () => {
   }, [shouldStartTravel]);
 
   const connect = () => {
+    if (!TRAVEL_SOCKET_URL) {
+      console.warn("[useTravelCourse] 소켓 URL이 정의되지 않았습니다.");
+      return;
+    }
     if (!accessToken) {
       console.warn("[useTravelCourse] 토큰이 정의되지 않았습니다.");
       return;
@@ -66,11 +77,13 @@ const useTravelWithoutCourse = () => {
         console.warn("[useTravelCourse] 소켓 연결이 종료되었습니다.");
         setTravelState("idle");
         setConnectedURL(null);
+        reset();
       },
       onError: (error) => {
         console.error("[useTravelCourse] 소켓 연결 오류:", error);
         setTravelState("idle");
         setConnectedURL(null);
+        reset();
       },
       onMessage: ({ event, status, data }) => {
         console.log("소캣 메시지 수신:", { event, status, data });
@@ -95,6 +108,7 @@ const useTravelWithoutCourse = () => {
 
             if (isArrived) {
               setTravelState("completed");
+              addTimelog("end", Date.now());
               showToast({
                 type: "success",
                 text1: "여행이 완료되었습니다.",
@@ -142,6 +156,10 @@ const useTravelWithoutCourse = () => {
           // console.log("[useTravelCourse] 여행 시작:", data);
           setTravelState("in-progress");
           addTimelog("start", Date.now());
+          if (intervalId) {
+            clearInterval(intervalId);
+            setIntervalId(null);
+          }
           const newIntervalId = setInterval(async () => {
             if (!TRAVEL_SOCKET_URL) {
               console.warn(
@@ -154,6 +172,7 @@ const useTravelWithoutCourse = () => {
               let { latitude, longitude } = (
                 await Location.getCurrentPositionAsync({})
               ).coords;
+              pushTraveledPath([longitude, latitude]);
               socket.sendMessage({
                 event: "current-position",
                 data: {
@@ -176,8 +195,14 @@ const useTravelWithoutCourse = () => {
         }
         if (event === "end" && status === "success" && data) {
           console.log("[useTravelCourse] 여행 끝:", data);
-          router.replace("/");
           socketManager.disconnectSocket(TRAVEL_SOCKET_URL);
+          if (intervalId) {
+            clearInterval(intervalId);
+            setIntervalId(null);
+          }
+          // setTravelState("completed");
+          addTimelog("end", Date.now());
+          router.replace("/");
         }
       },
     });
@@ -188,7 +213,7 @@ const useTravelWithoutCourse = () => {
       console.warn("[useTravelCourse] 소켓 URL이 정의되지 않았습니다.");
       return;
     }
-    socketManager.disconnectSocket(TRAVEL_SOCKET_URL);
+    reset();
   };
 
   return {
