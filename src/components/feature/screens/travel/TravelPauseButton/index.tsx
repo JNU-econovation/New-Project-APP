@@ -26,7 +26,17 @@ const TravelPauseButton = () => {
           },
         };
 
-    socketManager.getSocket(connectedURL || "")?.sendMessage(message);
+    if (!connectedURL) {
+      console.warn("[TravelPauseButton] No connected URL found.");
+      return;
+    }
+    const socket = socketManager.getSocket(connectedURL);
+
+    if (!socket) {
+      console.warn("[TravelPauseButton] No socket found.");
+      return;
+    }
+    socket.sendMessage(message);
   };
 
   return <PauseButton onPressOut={handlePause} />;
