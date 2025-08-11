@@ -3,13 +3,9 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 
 interface UseCoursePathwayQueryParams {
   courseId: string;
-  enabled?: boolean;
 }
 
-const useCoursePathwayQuery = ({
-  courseId,
-  enabled,
-}: UseCoursePathwayQueryParams) => {
+const useCoursePathwayQuery = ({ courseId }: UseCoursePathwayQueryParams) => {
   return useSuspenseQuery({
     queryKey: [PATHWAY_API_PATH(courseId)],
     queryFn: () => getPathwayOfCourse(courseId),
