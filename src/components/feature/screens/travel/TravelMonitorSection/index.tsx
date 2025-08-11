@@ -20,7 +20,7 @@ const TravelMonitorSection = () => {
       setElapsedTime(getElapsedTime());
     }, INTERVAL_CYCLE);
     return () => clearInterval(interval);
-  }, []);
+  }, [getElapsedTime, travelState]);
 
   return (
     <Container>

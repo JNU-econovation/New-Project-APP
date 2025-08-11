@@ -12,7 +12,7 @@ const TravelWithCourseMapWebview = () => {
 
   useEffect(() => {
     connect();
-  }, []);
+  }, [connect]);
 
   return (
     <WebViewWithInjected
