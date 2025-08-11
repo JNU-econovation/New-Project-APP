@@ -26,7 +26,17 @@ const TravelContinueButton = () => {
           },
         };
 
-    socketManager.getSocket(connectedURL || "")?.sendMessage(message);
+    if (!connectedURL) {
+      console.warn("[TravelContinueButton] No connected URL found.");
+      return;
+    }
+    const socket = socketManager.getSocket(connectedURL);
+
+    if (!socket) {
+      console.warn("[TravelContinueButton] No socket found.");
+      return;
+    }
+    socket.sendMessage(message);
   };
 
   return <StartButton onPressOut={handleContinue} />;

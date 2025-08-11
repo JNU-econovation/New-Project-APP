@@ -26,7 +26,17 @@ const TravelEndButton = () => {
           },
         };
 
-    socketManager.getSocket(connectedURL || "")?.sendMessage(message);
+    if (!connectedURL) {
+      console.warn("[TravelEndButton] No connected URL found.");
+      return;
+    }
+    const socket = socketManager.getSocket(connectedURL);
+
+    if (!socket) {
+      console.warn("[TravelEndButton] No socket found.");
+      return;
+    }
+    socket.sendMessage(message);
   };
 
   return <StopButton onPressOut={handleEnd} />;
