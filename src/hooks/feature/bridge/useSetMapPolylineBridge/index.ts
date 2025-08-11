@@ -1,11 +1,10 @@
+import type { Coordinate } from "@model/map";
 import type {
   MessageEventRequestData,
   MessageEventResponseData,
 } from "@model/webview";
 import usePostMessageBridge from "@service/bridge/hooks/usePostMessageBridge";
 import { useCallback } from "react";
-
-type Coordinate = [number, number];
 
 interface Path {
   path: Coordinate[];
