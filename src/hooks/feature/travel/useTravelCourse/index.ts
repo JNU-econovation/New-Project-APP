@@ -9,8 +9,7 @@ import * as Location from "expo-location";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 
-const TRAVEL_SOCKET_URL =
-  process.env.EXPO_PUBLIC_TRAVEL_NAVIGATE_SOCKET_URL || "";
+const TRAVEL_SOCKET_URL = process.env.EXPO_PUBLIC_TRAVEL_NAVIGATE_SOCKET_URL;
 const TRAVEL_SOCKET_INTERVAL = 1200;
 
 interface UseTravelCourseProps {
@@ -37,6 +36,10 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
   // location이 준비되면 start 메시지 전송
   useEffect(() => {
     (async () => {
+      if (!TRAVEL_SOCKET_URL) {
+        console.warn("[useTravelCourse] 소켓 URL이 정의되지 않았습니다.");
+        return;
+      }
       const socket = socketManager.getSocket(TRAVEL_SOCKET_URL);
       let { latitude, longitude } = (await Location.getCurrentPositionAsync({}))
         .coords;
@@ -58,6 +61,10 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
   }, [shouldStartTravel, courseId]);
 
   const connect = () => {
+    if (!TRAVEL_SOCKET_URL) {
+      console.warn("[useTravelCourse] 소켓 URL이 정의되지 않았습니다.");
+      return;
+    }
     if (!accessToken) {
       console.warn("[useTravelCourse] 토큰이 정의되지 않았습니다.");
       return;
