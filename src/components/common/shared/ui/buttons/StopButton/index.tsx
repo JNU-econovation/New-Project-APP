@@ -11,14 +11,14 @@ import { TouchableOpacityProps } from "react-native";
 
 interface StopButtonProps extends TouchableOpacityProps {}
 
-const StopButton = (props: StopButtonProps) => {
+const StopButton = ({ onPressIn, onPressOut, ...props }: StopButtonProps) => {
   const scale = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
   }));
 
-  const onPressIn = () => {
+  const onPressInHandler = () => {
     scale.value = withTiming(0.98, {
       duration: 150,
       easing: Easing.inOut(Easing.ease),
@@ -26,7 +26,7 @@ const StopButton = (props: StopButtonProps) => {
     });
   };
 
-  const onPressOut = () => {
+  const onPressOutHandler = () => {
     scale.value = withTiming(1, {
       duration: 150,
       easing: Easing.inOut(Easing.ease),
@@ -38,8 +38,14 @@ const StopButton = (props: StopButtonProps) => {
     <Animated.View style={animatedStyle}>
       <ActionButton
         activeOpacity={0.8}
-        onPressIn={onPressIn}
-        onPressOut={onPressOut}
+        onPressIn={(e) => {
+          onPressInHandler();
+          onPressIn?.(e);
+        }}
+        onPressOut={(e) => {
+          onPressOutHandler();
+          onPressOut?.(e);
+        }}
         {...props}
       >
         <StopSquare />
