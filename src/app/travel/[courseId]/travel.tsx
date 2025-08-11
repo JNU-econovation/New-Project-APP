@@ -4,7 +4,7 @@ import PositionBottom from "@shared/layout/PositionBottom";
 import Spacing from "@shared/layout/Spacing";
 import { Suspense } from "react";
 
-const WithoutCourseTravel = () => {
+const WithCourseTravelScreen = () => {
   return (
     <>
       <Spacing size={16} />
@@ -18,4 +18,4 @@ const WithoutCourseTravel = () => {
   );
 };
 
-export default WithoutCourseTravel;
+export default WithCourseTravelScreen;
