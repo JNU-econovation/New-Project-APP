@@ -18,6 +18,7 @@ interface TravelStateStore {
   setConnectedURL: (url: string | null) => void;
   addTimelog: (type: TravelTimelogType, timestamp: number) => void;
   getElapsedTime: () => number;
+  reset: () => void;
 }
 
 const useTravelStateStore = create<TravelStateStore>((set) => ({
@@ -41,12 +42,12 @@ const useTravelStateStore = create<TravelStateStore>((set) => ({
     })),
   getElapsedTime: () => {
     const { timelog } = useTravelStateStore.getState();
-    
+
     if (timelog.length === 0) return 0;
-    
+
     let totalElapsedTime = 0;
     let currentStartTime: number | null = null;
-    
+
     for (const [type, timestamp] of timelog) {
       switch (type) {
         case "start":
@@ -67,13 +68,23 @@ const useTravelStateStore = create<TravelStateStore>((set) => ({
           break;
       }
     }
-    
+
     // 현재 진행 중인 경우 (pause 상태가 아닌 경우)
     if (currentStartTime !== null) {
       totalElapsedTime += Date.now() - currentStartTime;
     }
-    
+
     return totalElapsedTime;
+  },
+  reset: () => {
+    set({
+      travelState: "idle",
+      intervalId: null,
+      distance: 0,
+      traveledPath: [],
+      connectedURL: null,
+      timelog: [],
+    });
   },
 }));
 
