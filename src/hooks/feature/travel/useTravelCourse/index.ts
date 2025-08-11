@@ -116,6 +116,7 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
 
             if (isArrived) {
               setTravelState("completed");
+              addTimelog("end", Date.now());
               showToast({
                 type: "success",
                 text1: "여행이 완료되었습니다.",
@@ -139,7 +140,7 @@ const useTravelCourse = ({ courseId }: UseTravelCourseProps) => {
                     },
                   });
                 })
-                .then(() => {
+                .finally(() => {
                   setTimeout(() => {
                     socketManager.disconnectSocket(TRAVEL_SOCKET_URL);
                   }, 1500);
