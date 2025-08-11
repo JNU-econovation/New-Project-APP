@@ -9,15 +9,26 @@ class SocketBuffer {
 
   public addSocket(url: string, socket: Socket) {
     if (this.socketBuffer[url]) {
-      console.warn(`[SocketBuffer] Socket for ${url} already exists.`);
-      return this.getSocket(url);
+      console.warn(`[SocketBuffer] Socket already exists.`);
+      return this.socketBuffer[url].socket;
     }
 
     this.socketBuffer[url] = { socket };
     return socket;
   }
 
-  public removeSocket(url: string) {
+  public removeSocket(url: string): void {
+    const existing = this.socketBuffer[url]?.socket;
+    if (existing) {
+      try {
+        existing.disconnect();
+      } catch (e) {
+        console.warn(
+          "[SocketBuffer] Error while disconnecting socket on remove.",
+          e,
+        );
+      }
+    }
     delete this.socketBuffer[url];
   }
 
