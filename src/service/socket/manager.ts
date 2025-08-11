@@ -46,6 +46,7 @@ export default class SocketManager {
     const handleClose = () => {
       globalEventEmitter.emit(`socket-close-${url}`);
       onClose?.();
+      this.buffer.removeSocket(url);
     };
 
     newSocketInstance.connect({
