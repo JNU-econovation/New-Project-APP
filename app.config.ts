@@ -1,7 +1,7 @@
-module.exports = {
+const appConfig = {
   expo: {
     name: "산결",
-    slug: "산결",
+    slug: "sangyeol",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/images/splash-icon.png",
@@ -83,3 +83,5 @@ module.exports = {
     },
   },
 };
+
+export default appConfig;
