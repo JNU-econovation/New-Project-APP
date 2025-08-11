@@ -1,8 +1,9 @@
 import { useFormContext } from "@service/form/context";
 import DefaultButton from "@shared/ui/buttons/DefaultButton";
+import { ComponentProps } from "react";
 
 interface FormSubmitButtonProps
-  extends React.ComponentProps<typeof DefaultButton> {
+  extends Omit<ComponentProps<typeof DefaultButton>, "onPress"> {
   title: string;
 }
 
