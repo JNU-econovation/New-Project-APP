@@ -26,8 +26,7 @@ const TravelScreen = () => {
   useEffect(() => {
     if (travelState !== "idle") {
       console.warn("[TravelScreen] 여행이 이미 시작되었습니다.");
-
-      router.replace(`/travel/${courseId}/travel`); // 기본 코스 ID로 이동
+      router.replace(`/travel/${courseId}/travel`);
       return;
     }
 
@@ -96,10 +95,9 @@ const CounterContainer = styled.View<{ count: number }>`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: ${({ count }) => (count !== 0 ? "10" : "-10")};
+  z-index: ${({ count }) => (count !== 0 ? 10 : -10)};
   transition: all 3s ease-in-out;
   width: 100%;
-  /* opacity: ${({ count }) => (count === 0 ? "0" : "1")}; */
 `;
 
 const WebviewContainer = styled.View<{ count: number }>`
@@ -109,7 +107,7 @@ const WebviewContainer = styled.View<{ count: number }>`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: ${({ count }) => (count === 0 ? "100000000" : "-10")};
+  z-index: ${({ count }) => (count === 0 ? 100 : -10)};
   transition: all 3s ease-in-out;
   background-color: ${COLORS.mainRed};
 `;
