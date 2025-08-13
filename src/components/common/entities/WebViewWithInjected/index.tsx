@@ -6,6 +6,7 @@ import {
   SET_VIEWPORT_RATE,
 } from "@constants/webview";
 import useGetCurrentPosition from "@hooks/feature/useGetCurrentPosition";
+import useRealTimeLocation from "@hooks/feature/useRealTimeLocation";
 import {
   MessageEventRequestData,
   MessageEventResponseData,
@@ -62,8 +63,6 @@ const WebViewWithInjected = ({
       `${DISABLED_PINCH_GESTURE}${DISABLED_TEXT_SELECT}${DISABLED_SCROLL}${SET_VIEWPORT_RATE}${INJECT_TOKEN(accessToken ?? "", refreshToken ?? "")}`,
     [accessToken, refreshToken],
   );
-
-  const { location } = useGetCurrentPosition();
 
   useEffect(() => {
     if (ref) {
@@ -147,16 +146,6 @@ const WebViewWithInjected = ({
       return {
         name: "show-toast",
         status: "success",
-      };
-    }
-
-    // 위치 정보 처리
-
-    if (name === "get-current-position" && method === "GET") {
-      return {
-        name: "get-current-position",
-        status: "success",
-        data: location,
       };
     }
   }, []);

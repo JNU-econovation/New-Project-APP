@@ -4,9 +4,9 @@ import { useEffect, useState, useRef } from "react";
 type LocationAccuracy = "lowest" | "low" | "balanced" | "high" | "highest";
 
 interface UseRealTimeLocationOptions {
-  accuracy?: LocationAccuracy;
-  timeInterval?: number;
-  distanceInterval?: number;
+  accuracy?: LocationAccuracy; // 위치 정확도 수준 (기본값: "high")
+  timeInterval?: number; // 위치 업데이트 시간 간격 (밀리초, 기본값: 1000ms)
+  distanceInterval?: number; // 위치 업데이트 거리 간격 (미터, 기본값: 1m)
 }
 
 const ACCURACY_MAP: Record<LocationAccuracy, Location.LocationAccuracy> = {

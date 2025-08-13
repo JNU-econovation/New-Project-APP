@@ -26,9 +26,18 @@ const TravelMonitorSection = () => {
     <Container>
       <Spacing size={24} />
       <ButtonContainer>
-        {travelState === "in-progress" && <TravelPauseButton />}
-        {travelState === "paused" && <TravelContinueButton />}
-        <TravelEndButton />
+        {travelState === "in-progress" && (
+          <>
+            <TravelPauseButton />
+            <TravelEndButton />
+          </>
+        )}
+        {travelState === "paused" && (
+          <>
+            <TravelContinueButton />
+            <TravelEndButton />
+          </>
+        )}
       </ButtonContainer>
 
       <TimeDisplay>{msToTimeText(elapsedTime)}</TimeDisplay>
