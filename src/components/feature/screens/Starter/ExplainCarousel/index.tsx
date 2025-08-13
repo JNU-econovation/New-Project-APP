@@ -1,17 +1,11 @@
-import { COLORS } from "@styles/colorPalette";
-import {
-  LeftArrowSVG,
-  RightArrowSVG,
-} from "@components/common/shared/ui/Icons";
 import styled from "@emotion/native";
 import ExplainItems from "@process/ExplainItems";
+import { LeftArrowSVG, RightArrowSVG } from "@shared/ui/Icons";
+import { COLORS } from "@styles/colorPalette";
 import { useCallback, useRef, useState } from "react";
 import { Dimensions, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
-import Carousel, {
-  ICarouselInstance,
-  Pagination,
-} from "react-native-reanimated-carousel";
+import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
 import LoginButton from "../LoginButton";
 
 const { width, height } = Dimensions.get("window");
@@ -64,21 +58,6 @@ const ExplainCarousel = () => {
           width={width}
           height={height - LoginButton.OCCUPY_SPACE}
           onSnapToItem={(i) => i !== index && setIndex(i)}
-          onProgressChange={(offsetProgress, absoluteProgress) => {
-            if (Math.abs(offsetProgress) < 180) {
-              setIndex(0);
-            }
-            if (Math.abs(offsetProgress) > 180 && index === 0) {
-              setIndex(1);
-            }
-            if (Math.abs(offsetProgress) > 545 && index === 1) {
-              setIndex(2);
-            }
-            if (Math.abs(offsetProgress) < 545 && index === 2) {
-              setIndex(1);
-            }
-            progress.value = absoluteProgress;
-          }}
           renderItem={({ index }) => <>{ExplainItems.Views[index]()}</>}
         />
         {index !== data.length - 1 && (
@@ -91,27 +70,30 @@ const ExplainCarousel = () => {
       <View
         style={{
           position: "absolute",
-          bottom: 0,
+          bottom: 40,
         }}
       >
-        <Pagination.Basic
-          progress={progress}
-          data={data}
-          dotStyle={{
-            backgroundColor: COLORS.subGray,
-            borderRadius: 10,
-            width: 8,
-            height: 8,
-          }}
-          activeDotStyle={{
-            backgroundColor: COLORS.mainGreen,
-            borderRadius: 10,
-          }}
-          containerStyle={{
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
             gap: 5,
           }}
-          onPress={onPressPagination}
-        />
+        >
+          {data.map((_, i) => (
+            <View
+              key={i}
+              style={{
+                backgroundColor:
+                  i === index ? COLORS.mainGreen : COLORS.subGray,
+                width: 8,
+                height: 8,
+                borderRadius: "100%",
+              }}
+            />
+          ))}
+        </View>
       </View>
     </Container>
   );
