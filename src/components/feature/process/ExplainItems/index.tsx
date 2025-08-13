@@ -3,7 +3,7 @@ import Guide1Image from "@shared/ui/Images/Guide1";
 import Guide2Image from "@shared/ui/Images/Guide2";
 import Guide3Image from "@shared/ui/Images/Guide3";
 import Text from "@shared/ui/Text";
-import { View } from "react-native";
+import { View, Image } from "react-native";
 
 const SCREEN_HEIGHT = 430;
 
@@ -98,6 +98,40 @@ const ExplainItem3 = () => {
     </ScreenView>
   );
 };
+const ExplainItem4 = () => {
+  return (
+    <ScreenView>
+      <Container>
+        <Text fontSize={30} fontWeight="bold" color="mainGreen">
+          깃대종 식물 키우기
+        </Text>
+        {/* <Guide3Image /> */}
+        <Image
+          source={require("@/assets/images/guide3.png")}
+          style={{ width: 197, height: 197 }}
+        />
+        <View>
+          <Text
+            fontSize={20}
+            fontWeight="semibold"
+            opacity={0.6}
+            textAlign="center"
+          >
+            전국의 산을 투어하며
+          </Text>
+          <Text
+            fontSize={20}
+            fontWeight="semibold"
+            opacity={0.6}
+            textAlign="center"
+          >
+            깃대종 식물 획득하기
+          </Text>
+        </View>
+      </Container>
+    </ScreenView>
+  );
+};
 
 const ScreenView = styled.View`
   display: flex;
@@ -114,7 +148,7 @@ const Container = styled.View`
 `;
 
 const ExplainItems = {
-  Views: [ExplainItem1, ExplainItem2, ExplainItem3],
+  Views: [ExplainItem1, ExplainItem2, ExplainItem4],
   SCREEN_HEIGHT: SCREEN_HEIGHT,
 };
 
