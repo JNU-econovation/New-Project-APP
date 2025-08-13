@@ -1,6 +1,6 @@
 import styled from "@emotion/native";
 import Spacing from "@shared/layout/Spacing";
-import { HikingSVG, LeftArrowWithWhiteBgSVG, StarSVG } from "@shared/ui/Icons";
+import { HikingSVG, BackArrow, StarSVG } from "@shared/ui/Icons";
 import Text from "@shared/ui/Text";
 import AppleLoginButton from "@widget/AppleLoginButton";
 import KakaoLoginButton from "@widget/KakaoLoginButton";
@@ -13,17 +13,17 @@ const LoginScreen = () => {
       <Spacing size={28} />
       <HeaderContainer>
         <TouchableOpacity onPress={() => router.back()} activeOpacity={0.8}>
-          <LeftArrowWithWhiteBgSVG />
+          <BackArrow />
         </TouchableOpacity>
       </HeaderContainer>
 
       <Spacing size={24} />
 
       <TitleContainer>
-        <Text fontSize={30} fontWeight="bold">
+        <Text fontSize={30} fontWeight="bold" color="mainGreen">
           그럼,
         </Text>
-        <Text fontSize={30} fontWeight="bold">
+        <Text fontSize={30} fontWeight="bold" color="mainGreen">
           모험을 시작해볼까요?
         </Text>
         <TitleStarPositioner>
