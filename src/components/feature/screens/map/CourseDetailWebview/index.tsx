@@ -1,7 +1,7 @@
 import PATH_ROUTE from "@constants/pathRoute";
 import WebViewWithInjected from "@entities/WebViewWithInjected";
 import useGetCurrentPosition from "@hooks/feature/useGetCurrentPosition";
-import { router } from "expo-router";
+// import { router } from "expo-router";
 
 const CourseDetailWebview = () => {
   const { location } = useGetCurrentPosition();
@@ -19,13 +19,13 @@ const CourseDetailWebview = () => {
             data: location,
           };
         }
-        if (name === "start-travel" && method === "POST") {
-          router.push("/travel");
-          return {
-            name: "start-travel",
-            status: "success",
-          };
-        }
+        // if (name === "start-travel" && method === "POST") {
+        //   router.push("/travel");
+        //   return {
+        //     name: "start-travel",
+        //     status: "success",
+        //   };
+        // }
         return {
           name: "unknown-message",
           status: "error",
