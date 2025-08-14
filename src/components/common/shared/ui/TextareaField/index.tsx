@@ -40,8 +40,12 @@ const TextAreaField = ({
         }
         contentSideComponent={contentSideComponent}
       />
-      <Spacing size={helperTextSpacing} />
-      <Text {...helperTextProps}>{helperText}</Text>
+      {helperText && (
+        <>
+          <Spacing size={helperTextSpacing} />
+          <Text {...helperTextProps}>{helperText}</Text>
+        </>
+      )}
     </>
   );
 };
