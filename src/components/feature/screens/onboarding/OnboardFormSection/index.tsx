@@ -38,7 +38,7 @@ const OnboardFormSection = () => {
       setVerificationDeadlineTimer(verificationDeadline - Date.now());
     }, 1000);
 
-    return () => clearTimeout(timer);
+    return () => clearInterval(timer);
   }, [setVerificationDeadlineTimer]);
 
   // 이메일 인증 요청 버튼 클릭 시
