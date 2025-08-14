@@ -9,8 +9,6 @@ interface ButtonStyledProps {
   fontSize?: number;
   startIcon?: ReactNode;
   fontWeight?: "bold";
-  marginInline?: number;
-  marginBlock?: number;
   paddingVertical?: number;
   paddingHorizontal?: number;
 }
@@ -30,6 +28,7 @@ const DefaultButton = ({
   startIcon,
   paddingVertical,
   paddingHorizontal,
+
   onPress,
 }: DefaultButtonProps) => {
   return (
