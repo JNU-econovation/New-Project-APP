@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useCallback, useMemo, useRef, useState } from "react";
 
 import NoticeBar from "../components/NoticeBar";
 import NoticeBarContext from "../context";
@@ -10,24 +10,21 @@ interface NoticeBarProviderProps {
 
 const NoticeBarProvider = ({ children }: NoticeBarProviderProps) => {
   const [queue, setQueue] = useState<NoticeBarState[]>([]);
-  const [id, setId] = useState(0);
+  const idRef = useRef(0);
 
-  const showNotice = ({
-    message,
-    duration = 2500,
-  }: {
-    message: string;
-    duration?: number;
-  }) => {
-    setQueue((prevQueue) => {
-      const newNotice: NoticeBarState = { id, message, duration };
-      setId((prevId) => prevId + 1);
-      return [...prevQueue, newNotice];
-    });
-  };
+  const showNotice = useCallback(
+    ({ message, duration = 2500 }: { message: string; duration?: number }) => {
+      const newId = idRef.current++;
+      const newNotice: NoticeBarState = { id: newId, message, duration };
+      setQueue((prevQueue) => [...prevQueue, newNotice]);
+    },
+    [],
+  );
+
+  const value = useMemo(() => ({ showNotice }), [showNotice]);
 
   return (
-    <NoticeBarContext.Provider value={{ showNotice }}>
+    <NoticeBarContext.Provider value={value}>
       {children}
       {queue.length > 0 &&
         queue.map((notice) => {
