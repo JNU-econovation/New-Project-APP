@@ -26,9 +26,11 @@ const FieldLayout = ({
       <Spacing size={14} />
       <ContentContainer>
         {content}
-        <ContentSideComponentContainer>
-          {contentSideComponent}
-        </ContentSideComponentContainer>
+        {contentSideComponent && (
+          <ContentSideComponentContainer>
+            {contentSideComponent}
+          </ContentSideComponentContainer>
+        )}
       </ContentContainer>
     </>
   );
