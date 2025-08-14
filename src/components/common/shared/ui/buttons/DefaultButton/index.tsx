@@ -9,6 +9,10 @@ interface ButtonStyledProps {
   fontSize?: number;
   startIcon?: ReactNode;
   fontWeight?: "bold";
+  marginInline?: number;
+  marginBlock?: number;
+  paddingVertical?: number;
+  paddingHorizontal?: number;
 }
 
 interface DefaultButtonProps extends ButtonStyledProps {
@@ -24,6 +28,8 @@ const DefaultButton = ({
   color,
   fontSize,
   startIcon,
+  paddingVertical,
+  paddingHorizontal,
   onPress,
 }: DefaultButtonProps) => {
   return (
@@ -33,6 +39,8 @@ const DefaultButton = ({
       style={{ width: fullWidth ? "100%" : undefined }}
       backgroundColor={backgroundColor}
       activeOpacity={0.8}
+      paddingVertical={paddingVertical}
+      paddingHorizontal={paddingHorizontal}
     >
       {startIcon && startIcon}
       <StyledText color={color} fontSize={fontSize}>
@@ -43,12 +51,18 @@ const DefaultButton = ({
 };
 
 const StyledTouchableOpacity = styled.TouchableOpacity<ButtonStyledProps>(
-  ({ fullWidth, disabled, backgroundColor }) => ({
+  ({
+    fullWidth,
+    disabled,
+    backgroundColor,
+    paddingVertical,
+    paddingHorizontal,
+  }) => ({
     backgroundColor: backgroundColor
       ? COLORS[backgroundColor]
       : COLORS.mainGreen,
-    paddingVertical: 16,
-    paddingHorizontal: 20,
+    paddingVertical: paddingVertical || 16,
+    paddingHorizontal: paddingHorizontal || 20,
     borderRadius: 8,
     width: fullWidth ? "100%" : undefined,
     alignItems: "center",
