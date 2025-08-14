@@ -6,12 +6,14 @@ interface FieldLayoutProps {
   title: string;
   titleSideComponent?: React.ReactNode;
   content: React.ReactNode;
+  contentSideComponent?: React.ReactNode;
 }
 
 const FieldLayout = ({
   title,
   titleSideComponent,
   content,
+  contentSideComponent,
 }: FieldLayoutProps) => {
   return (
     <>
@@ -22,7 +24,12 @@ const FieldLayout = ({
         {titleSideComponent && titleSideComponent}
       </HeaderContainer>
       <Spacing size={14} />
-      {content}
+      <ContentContainer>
+        {content}
+        <ContentSideComponentContainer>
+          {contentSideComponent}
+        </ContentSideComponentContainer>
+      </ContentContainer>
     </>
   );
 };
@@ -31,6 +38,16 @@ const HeaderContainer = styled.View`
   flex-direction: row;
   align-items: center;
   gap: 8px;
+`;
+
+const ContentContainer = styled.View`
+  position: relative;
+`;
+
+const ContentSideComponentContainer = styled.View`
+  position: absolute;
+  height: 100%;
+  right: 0;
 `;
 
 export default FieldLayout;
