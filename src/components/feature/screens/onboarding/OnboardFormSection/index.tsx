@@ -27,8 +27,7 @@ const OnboardFormSection = () => {
   const emailSchema = z.string().trim().email();
   const verificationCodeSchema = z
     .string()
-    .min(6, "인증 번호는 6자리입니다.")
-    .max(6, "인증 번호는 6자리입니다.");
+    .regex(/^\d{6}$/, "인증 번호는 숫자 6자리입니다.");
 
   // 타이머를 위한
   useEffect(() => {
