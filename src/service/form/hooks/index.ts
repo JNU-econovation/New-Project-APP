@@ -7,7 +7,7 @@ import _FormPositionSelectField from "../components/_FormPositionSelectField";
 import _FormSubmitButton from "../components/_FormSubmitButton";
 import _FormTextareaField from "../components/_FormTextareaField";
 
-export const { useAppForm, withForm } = createFormHook({
+export const { useAppForm, withForm, withFieldGroup } = createFormHook({
   fieldComponents: {
     TextAreaField: _FormTextareaField,
     AttachmentField: _FormAttachmentField,
