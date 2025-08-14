@@ -15,6 +15,7 @@ interface NoticeBarProps extends NoticeContainerProps {
 }
 
 const NoticeBar = ({ message, duration, zIndex, setQueue }: NoticeBarProps) => {
+  const timeIdRef = useRef<number[]>([]);
   const animate = useRef(new Animated.Value(-92)).current;
 
   const hideNotice = useCallback(() => {
@@ -23,9 +24,11 @@ const NoticeBar = ({ message, duration, zIndex, setQueue }: NoticeBarProps) => {
       duration: 250,
       useNativeDriver: true,
     }).start();
-    setTimeout(() => {
-      setQueue((prevQueue) => prevQueue.slice(1));
-    }, 250);
+    timeIdRef.current.push(
+      setTimeout(() => {
+        setQueue((prevQueue) => prevQueue.slice(1));
+      }, 250),
+    );
   }, [animate]);
 
   useEffect(() => {
@@ -44,8 +47,9 @@ const NoticeBar = ({ message, duration, zIndex, setQueue }: NoticeBarProps) => {
 
     return () => {
       timeId && clearTimeout(timeId);
+      timeIdRef.current.forEach(clearTimeout);
     };
-  }, [duration, animate]);
+  }, [duration, hideNotice]);
 
   return (
     <Animated.View
