@@ -13,8 +13,10 @@ interface StyledTextInputProps {
 }
 
 const Textarea = styled.TextInput<StyledTextInputProps>`
-  border: 1px solid
-    ${({ borderColor }) => (borderColor ? COLORS[borderColor] : COLORS.subGray)};
+  border-width: 1px;
+  border-color: ${({ borderColor }) =>
+    borderColor ? COLORS[borderColor] : COLORS.subGray};
+  border-style: solid;
   border-radius: 8px;
   padding: 12px;
   background-color: ${({ backgroundColor }) =>
