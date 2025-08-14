@@ -4,7 +4,6 @@ import Guide2Image from "@shared/ui/Images/Guide2";
 import Guide3Image from "@shared/ui/Images/Guide3";
 import Text from "@shared/ui/Text";
 import { View, Image } from "react-native";
-import Guide3Png from "@assets/images/guide3.png";
 
 const SCREEN_HEIGHT = 430;
 
@@ -106,8 +105,9 @@ const ExplainItem4 = () => {
         <Text fontSize={30} fontWeight="bold" color="mainGreen">
           깃대종 식물 키우기
         </Text>
+        {/* <Guide3Image /> */}
         <Image
-          source={require(Guide3Png)}
+          source={require("@/assets/images/guide3.png")}
           style={{ width: 197, height: 197 }}
         />
         <View>
