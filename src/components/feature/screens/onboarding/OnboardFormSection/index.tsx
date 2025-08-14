@@ -7,12 +7,10 @@ import TextAreaField from "@shared/ui/TextareaField";
 import { useEffect, useRef, useState } from "react";
 import * as z from "zod";
 
-const timestampToMinutesSeconds = (timestamp: number) => {
-  const date = new Date(timestamp); // 인증 요청 버튼 누르면 누른 시점으로부터 5분 뒤로 설정됨
-  const minutes =
-    date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-  const seconds =
-    date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
+const timestampToMinutesSeconds = (ms: number) => {
+  const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+  const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+  const seconds = String(totalSeconds % 60).padStart(2, "0");
   return `${minutes}:${seconds}`;
 };
 
