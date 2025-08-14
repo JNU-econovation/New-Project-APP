@@ -4,6 +4,7 @@ import Spacing from "@shared/layout/Spacing";
 import DefaultButton from "@shared/ui/buttons/DefaultButton";
 import Text from "@shared/ui/Text";
 import TextAreaField from "@shared/ui/TextareaField";
+import { COLORS } from "@styles/colorPalette";
 import { useEffect, useRef, useState } from "react";
 import * as z from "zod";
 
@@ -31,8 +32,6 @@ const OnboardFormSection = () => {
 
   // 타이머를 위한
   useEffect(() => {
-    //TODO: verificationDeadlineTimer가 하나 증가할 때 top알림창 뜨도록
-
     const timer = setInterval(() => {
       const verificationDeadline = verificationRef.current.deadline;
       setVerificationDeadlineTimer(verificationDeadline - Date.now());
@@ -91,8 +90,9 @@ const OnboardFormSection = () => {
         keyboardType="email-address"
         onChangeText={setEmail}
         value={email}
+        placeholderTextColor={COLORS.subGray}
         helperText={
-          email && emailSchema.safeParse(email).error
+          email && emailSchema.safeParse(email).error?.message
             ? "존재하지 않는 이메일입니다."
             : ""
         }
@@ -130,6 +130,7 @@ const OnboardFormSection = () => {
         value={verificationCode}
         maxLength={6}
         editable={!!verificationCodeSent}
+        placeholderTextColor={COLORS.subGray}
         contentSideComponent={
           verificationCodeSent > 0 && (
             <InputRightSideContainer>
@@ -142,6 +143,7 @@ const OnboardFormSection = () => {
           )
         }
       />
+      <Spacing size={40} />
       {!!verificationCodeSent && (
         <DefaultButton
           title="확인하기"
