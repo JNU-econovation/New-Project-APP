@@ -24,3 +24,9 @@ export { default as HeroSVG } from "@assets/icons/Hero.svg";
 // Header
 export { default as BellSVG } from "@assets/icons/Bell.svg";
 export { default as SettingSVG } from "@assets/icons/Setting.svg";
+
+// polygon
+export { default as PointerPolygon } from "@assets/icons/Pointer_Polygon.svg";
+export { default as WeekGreenTriangle } from "@assets/icons/Week_Green_Triangle.svg";
+export { default as ChosenTriangle } from "@assets/icons/Chosen_Triangle.svg";
+export { default as WeekTriangle } from "@assets/icons/Week_Triangle.svg";
