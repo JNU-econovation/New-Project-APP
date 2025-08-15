@@ -58,7 +58,7 @@ const appConfig = {
         "expo-location",
         {
           locationAlwaysAndWhenInUsePermission:
-            "Allow $(PRODUCT_NAME) to use your location.",
+            "$(PRODUCT_NAME)이 위치 정보를 항상 사용하도록 허용합니다.",
         },
       ],
       "expo-web-browser",
@@ -66,7 +66,9 @@ const appConfig = {
         "expo-image-picker",
         {
           photosPermission:
-            "The app accesses your photos to let you share them with your friends.",
+            "$(PRODUCT_NAME)이 사진 라이브러리에 접근할 수 있도록 허용합니다.",
+          cameraPermission:
+            "$(PRODUCT_NAME)이 카메라에 접근할 수 있도록 허용합니다.",
         },
       ],
     ],
