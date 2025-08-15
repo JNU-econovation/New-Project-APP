@@ -1,4 +1,3 @@
-import useGetCurrentPosition from "@hooks/feature/useGetCurrentPosition";
 import { useTokenStore } from "@store/secureStorage/useTokenStore";
 import { getValueFromSecureStore } from "@utils/secureStore";
 import { useFonts } from "expo-font";
@@ -20,8 +19,6 @@ export default function Index() {
     "pretendard-semibold": require("@/assets/fonts/Pretendard-SemiBold.otf"),
     "pretendard-thin": require("@/assets/fonts/Pretendard-Thin.otf"),
   });
-
-  useGetCurrentPosition();
 
   const checkLogin = useCallback(async () => {
     try {
