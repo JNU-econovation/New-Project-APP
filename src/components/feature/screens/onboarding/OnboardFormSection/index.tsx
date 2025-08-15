@@ -5,6 +5,7 @@ import DefaultButton from "@shared/ui/buttons/DefaultButton";
 import Text from "@shared/ui/Text";
 import TextAreaField from "@shared/ui/TextareaField";
 import { COLORS } from "@styles/colorPalette";
+import { router } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import * as z from "zod";
 
@@ -62,6 +63,7 @@ const OnboardFormSection = () => {
     });
   };
 
+  // 인증 번호 확인 버튼 클릭 시
   const handleVerificationCodeSubmit = () => {
     const isValid = verificationCodeSchema.safeParse(verificationCode).success;
     if (!isValid) {
@@ -76,6 +78,8 @@ const OnboardFormSection = () => {
     // onSettled : button disabled
 
     // alert("인증번호가 일치하지 않습니다.");
+
+    router.push("/onboarding/permission");
   };
 
   return (
