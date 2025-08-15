@@ -8,10 +8,15 @@ import {
   MountainSVG,
   StoreSVG,
 } from "@shared/ui/Icons";
+import { useTokenStore } from "@store/secureStorage/useTokenStore";
 import { COLORS } from "@styles/colorPalette";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 
 export default function TabLayout() {
+  const { accessToken } = useTokenStore();
+  //TODO: 로그인 페이지로 변경 필요
+  if (!accessToken) return <Redirect href="/onboarding/permission" />;
+
   return (
     <QueryProvider>
       <Tabs
