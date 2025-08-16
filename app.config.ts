@@ -39,6 +39,14 @@ const appConfig = {
       "expo-splash-screen",
       "expo-apple-authentication",
       "expo-router",
+      // "@react-native-voice/voice",
+      [
+        "@react-native-voice/voice",
+        {
+          microphonePermission: "마이크 접근 권한이 필요합니다.",
+          speechRecognitionPermission: "음성 인식 권한이 필요합니다.",
+        },
+      ],
       [
         "expo-font",
         {
@@ -80,9 +88,10 @@ const appConfig = {
         origin: false,
       },
       eas: {
-        projectId: "980c25a2-cc92-431c-9a41-8c1a84bfc6b8",
+        projectId: "771bd71e-9bd9-42bc-809c-d0207f8329d3",
       },
     },
+    owner: "geongyu09",
   },
 };
 
