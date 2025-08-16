@@ -58,8 +58,7 @@ const REQUEST = [
     const { granted: cameraGranted } =
       await ImagePicker.requestCameraPermissionsAsync();
     const { granted: libraryGranted } =
-      await ImagePicker.requestMediaLibraryPermissionsAsync(true);
-
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
     return cameraGranted && libraryGranted;
   },
 ];
