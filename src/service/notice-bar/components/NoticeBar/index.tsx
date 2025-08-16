@@ -80,6 +80,8 @@ const NoticeContainer = styled.View<NoticeContainerProps>`
   display: flex;
   justify-content: flex-end;
   z-index: ${({ zIndex }) => (zIndex ? +100 : 0)};
+  /* Android */
+  elevation: 4;
 `;
 
 const TextContainer = styled.View`

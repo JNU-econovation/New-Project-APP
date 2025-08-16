@@ -62,6 +62,7 @@ const PermissionListItemContainer = styled.View`
   align-items: center;
   flex-direction: row;
   overflow-x: hidden;
+  background-color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 `;
 
@@ -77,6 +78,7 @@ const PermissionListItem = styled.View<Pick<ListItemCardProps, "disabled">>`
   padding-inline: 20px;
   background-color: ${({ disabled }) =>
     disabled ? COLORS.disabledGray : "white"};
+  elevation: 4;
 `;
 
 const PermissionListItemTextContainer = styled.View`
