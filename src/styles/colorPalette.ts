@@ -14,5 +14,7 @@ export const COLORS = {
   black: "#000000",
   kakaoYellow: "#fae64d",
   mainRed: "#FF5151",
-  errorMessage: "#ff0000",
+
+  error: "#ff0000",
+  success: "#2D6EFF",
 } as const;
