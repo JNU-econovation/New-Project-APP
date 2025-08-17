@@ -4,6 +4,18 @@ import styled from "@emotion/native";
 interface TextProps {
   fontSize?: number;
   color?: keyof typeof COLORS;
+  /**
+   * 폰트 굵기 설정
+   * - thin: 100
+   * - extralight: 200  
+   * - light: 300
+   * - normal: 400
+   * - medium: 500
+   * - semibold: 600
+   * - bold: 700
+   * - extrabold: 800
+   * - black: 900
+   */
   fontWeight?:
     | "normal"
     | "bold"
