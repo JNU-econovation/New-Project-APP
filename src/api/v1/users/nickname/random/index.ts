@@ -6,7 +6,7 @@ interface GetRandomNicknameResponse {
   isDuplicated: boolean;
 }
 
-export const getRandomNickname = async (nickname: string) => {
+export const getRandomNickname = async () => {
   const response = await authenticatedApi<GetRandomNicknameResponse>({
     method: "get",
     url: RANDOM_NICKNAME_API_PATH,
