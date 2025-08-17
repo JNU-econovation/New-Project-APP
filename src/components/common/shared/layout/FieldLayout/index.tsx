@@ -18,7 +18,7 @@ const FieldLayout = ({
   return (
     <>
       <HeaderContainer>
-        <Text fontWeight="bold" fontSize={20}>
+        <Text fontWeight="medium" fontSize={20}>
           {title}
         </Text>
         {titleSideComponent && titleSideComponent}
