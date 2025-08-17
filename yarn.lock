@@ -2344,6 +2344,11 @@
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
+"@suspensive/react@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@suspensive/react/-/react-3.6.0.tgz#fc71973bd18ee16188f30d85794db37a40250002"
+  integrity sha512-u8VbWxtHfXtWYimwhM/x0Kti2f09pEII70w7PtNUfL6Bm3mOAVUVvWhTDWEbqf1W7W8AYB4JNd51yL5gX5ABxQ==
+
 "@svgr/babel-plugin-add-jsx-attribute@8.0.0":
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-8.0.0.tgz#4001f5d5dd87fa13303e36ee106e3ff3a7eb8b22"
