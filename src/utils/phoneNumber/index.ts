@@ -86,6 +86,39 @@ export const isValidPhoneNumber = (phoneNumber: number | string): boolean => {
   return mobilePattern.test(digits);
 };
 
+/**
+ * 맨 앞 3자리를 제외한 숫자만으로 번호 확인 및 포맷팅
+ * @param phoneNumber - 핸드폰 번호 (앞 3자리 제외)
+ * @returns 포맷된 핸드폰 번호 문자열 (예: "1234-5678")
+ */
+export const validateAndFormatPhoneWithoutPrefix = (phoneNumber: number | string): string => {
+  const numStr = phoneNumber.toString().replace(/\D/g, "");
+  
+  // 길이별 포맷팅
+  if (numStr.length === 7) {
+    // 7자리인 경우 3-4 포맷 (예: "123-4567")
+    return `${numStr.slice(0, 3)}-${numStr.slice(3)}`;
+  } else if (numStr.length === 8) {
+    // 8자리인 경우 4-4 포맷 (예: "1234-5678")
+    return `${numStr.slice(0, 4)}-${numStr.slice(4)}`;
+  }
+  
+  // 7자리나 8자리가 아닌 경우 원본 반환
+  return numStr;
+};
+
+/**
+ * 맨 앞 3자리를 제외한 번호의 유효성만 검사
+ * @param phoneNumber - 핸드폰 번호 (앞 3자리 제외)
+ * @returns 유효한 번호인지 여부
+ */
+export const isValidPhoneWithoutPrefix = (phoneNumber: number | string): boolean => {
+  const numStr = phoneNumber.toString().replace(/\D/g, "");
+  
+  // 8자리 숫자인지 확인
+  return /^\d{8}$/.test(numStr);
+};
+
 // 사용 예시
 // console.log(formatPhoneNumber(1012345678));     // "010-1234-5678"
 // console.log(formatPhoneNumber(01012345678));    // "010-1234-5678"
