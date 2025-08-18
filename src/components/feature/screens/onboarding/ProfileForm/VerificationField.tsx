@@ -1,5 +1,7 @@
+import HELPER from "@constants/inputField/helper";
 import styled from "@emotion/native";
 import { useProfileSetFormContext } from "@hooks/feature/form/useProfileSetForm";
+import useVerifyPhoneNumber from "@hooks/feature/query/mutate/useVerifyPhoneNumber";
 import DefaultButton from "@shared/ui/buttons/DefaultButton";
 import Text from "@shared/ui/Text";
 import TextAreaField from "@shared/ui/TextareaField";
@@ -8,14 +10,6 @@ import { useEffect, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
 import { Keyboard } from "react-native";
 
-const helperText = {
-  none: undefined,
-  require: "필수 입력 항목입니다.",
-  success: "인증이 완료되었습니다.",
-  error: "인증번호가 올바르지 않습니다.",
-  timeout: "입력 시간이 초과되었습니다. 재요청해주세요.",
-};
-
 const VerificationField = () => {
   const { control, getValues, watch, setValue } = useProfileSetFormContext();
   const [verificationTimer, setVerificationTimer] = useState<number | null>(
@@ -23,39 +17,46 @@ const VerificationField = () => {
   );
   const timerRef = useRef<number | null>(null);
 
-  const [helperState, setHelperState] =
-    useState<keyof typeof helperText>("none");
+  const { mutate: checkVerificationCode } = useVerifyPhoneNumber();
 
   const handlePhoneNumberVerification = () => {
     const verificationCode = getValues("verificationCode");
     if (verificationCode.length === 6) {
       Keyboard.dismiss();
-      if (helperState !== "none") return;
+      if (getValues("verificationFieldHelperState") !== "NONE") return;
 
-      // 인증 요청 로직
-      if (Date.now() % 2 === 0) {
-        setHelperState("success");
-        setValue("isPhoneNumberValid", true);
-        return;
-      }
-      setHelperState("error");
-      setValue("isPhoneNumberValid", false);
+      checkVerificationCode(
+        { certificationCode: verificationCode },
+        {
+          onSuccess: () => {
+            setValue("verificationFieldHelperState", "SUCCESS");
+            setValue("isPhoneNumberValid", true);
+            return;
+          },
+          onError: (error) => {
+            setValue("verificationFieldHelperState", "ERROR");
+            setValue("isPhoneNumberValid", false);
+          },
+        },
+      );
     }
   };
 
   useEffect(() => {
     if (watch("verificationDeadline")) {
-      if (!timerRef.current) {
-        timerRef.current = setInterval(() => {
-          const remainingTime = watch("verificationDeadline") - Date.now();
-          if (remainingTime <= 0) {
-            setVerificationTimer(null);
-            setHelperState("timeout");
-          } else {
-            setVerificationTimer(remainingTime);
-          }
-        }, 100);
-      }
+      timerRef.current = setInterval(() => {
+        const remainingTime = watch("verificationDeadline") - Date.now();
+        if (remainingTime <= 0) {
+          setVerificationTimer(null);
+          setValue("verificationFieldHelperState", "TIMEOUT");
+        } else {
+          setVerificationTimer(remainingTime);
+        }
+      }, 100);
+    }
+
+    if (watch("isPhoneNumberValid") && timerRef.current) {
+      clearInterval(timerRef.current);
     }
 
     return () => {
@@ -76,12 +77,16 @@ const VerificationField = () => {
           backgroundColor="inputGray"
           borderColor="inputGray"
           paddingVertical={16}
-          helperText={helperText[helperState]}
+          helperText={
+            HELPER.PROFILE_FORM.VERIFICATION[
+              getValues("verificationFieldHelperState")
+            ]
+          }
           onChangeText={(verificationCode) => {
             if (watch("isPhoneNumberValid")) {
               return;
             }
-            setHelperState("none");
+            setValue("verificationFieldHelperState", "NONE");
             onChange(verificationCode);
             if (verificationCode.length === 6) {
               Keyboard.dismiss();
@@ -102,7 +107,10 @@ const VerificationField = () => {
             </Text>
           }
           helperTextProps={{
-            color: helperState === "success" ? "success" : "error",
+            color:
+              watch("verificationFieldHelperState") === "SUCCESS"
+                ? "success"
+                : "error",
           }}
           contentSideComponent={
             <InputRightSideContainer>
@@ -116,7 +124,7 @@ const VerificationField = () => {
                 disabled={
                   watch("phoneNumberVerificationCount") === 0 ||
                   watch("verificationCode").length !== 6 ||
-                  helperState !== "none"
+                  watch("verificationFieldHelperState") !== "NONE"
                 }
               />
             </InputRightSideContainer>
