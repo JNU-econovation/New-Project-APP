@@ -1,9 +1,12 @@
 import { useProfileSetFormContext } from "@hooks/feature/form/useProfileSetForm";
+import useProfileMutate from "@hooks/feature/query/mutate/useProfileMutate";
 import PositionBottom from "@shared/layout/PositionBottom";
 import DefaultButton from "@shared/ui/buttons/DefaultButton";
+import { router } from "expo-router";
 
 const SubmitButton = () => {
   const { getValues, setValue } = useProfileSetFormContext();
+  const { mutate: postProfile } = useProfileMutate();
 
   const handleSubmit = () => {
     const {
@@ -30,7 +33,18 @@ const SubmitButton = () => {
 
     if (!email) setValue("emailFieldHelperState", "REQUIRE");
 
-    console.log({ email, nickname, phoneNumber });
+    postProfile(
+      { email, nickname, phoneNumber: `010-${phoneNumber}` },
+      {
+        onSuccess: () => {
+          router.replace("/(tabs)/home");
+        },
+        onError: () => {
+          //TODO: 명세가 정해진 이후 수정 필요
+          setValue("emailFieldHelperState", "DUPLICATED");
+        },
+      },
+    );
   };
 
   return (
