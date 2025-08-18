@@ -26,7 +26,7 @@ const useProfileSetForm = () => {
     defaultValues: {
       // form field
       nickname: "",
-      phoneNumber: "010-",
+      phoneNumber: "",
       verificationCode: "",
       email: "",
 
@@ -34,6 +34,10 @@ const useProfileSetForm = () => {
       isNicknameValid: true,
       isPhoneNumberValid: false,
       phoneNumberVerificationCount: 0,
+      nicknameFieldHelperState: "NONE",
+      phoneNumberFieldHelperState: "NONE",
+      verificationFieldHelperState: "NONE",
+      emailFieldHelperState: "NONE",
     },
   });
 };
