@@ -6,11 +6,17 @@ interface PostVerifyPhoneNumberResponse {
   certificationCode: number;
 }
 
-export const postVerifyPhoneNumber = async (verifyNumber: string) => {
+interface PostVerifyPhoneNumberRequest {
+  certificationCode: string;
+}
+
+export const postVerifyPhoneNumber = async ({
+  certificationCode,
+}: PostVerifyPhoneNumberRequest) => {
   const response = await authenticatedApi<PostVerifyPhoneNumberResponse>({
     method: "POST",
     url: USER_VERIFY_NUMBER_API_PATH,
-    data: { certificationCode: verifyNumber },
+    data: { certificationCode },
   });
 
   return response.data;
