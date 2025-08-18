@@ -33,6 +33,15 @@ const SubmitButton = () => {
 
     if (!email) setValue("emailFieldHelperState", "REQUIRE");
 
+    const hasError =
+      !nickname ||
+      !isNicknameValid ||
+      !phoneNumber ||
+      !email ||
+      (!isPhoneNumberValid &&
+        (!verificationCode || `${verificationCode}`.length !== 6));
+    if (hasError) return;
+
     postProfile(
       { email, nickname, phoneNumber: `010-${phoneNumber}` },
       {
