@@ -423,7 +423,7 @@
       "responses": [
         {
           "uuid": "1945305f-2d50-43e0-8256-e153e4fdd8e0",
-          "body": "{\n  \t\"data\" : {\n\t\t   \"nickname\" : \"무등산탐험가1111\"\n  \t}\n\t\t\"status\" : \"success\"\n}",
+          "body": "{\n  \t\"data\" : {\n\t\t   \"nickname\" : \"무등산탐험가1111\"\n  \t},\n\t\t\"status\" : \"success\"\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -452,7 +452,7 @@
       "responses": [
         {
           "uuid": "0c7ea272-6ca9-43a1-93ab-7decdb1c93f9",
-          "body": "{\n   \"nickname\" : \"무등산탐험가11111\"\n   \"phoneNumber\" :  \"010-8998-6388\"\n   \"email\" : \"abc@naver.com\"\n}",
+          "body": "{\n   \"nickname\" : \"무등산탐험가11111\",\n   \"phoneNumber\" :  \"010-8998-6388\",\n   \"email\" : \"abc@naver.com\"\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -481,7 +481,7 @@
       "responses": [
         {
           "uuid": "833212fa-fbdd-4abd-9175-44b5684b9bfa",
-          "body": "{\n  \t\"data\" : {\n\t\t  \t\"isDuplicated\" : false \n  \t}\n\t\t\"status\" : \"success\"\n}",
+          "body": "{\n  \t\"data\" : {\n\t\t  \t\"isDuplicated\" : false \n  \t},\n\t\t\"status\" : \"success\"\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -518,7 +518,7 @@
       "responses": [
         {
           "uuid": "31985696-3e9a-4f94-b431-f3ac03638bb2",
-          "body": "{\n\t\t\"data\" : {\n\t\t   \"certificationCode\" : \"945345\"\n\t\t}\n\t\t\"status\" : \"success\"\n}",
+          "body": "{\n\t\t\"data\" : {\n\t\t   \"certificationCode\" : \"945345\"\n\t\t},\n\t\t\"status\" : \"success\"\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -547,7 +547,7 @@
       "responses": [
         {
           "uuid": "ad4e1996-3aed-4e7a-93d6-c43e999740f8",
-          "body": "{\n\t\t\"data\" : {\n\t\t\t\t\"phoneNumber\" : \"010-1234-5678\"\n\t\t}\n\t\t\"status\" : \"success\"\n}",
+          "body": "{\n\t\t\"data\" : {\n\t\t\t\t\"phoneNumber\" : \"010-1234-5678\"\n\t\t},\n\t\t\"status\" : \"success\"\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
