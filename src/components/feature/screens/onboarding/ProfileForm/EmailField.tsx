@@ -46,7 +46,6 @@ const EmailField = () => {
             onChange(email);
           }}
           value={value}
-          maxLength={12}
           helperTextProps={{
             color: "error",
           }}
