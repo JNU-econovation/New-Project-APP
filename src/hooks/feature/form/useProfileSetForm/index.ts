@@ -1,3 +1,4 @@
+import HELPER from "@constants/inputField/helper";
 import { useForm, useFormContext } from "react-hook-form";
 
 interface ProfileFormValues {
@@ -8,6 +9,8 @@ interface ProfileFormValues {
 
   // meta
   isNicknameValid: boolean;
+  nicknameFieldHelperState: keyof typeof HELPER.PROFILE_FORM.NICKNAME;
+
   phoneNumberVerificationCount: number;
   isPhoneNumberValid: boolean;
   verificationDeadline: number;
