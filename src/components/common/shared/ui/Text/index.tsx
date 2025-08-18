@@ -7,9 +7,10 @@ interface TextProps {
   /**
    * 폰트 굵기 설정
    * - thin: 100
-   * - extralight: 200  
+   * - extralight: 200
    * - light: 300
-   * - normal: 400
+   * - normal: 400 (alias of regular)
+   * - regular: 400
    * - medium: 500
    * - semibold: 600
    * - bold: 700
@@ -18,6 +19,7 @@ interface TextProps {
    */
   fontWeight?:
     | "normal"
+    | "regular"
     | "bold"
     | "black"
     | "extrabold"
