@@ -3,6 +3,8 @@ import Spacing from "@shared/layout/Spacing";
 import Text from "@shared/ui/Text";
 import Textarea from "@shared/ui/Textarea";
 
+import TextAreaFieldLoader from "./loader";
+
 interface TextAreaFieldProps extends React.ComponentProps<typeof Textarea> {
   title: string;
   titleSpacing?: number;
@@ -49,5 +51,7 @@ const TextAreaField = ({
     </>
   );
 };
+
+TextAreaField.loader = TextAreaFieldLoader;
 
 export default TextAreaField;
