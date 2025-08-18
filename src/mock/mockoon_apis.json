@@ -452,7 +452,7 @@
       "responses": [
         {
           "uuid": "0c7ea272-6ca9-43a1-93ab-7decdb1c93f9",
-          "body": "{\n   \"nickname\" : \"무등산탐험가11111\",\n   \"phoneNumber\" :  \"010-8998-6388\",\n   \"email\" : \"abc@naver.com\"\n}",
+          "body": "{\n  \"data\" :{ \n   \"nickname\" : \"무등산탐험가11111\",\n   \"phoneNumber\" :  \"010-8998-6388\",\n   \"email\" : \"abc@naver.com\"},\n   \"status\" : \"success\"\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "",
