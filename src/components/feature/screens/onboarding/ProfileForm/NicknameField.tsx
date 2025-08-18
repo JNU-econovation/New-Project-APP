@@ -1,13 +1,16 @@
 import HELPER from "@constants/inputField/helper";
+import styled from "@emotion/native";
 import { useProfileSetFormContext } from "@hooks/feature/form/useProfileSetForm";
+import useCheckNicknameDuplicatedMutate from "@hooks/feature/query/mutate/useCheckNicknameDuplicatedMutate";
 import useRandomNicknameQuery from "@hooks/feature/query/query/useRandomNicknameQuery";
+import DefaultButton from "@shared/ui/buttons/DefaultButton";
 import TextAreaField from "@shared/ui/TextareaField";
 import { COLORS } from "@styles/colorPalette";
 import { Suspense } from "@suspensive/react";
 import { useEffect } from "react";
 import { Controller } from "react-hook-form";
+import { Keyboard } from "react-native";
 import { z } from "zod";
-import NicknameFieldContentSideButton from "./side";
 
 const nicknameSchema = z
   .string()
@@ -28,6 +31,8 @@ const NicknameField = Suspense.with(
     const {
       data: { nickname: randomNickname },
     } = useRandomNicknameQuery();
+    const { mutate: checkNicknameDuplicated } =
+      useCheckNicknameDuplicatedMutate();
 
     const checkNickname = (nickname: string) => {
       const result = nicknameSchema.safeParse(nickname);
@@ -43,6 +48,27 @@ const NicknameField = Suspense.with(
       }
 
       setValue("nicknameFieldHelperState", "INVALID");
+    };
+
+    const handleEmailSubmit = () => {
+      if (watch("nicknameFieldHelperState") !== "FIT") return;
+      Keyboard.dismiss();
+
+      checkNicknameDuplicated(
+        { nickname: getValues("nickname") },
+        {
+          onSuccess: ({ isDuplicated }) => {
+            if (isDuplicated) {
+              setValue("nicknameFieldHelperState", "DUPLICATED");
+              return;
+            }
+
+            setValue("nicknameFieldHelperState", "SUCCESS");
+            setValue("nickname", getValues("nickname"));
+            setValue("isNicknameValid", true);
+          },
+        },
+      );
     };
 
     useEffect(() => {
@@ -67,6 +93,7 @@ const NicknameField = Suspense.with(
             }
             onChangeText={(text) => {
               checkNickname(text);
+              setValue("isNicknameValid", false);
               onChange(text);
             }}
             value={value}
@@ -78,12 +105,34 @@ const NicknameField = Suspense.with(
                   ? "success"
                   : "error",
             }}
-            contentSideComponent={<NicknameFieldContentSideButton />}
+            contentSideComponent={
+              <InputRightSideContainer>
+                <DefaultButton
+                  title={"확인"}
+                  color="mainWhite"
+                  fontSize={14}
+                  paddingHorizontal={12}
+                  paddingVertical={8}
+                  fullWidth
+                  onPress={handleEmailSubmit}
+                  disabled={watch("nicknameFieldHelperState") !== "FIT"}
+                />
+              </InputRightSideContainer>
+            }
           />
         )}
       />
     );
   },
 );
+
+const InputRightSideContainer = styled.View`
+  width: 80px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 8px;
+`;
 
 export default NicknameField;
