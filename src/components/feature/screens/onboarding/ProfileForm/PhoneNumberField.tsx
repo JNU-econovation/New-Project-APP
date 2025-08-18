@@ -1,10 +1,17 @@
+import HELPER from "@constants/inputField/helper";
 import styled from "@emotion/native";
 import { useProfileSetFormContext } from "@hooks/feature/form/useProfileSetForm";
 import useSMSForVerificationMutate from "@hooks/feature/query/mutate/useSMSForVerificationMutate";
 import DefaultButton from "@shared/ui/buttons/DefaultButton";
+import Text from "@shared/ui/Text";
 import TextAreaField from "@shared/ui/TextareaField";
 import { COLORS } from "@styles/colorPalette";
-import { formatPhoneNumberLive, isValidPhoneNumber } from "@utils/phoneNumber";
+import {
+  isValidPhoneNumber,
+  isValidPhoneWithoutPrefix,
+  validateAndFormatPhoneWithoutPrefix,
+} from "@utils/phoneNumber";
+import { useState } from "react";
 import { Controller } from "react-hook-form";
 import { Keyboard } from "react-native";
 
@@ -12,8 +19,10 @@ const PhoneNumberField = () => {
   const { control, getValues, watch, setValue } = useProfileSetFormContext();
   const { mutate: sendSMSVerification } = useSMSForVerificationMutate();
 
+  const [isFocused, setIsFocused] = useState(false);
+
   const handlePhoneNumberVerification = () => {
-    const phoneNumber = getValues("phoneNumber");
+    const phoneNumber = `010-${getValues("phoneNumber")}`;
     Keyboard.dismiss();
     if (isValidPhoneNumber(phoneNumber)) {
       sendSMSVerification(phoneNumber, {
@@ -36,32 +45,49 @@ const PhoneNumberField = () => {
         <TextAreaField
           title="전화번호"
           titleSpacing={0}
-          placeholder="입력하기"
           backgroundColor="inputGray"
           borderColor="inputGray"
           paddingVertical={16}
           placeholderTextColor={COLORS.subGray}
-          // helperText={helperText[helperState]}
+          helperText={
+            HELPER.PROFILE_FORM.PHONE_NUMBER[
+              watch("phoneNumberFieldHelperState")
+            ]
+          }
+          paddingHorizontal={55}
           onChangeText={(phoneNumber) => {
             if (watch("isPhoneNumberValid")) {
               return;
             }
-            if (phoneNumber.length <= 4) {
-              onChange("010-");
-              Keyboard.dismiss();
-              return;
-            }
-            const formatted = formatPhoneNumberLive(phoneNumber);
+            const formatted = validateAndFormatPhoneWithoutPrefix(phoneNumber);
             onChange(formatted);
           }}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           keyboardType="number-pad"
           value={value}
-          maxLength={13}
+          maxLength={9}
           editable={!watch("isPhoneNumberValid")}
-          // helperTextProps={{
-          //   color: helperState === "success" ? "success" : "error",
-          // }}
-          contentSideComponent={
+          helperTextProps={{
+            color:
+              watch("phoneNumberFieldHelperState") === "SUCCESS"
+                ? "success"
+                : "error",
+          }}
+          contentLeftComponent={
+            <InputLeftSideContainer>
+              <Text
+                color={
+                  watch("phoneNumber").length === 0 && !isFocused
+                    ? "gray20"
+                    : "black"
+                }
+              >
+                010 -
+              </Text>
+            </InputLeftSideContainer>
+          }
+          contentRightComponent={
             <InputRightSideContainer>
               <DefaultButton
                 title={
@@ -75,7 +101,7 @@ const PhoneNumberField = () => {
                 paddingVertical={8}
                 onPress={handlePhoneNumberVerification}
                 disabled={
-                  isValidPhoneNumber(value) === false ||
+                  isValidPhoneWithoutPrefix(value) === false ||
                   watch("isPhoneNumberValid")
                 }
               />
@@ -86,6 +112,14 @@ const PhoneNumberField = () => {
     />
   );
 };
+
+const InputLeftSideContainer = styled.View`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 14px;
+`;
 
 const InputRightSideContainer = styled.View`
   width: 100%;
