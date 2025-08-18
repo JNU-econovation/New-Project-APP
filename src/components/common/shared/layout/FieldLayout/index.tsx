@@ -6,14 +6,16 @@ interface FieldLayoutProps {
   title: string;
   titleSideComponent?: React.ReactNode;
   content: React.ReactNode;
-  contentSideComponent?: React.ReactNode;
+  contentLeftComponent?: React.ReactNode;
+  contentRightComponent?: React.ReactNode;
 }
 
 const FieldLayout = ({
   title,
   titleSideComponent,
   content,
-  contentSideComponent,
+  contentLeftComponent,
+  contentRightComponent,
 }: FieldLayoutProps) => {
   return (
     <>
@@ -26,10 +28,15 @@ const FieldLayout = ({
       <Spacing size={14} />
       <ContentContainer>
         {content}
-        {contentSideComponent && (
-          <ContentSideComponentContainer>
-            {contentSideComponent}
-          </ContentSideComponentContainer>
+        {contentLeftComponent && (
+          <ContentLeftComponentContainer>
+            {contentLeftComponent}
+          </ContentLeftComponentContainer>
+        )}
+        {contentRightComponent && (
+          <ContentRightComponentContainer>
+            {contentRightComponent}
+          </ContentRightComponentContainer>
         )}
       </ContentContainer>
     </>
@@ -46,7 +53,13 @@ const ContentContainer = styled.View`
   position: relative;
 `;
 
-const ContentSideComponentContainer = styled.View`
+const ContentLeftComponentContainer = styled.View`
+  position: absolute;
+  height: 100%;
+  left: 0;
+`;
+
+const ContentRightComponentContainer = styled.View`
   position: absolute;
   height: 100%;
   right: 0;

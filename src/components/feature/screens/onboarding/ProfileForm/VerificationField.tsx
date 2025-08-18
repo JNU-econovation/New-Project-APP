@@ -112,7 +112,7 @@ const VerificationField = () => {
                 ? "success"
                 : "error",
           }}
-          contentSideComponent={
+          contentRightComponent={
             <InputRightSideContainer>
               <DefaultButton
                 title="확인"
