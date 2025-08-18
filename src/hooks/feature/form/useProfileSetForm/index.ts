@@ -12,8 +12,13 @@ interface ProfileFormValues {
   nicknameFieldHelperState: keyof typeof HELPER.PROFILE_FORM.NICKNAME;
 
   phoneNumberVerificationCount: number;
+  phoneNumberFieldHelperState: keyof typeof HELPER.PROFILE_FORM.PHONE_NUMBER;
+
   isPhoneNumberValid: boolean;
   verificationDeadline: number;
+  verificationFieldHelperState: keyof typeof HELPER.PROFILE_FORM.VERIFICATION;
+
+  emailFieldHelperState: keyof typeof HELPER.PROFILE_FORM.EMAIL;
 }
 
 const useProfileSetForm = () => {
@@ -26,7 +31,7 @@ const useProfileSetForm = () => {
       email: "",
 
       // meta
-      isNicknameValid: false,
+      isNicknameValid: true,
       isPhoneNumberValid: false,
       phoneNumberVerificationCount: 0,
     },
