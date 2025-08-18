@@ -4,11 +4,11 @@ import {
 } from "@api/v1/users/sms";
 import { useMutation } from "@tanstack/react-query";
 
-const useSMSForVerification = () => {
+const useSMSForVerificationMutate = () => {
   return useMutation({
     mutationKey: [USER_VERIFY_SMS_API_PATH],
     mutationFn: postSMSForVerification,
   });
 };
 
-export default useSMSForVerification;
+export default useSMSForVerificationMutate;

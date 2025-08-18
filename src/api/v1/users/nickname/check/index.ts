@@ -3,7 +3,7 @@ import authenticatedApi from "@api/_instances/authenticatedApi";
 export const CHECK_NICKNAME_API_PATH = (nickname: string) =>
   `/api/v1/users/nickname/check?nickname=${nickname}`;
 
-interface GetCheckNicknameDuplicatedResponse {
+export interface GetCheckNicknameDuplicatedResponse {
   isDuplicated: boolean;
 }
 
