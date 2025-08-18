@@ -5,12 +5,10 @@ import {
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 const useRandomNicknameQuery = () => {
-  const query = useSuspenseQuery({
+  return useSuspenseQuery({
     queryKey: [RANDOM_NICKNAME_API_PATH],
     queryFn: getRandomNickname,
   });
-
-  return query;
 };
 
 export default useRandomNicknameQuery;
