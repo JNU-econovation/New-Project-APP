@@ -12,7 +12,8 @@ interface TextAreaFieldProps extends React.ComponentProps<typeof Textarea> {
   helperTextSpacing?: number;
   helperTextProps?: React.ComponentProps<typeof Text>;
   titleSideComponent?: React.ReactNode;
-  contentSideComponent?: React.ReactNode;
+  contentRightComponent?: React.ReactNode;
+  contentLeftComponent?: React.ReactNode;
 }
 
 /**
@@ -26,7 +27,8 @@ const TextAreaField = ({
   helperTextSpacing = 4,
   helperTextProps,
   titleSideComponent,
-  contentSideComponent,
+  contentRightComponent,
+  contentLeftComponent,
   ...props
 }: TextAreaFieldProps) => {
   return (
@@ -40,7 +42,8 @@ const TextAreaField = ({
             <Textarea {...props} />
           </>
         }
-        contentSideComponent={contentSideComponent}
+        contentRightComponent={contentRightComponent}
+        contentLeftComponent={contentLeftComponent}
       />
       {helperText && (
         <>

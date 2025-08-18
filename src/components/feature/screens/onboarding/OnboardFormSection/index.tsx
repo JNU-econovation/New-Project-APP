@@ -99,7 +99,7 @@ const OnboardFormSection = () => {
           fontSize: 14,
           color: "mainRed",
         }}
-        contentSideComponent={
+        contentRightComponent={
           <InputRightSideContainer>
             <DefaultButton
               title={verificationCodeSent == 0 ? "인증 요청" : "재요청"}
@@ -129,7 +129,7 @@ const OnboardFormSection = () => {
         maxLength={6}
         editable={!!verificationCodeSent}
         placeholderTextColor={COLORS.subGray}
-        contentSideComponent={
+        contentRightComponent={
           verificationCodeSent > 0 && (
             <InputRightSideContainer>
               <Text fontSize={16} fontWeight="medium">

@@ -105,7 +105,7 @@ const NicknameField = Suspense.with(
                   ? "success"
                   : "error",
             }}
-            contentSideComponent={
+            contentRightComponent={
               <InputRightSideContainer>
                 <DefaultButton
                   title={"확인"}
