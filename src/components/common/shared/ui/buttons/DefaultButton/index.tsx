@@ -1,6 +1,8 @@
 import { COLORS } from "@styles/colorPalette";
 import styled from "@emotion/native";
 import { ReactNode } from "react";
+
+import DefaultButtonLoader from "./loader";
 interface ButtonStyledProps {
   fullWidth?: boolean;
   disabled?: boolean;
@@ -78,5 +80,7 @@ const StyledText = styled.Text<ButtonStyledProps>`
   font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : "bold")};
   text-align: center;
 `;
+
+DefaultButton.loader = DefaultButtonLoader;
 
 export default DefaultButton;
