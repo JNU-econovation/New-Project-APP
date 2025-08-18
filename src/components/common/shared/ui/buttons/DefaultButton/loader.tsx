@@ -21,7 +21,7 @@ const DefaultButtonLoader = ({
   paddingHorizontal = 20,
   width = 80,
   height,
-  backgroundColor = "gray100",
+  backgroundColor = "gray20",
   title,
   color = "black",
 }: DefaultButtonLoaderProps) => {
@@ -36,7 +36,11 @@ const DefaultButtonLoader = ({
       height={calculatedHeight}
       backgroundColor={backgroundColor}
     >
-      {title ? <ButtonText color={color}>{title}</ButtonText> : <TextSkeleton />}
+      {title ? (
+        <ButtonText color={color}>{title}</ButtonText>
+      ) : (
+        <TextSkeleton />
+      )}
     </ButtonSkeleton>
   );
 };
