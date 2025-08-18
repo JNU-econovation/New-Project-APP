@@ -1,26 +1,30 @@
 import styled from "@emotion/native";
-import DefaultButton from "@shared/ui/buttons/DefaultButton";
-import { COLORS } from "@styles/colorPalette";
-
-import TextAreaField from "@components/common/shared/ui/TextareaField";
 import { useProfileSetFormContext } from "@hooks/feature/form/useProfileSetForm";
+import useSMSForVerificationMutate from "@hooks/feature/query/mutate/useSMSForVerificationMutate";
+import DefaultButton from "@shared/ui/buttons/DefaultButton";
+import TextAreaField from "@shared/ui/TextareaField";
+import { COLORS } from "@styles/colorPalette";
 import { formatPhoneNumberLive, isValidPhoneNumber } from "@utils/phoneNumber";
 import { Controller } from "react-hook-form";
 import { Keyboard } from "react-native";
 
 const PhoneNumberField = () => {
   const { control, getValues, watch, setValue } = useProfileSetFormContext();
+  const { mutate: sendSMSVerification } = useSMSForVerificationMutate();
 
   const handlePhoneNumberVerification = () => {
     const phoneNumber = getValues("phoneNumber");
+    Keyboard.dismiss();
     if (isValidPhoneNumber(phoneNumber)) {
-      Keyboard.dismiss();
-      setValue("verificationDeadline", Date.now() + 1000 * 60 * 5); //5 min
-      setValue(
-        "phoneNumberVerificationCount",
-        watch("phoneNumberVerificationCount") + 1,
-      );
-      // 인증 요청 로직
+      sendSMSVerification(phoneNumber, {
+        onSuccess: () => {
+          setValue("verificationDeadline", Date.now() + 1000 * 60 * 5); //5 min
+          setValue(
+            "phoneNumberVerificationCount",
+            watch("phoneNumberVerificationCount") + 1,
+          );
+        },
+      });
     }
   };
 
