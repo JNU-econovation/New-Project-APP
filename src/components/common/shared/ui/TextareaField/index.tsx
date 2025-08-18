@@ -55,6 +55,6 @@ const TextAreaField = ({
   );
 };
 
-TextAreaField.loader = TextAreaFieldLoader;
-
-export default TextAreaField;
+export default Object.assign(TextAreaField, {
+  loader: TextAreaFieldLoader,
+});
