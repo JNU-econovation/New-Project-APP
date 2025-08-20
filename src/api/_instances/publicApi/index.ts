@@ -1,3 +1,4 @@
+import { ErrorResponse } from "@model/api";
 import axios from "axios";
 
 const { EXPO_PUBLIC_MODE } = process.env;
@@ -63,7 +64,15 @@ publicApi.interceptors.response.use(
       console.error("[data:]", error.response?.data);
       console.error("[status:]", error.response?.status);
     }
-    return Promise.reject(error);
+
+    const apiError: ErrorResponse = {
+      status: "error",
+      errorCode: error.response?.data.errorCode || "UNKNOWN_ERROR",
+      message:
+        error.response?.data?.message || "알 수 없는 오류가 발생했습니다.",
+    };
+
+    return Promise.reject(apiError);
   },
 );
 
