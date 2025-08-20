@@ -1,5 +1,6 @@
+import { ErrorResponse } from "@model/api";
 import { getValueFromSecureStore } from "@utils/secureStore";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const { EXPO_PUBLIC_MODE } = process.env;
 
@@ -36,9 +37,10 @@ authenticatedApi.interceptors.response.use(
       console.log("[url:]", response.config.url);
       console.log("[data:]", response.data);
     }
+
     return response.data;
   },
-  (error) => {
+  (error: AxiosError<ErrorResponse>) => {
     if (EXPO_PUBLIC_MODE === "development") {
       console.warn("=============[authenticatedApi API error]=============");
       console.warn("[error :]", error);
@@ -46,7 +48,15 @@ authenticatedApi.interceptors.response.use(
       console.warn("[data:]", error.response?.data);
       console.warn("[status:]", error.response?.status);
     }
-    return Promise.reject(error);
+
+    const apiError: ErrorResponse = {
+      status: "error",
+      errorCode: error.response?.data.errorCode || "UNKNOWN_ERROR",
+      message:
+        error.response?.data?.message || "알 수 없는 오류가 발생했습니다.",
+    };
+
+    return Promise.reject(apiError);
   },
 );
 
