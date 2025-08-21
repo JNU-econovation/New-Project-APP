@@ -64,15 +64,20 @@ publicApi.interceptors.response.use(
       console.error("[data:]", error.response?.data);
       console.error("[status:]", error.response?.status);
     }
+    
+    const err = Object.assign(
+      new Error(error.response?.data?.message || "알 수 없는 오류가 발생했습니다."),
+      {
+        name: "ApiError",
+        status: "error" as const,
+        errorCode: error.response?.data?.errorCode ?? "UNKNOWN_ERROR",
+        httpStatus: error.response?.status,
+        url: error.config?.url,
+        cause: error,
+      },
+    ) as Error & ErrorResponse & { httpStatus?: number; url?: string; cause?: unknown };
 
-    const apiError: ErrorResponse = {
-      status: "error",
-      errorCode: error.response?.data.errorCode || "UNKNOWN_ERROR",
-      message:
-        error.response?.data?.message || "알 수 없는 오류가 발생했습니다.",
-    };
-
-    return Promise.reject(apiError);
+    return Promise.reject(err);
   },
 );
 
